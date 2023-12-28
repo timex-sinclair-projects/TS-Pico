@@ -1,6 +1,8 @@
 # TS-Pico
 A modern file storage system and development platform for the Timex/Sinclair 2068.
 
+The sdcard folder contains a zip file with the current SD card distribution. 
+
 You can learn more about this project at https://www.ts-pico.com
 
 GitHub for the Pico PCB: https://github.com/jburrell7/TSPICO
