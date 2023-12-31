@@ -9,4 +9,6 @@ GitHub for the Pico PCB: https://github.com/jburrell7/TSPICO
 
 GitHub for the expansion bus PCB: https://github.com/timex-sinclair-projects/TS2068_Extender
 
-The Wiki has guidance about using the TS Pico. 
+3D printable enclosure for the TS-Pico: https://www.thingiverse.com/thing:6392456
+
+The Wiki has guidance about using the TS-Pico. 
