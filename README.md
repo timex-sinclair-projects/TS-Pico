@@ -11,7 +11,7 @@ This jumper comes by default open, so the /WR signal doesn´t reach either the F
 
 # Intro
 
-This branch is to be used for testing the new (and possibly upcoming) firmware updates. Files in this branch can be shared between beta testers **WITH THE EXCEPTION** of the files in the ```docker``` folder; specially the ```tspico_io.py``` file. It contains code that is either dangerous/inconvenient to fall into the wrong hands...enough said. The folder in general and the file in particular are only intended to be used to generate the firmware updates
+This branch is to be used for testing the new (and possibly upcoming) firmware updates. Files in this branch can be shared between beta testers.
 
 # Folders structure:
 ```UPD```: This folder must be duplicated onto the SD to be read during update. The main component is a JSON file with all the new directories to be added, and also the files and its location. The files to be copied are also there; they include ```tspico.py``` itself, the main routine to be modified by the user; ```activity.log``` to store debugging error msgs, ```config.ini``` to store initial configuration values; and a couple ```.TAP``` files used by service routines
@@ -22,7 +22,7 @@ This branch is to be used for testing the new (and possibly upcoming) firmware u
 
 ```src_new_v1.1```: contains the file structure of a "canonical" TS-Pico when updated from v1.0 to v1.1
 
-Note that the ```tspico.py``` files located on all directories are exactly the same; however each has a different meaning 
+Note that the ```tspico.py``` files located on all directories are exactly the same; however each has a different meaning.
 
 # Usage:
 A regular user (in this case our beta testers) would only need:
@@ -56,10 +56,9 @@ Finally, I left both a changelog and some functions to be implemented in future 
 - Add the new Spectrum ROM, compatible with the new firmware, for updating slot 0 of the Flash 
 
 # Final words:
-- Needless to say, there might be many bugs, either on the firmware, the upgrade process or God knows where. We should discuss about a way to deal with discovered bugs and new/improved functions.
-- Many functions may be counterintuitive and awkward, and they arise mainly from compromises made either for performance or design limitations. A good example is the need to turn on/off the SD and the IO machines alternativele; this comes from the fact that some pins are shared between those peripherals; other is the need to cache the files in the internal Flash. Some are inherited from previuos versions, but surely many things can be improved 
+- Needless to say, there might be many bugs, either on the firmware, the upgrade process or God knows where. 
+- Many functions may be counterintuitive and awkward, and they arise mainly from compromises made either for performance or design limitations. A good example is the need to turn on/off the SD and the IO machines alternatively; this comes from the fact that some pins are shared between those peripherals; other is the need to cache the files in the internal flash. Some are inherited from previuos versions, but surely many things can be improved 
 - Once you get the grasp of it, how Gustavo's ROM works and what expect and returns, the interaction is surprisingly simple
-- Enjoy!
 
 
 
