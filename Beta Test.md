@@ -48,7 +48,7 @@ You will need a [USB to Micro USB](https://www.google.com/search?q=micro+usb) ca
 3. [Press and hold the BOOTSEL button](images/Pico-bootsel.png), press and release the Pico Reset button (top-most of the 3 pushbuttons on the right), then release the BOOTSEL button.
 4. The [Raspberry Pi Pico will appear as a file system device on your computer](images/RPI%20file%20device.png), just as if you'd plugged in a USB thumbdrive.
 5. Download [flash-nuke.uf2](firmware/flash_nuke.uf2) to your computer.
-6. Drag flash-nuke.uf2 to the TS-Pico device. The TS-Pico will automatically unmount during this process. Mac users: your computer will report this as a problem. It's not.
+6. Drag flash-nuke.uf2 to the Pico device. The Pico will automatically unmount during this process. Mac users: your computer will report this as a problem. It's not.
 7. This UF2 will wipe all internal Raspberry Pi Pico memory back to a clean slate. This takes a second or two.
 8. The Pico will re-appear as a file system device on your computer.
 9. Download the [new uf2 file](firmware/new_firmware_v1.1.uf2) (new_firmware_v1.1.uf2) to your computer.
