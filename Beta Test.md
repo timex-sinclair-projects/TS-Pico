@@ -84,6 +84,10 @@ MPY: soft reboot
 270000000
 ````
 
+Disconnect the TS-Pico from your computer, re-install it in the expansion board, and power on your TS-2068.
+
+
+
 ## Testing procedure
 
 Our goals in this beta are to:
@@ -95,5 +99,7 @@ If you do not have a GitHub account, please [create one now](https://docs.github
 ### Repeatability is key
 
 It's take notes when you are testing the TS-Pico: we will need as much information as possible about issues when you report them, including all the steps you took from power-on or reset. The more information you provide, the easier it may be for us to replicate.
+
+### Reporting issues
 
 
