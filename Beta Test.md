@@ -1,6 +1,13 @@
 # TS-Pico Firmware Beta Test 
 Thank you for agreeing to help the Pico team test the new firmware.
 
+## Definitions
+
+**TS-Pico**: The whole enchillada: the assembled printed circuit board and all components.
+**Raspberry Pi Pico** or **Pico**: Just the Rasperry Pi Pico component. It may be socketed.
+**Flash ROM** or **Flash**: the SST 39SF040 chip on the TS-Pico. It is mounted in a socket.
+**P10**: The set of pins that, with a small connector, enables the /WR signal to the Flash ROM and static RAM. It is to the right of the Flash ROM. 
+
 ## The testing board
 
 You have received standard TS-Pico hardware with a pre-programmed Raspberry Pi Pico and the Pico-custom ROM image on flash. 
@@ -9,7 +16,7 @@ The P10 jumper (to the right of the flash IC) should be connected on your TS-Pic
 
 If it is not, please connect it now.
 
-<img src="/P10_location.jpg" alt="Install this jumper" width="800"> 
+<img src="/P10_location.jpg" alt="Install this jumper" width="400"> 
 
 ## The new firmware
 
@@ -35,15 +42,17 @@ There may be times when you need to "wipe" the firmware and return the TS-Pico t
 You will need a [USB to Micro USB](https://www.google.com/search?q=micro+usb) cable and [Thonny](https://thonny.org/) [installed on your computer](https://projects.raspberrypi.org/en/projects/getting-started-with-the-pico/2). 
 
 1. Remove the TS-Pico from the expansion slot board.
-2. Plug TS-Pico into the Micro USB cable
-3. Press and hold the BOOTSEL button, press and release the Pico Reset button (top-most of the 3 pushbuttons on the right), then release the BOOTSEL button.
-4. Your TS-Pico will appear as a file system device on your computer, just as if you'd plugged in a USB thumbdrive.
-5. Download the nuke-pico.uf2 file to your computer.
-6. Drag nuke-pico.uf2 to the TS-Pico device. The TS-Pico will automatically unmount during this process. Mac users: your computer will report this as a problem. It's not.
+2. [Plug TS-Pico into the Micro USB cable](images/Pico-Top-Plug-v2.png).
+3. [Press and hold the BOOTSEL button](images/Pico-bootsel.png), press and release the Pico Reset button (top-most of the 3 pushbuttons on the right), then release the BOOTSEL button.
+4. The [Raspberry Pi Pico will appear as a file system device on your computer](images), just as if you'd plugged in a USB thumbdrive.
+5. Download [flash-nuke.uf2](firmware/flash_nuke.uf2) to your computer.
+6. Drag flash-nuke.uf2 to the TS-Pico device. The TS-Pico will automatically unmount during this process. Mac users: your computer will report this as a problem. It's not.
 7. This UF2 will wipe all internal Raspberry Pi Pico memory back to a clean slate. This takes a second or two.
-8. Your TS-Pico will re-appear as a file system device on your computer.
-9. Download the new uf2 file to your computer.
-10. Drag the new uf2 file to your computer.
+8. The Pico will re-appear as a file system device on your computer.
+9. Download the [new uf2 file](firmware/new_firmware_v1.1.uf2) (new_firmware_v1.1.uf2) to your computer.
+10. Drag the new uf2 file to your computer. The TS-Pico will automatically unmount during this process.
+11. Start Thonny on your computer. Ensure you have a [Files browser tab](images) available. If you do not see it, go to View and select Files.
+12. If the Pico does not 
 
 ## Testing procedure
 
