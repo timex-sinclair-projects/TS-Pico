@@ -41,19 +41,9 @@ There may be times when you need to "wipe" the firmware and return the TS-Pico t
 
 You will need a [USB to Micro USB](https://www.google.com/search?q=micro+usb) cable and [Thonny](https://thonny.org/) [installed on your computer](https://projects.raspberrypi.org/en/projects/getting-started-with-the-pico/2). 
 
-<figure>
-    <img src="images/Pico-Top-Plug-v2.png" alt="Plug cable into Pico" width="200">
-    <figcaption>Plug your Micro USB cable into the Raspberry Pi Pico.</figcaption>
-</figure>
-
-<figure>
-    <img src="images/Pico-bootsel.png" alt="Bootsel button" width="200">
-    <figcaption>BOOTSEL button on the Raspberry Pi Pico.</figcaption>
-</figure>
-
 1. Remove the TS-Pico from the expansion slot board.
-2. Plug TS-Pico into the Micro USB cable.
-3. Press and hold the BOOTSEL button, press and release the Pico Reset button (top-most of the 3 pushbuttons on the right), then release the BOOTSEL button.
+2. [Plug TS-Pico into the Micro USB cable](images/Pico-Top-Plug-v2.png).
+3. [Press and hold the BOOTSEL button](images/Pico-bootsel.png{, press and release the Pico Reset button (top-most of the 3 pushbuttons on the right), then release the BOOTSEL button.
 4. Your TS-Pico will appear as a file system device on your computer, just as if you'd plugged in a USB thumbdrive.
 5. Download [flash-nuke.uf2](firmware/flash_nuke.uf2) to your computer.
 6. Drag flash-nuke.uf2 to the TS-Pico device. The TS-Pico will automatically unmount during this process. Mac users: your computer will report this as a problem. It's not.
