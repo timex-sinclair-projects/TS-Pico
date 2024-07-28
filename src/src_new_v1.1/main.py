@@ -31,24 +31,6 @@ utime.sleep(.5)
 while True:
     
     collect()
-
-    try:
-        TS2068_IO()
+    TS2068_IO()
         
-    except Exception as err:
-        
-        try:
-            close("activity.log")
-        except:
-            pass
-        
-        with open("/activity.log", "a") as log:
-            
-            log_msg += "[" + str(time.ticks_us()) + "] "
-            log_msg += "FATAL ERROR!!!:"
-            
-            log.write(log_msg)
-            sys.print_exception(err, log)
-            
-        break        
-        
+ 
