@@ -54,7 +54,7 @@ You will need a [USB to Micro USB](https://www.google.com/search?q=micro+usb) ca
 9. Download the [new uf2 file](firmware/new_firmware_v1.1.uf2) (new_firmware_v1.1.uf2) to your computer.
 10. Drag the new uf2 file to your computer. The TS-Pico will automatically unmount during this process.
 
-## Next, restore the TS-Pico MicroPython code and support files
+### Next, restore the TS-Pico MicroPython code and support files
 
 1. Download the "src/src_new_v1.1" folder to your computer.
 2. Open Thonny.
