@@ -6,7 +6,8 @@ Thank you for agreeing to help the Pico team test the new firmware.
 **TS-Pico**: The whole enchillada: the assembled printed circuit board and all components.
 **Raspberry Pi Pico** or **Pico**: Just the Rasperry Pi Pico component. It may be socketed.
 **Flash ROM** or **Flash**: the SST 39SF040 chip on the TS-Pico. It is mounted in a socket.
-**P10**: The set of pins that, with a small connector, enables the /WR signal to the Flash ROM and static RAM. It is to the right of the Flash ROM. 
+**P10**: The set of pins that, with a small connector, enables the /WR signal to the Flash ROM and static RAM. It is to the right of the Flash ROM.
+**UF2**: A special file that contains the MicroPython interpreter and core TS-Pico functionality code, pre-compiled for better performance.
 
 ## The testing board
 
@@ -41,6 +42,7 @@ There may be times when you need to "wipe" the firmware and return the TS-Pico t
 
 You will need a [USB to Micro USB](https://www.google.com/search?q=micro+usb) cable and [Thonny](https://thonny.org/) [installed on your computer](https://projects.raspberrypi.org/en/projects/getting-started-with-the-pico/2). 
 
+### First, wipe the Pico and restore the UF2 firmware
 1. Remove the TS-Pico from the expansion slot board.
 2. [Plug TS-Pico into the Micro USB cable](images/Pico-Top-Plug-v2.png).
 3. [Press and hold the BOOTSEL button](images/Pico-bootsel.png), press and release the Pico Reset button (top-most of the 3 pushbuttons on the right), then release the BOOTSEL button.
@@ -51,8 +53,26 @@ You will need a [USB to Micro USB](https://www.google.com/search?q=micro+usb) ca
 8. The Pico will re-appear as a file system device on your computer.
 9. Download the [new uf2 file](firmware/new_firmware_v1.1.uf2) (new_firmware_v1.1.uf2) to your computer.
 10. Drag the new uf2 file to your computer. The TS-Pico will automatically unmount during this process.
-11. Start Thonny on your computer. Ensure you have a [Files browser tab](images/Files%20browser.png) available. If you do not see it, go to View and select Files.
-12. If the Pico does not 
+
+## Next, restore the TS-Pico MicroPython code and support files
+
+1. Download the "src/src_new_v1.1" folder to your computer.
+2. Open Thonny.
+4. Ensure you have a [Files browser tab](images/Files%20browser.png) available. If you do not see it, go to View and select Files.
+5. Navigate to the __src_new_v1.1__ folder on your computer. Once you get there, you should see a TS folder and three files.
+6. If the Files browser is one large window, click the Stop button to get the Pico's attention. Your Files browser should have a split, showing the Pico ([like this](images/Files-browser-split.png)).
+7. In Thonny, right-click on the TS folder and select "Upload to /". This will upload the folder and its contents to the Pico. **Note:** Don't try to upload this folder and the other files all at once. For some reason, Thonny gets confused and puts the files that should be in the TS folder at the top level.
+8. Select the 3 top level files (activity.log, config.ini, and main.py), right-click and select "Upload to /". Your Files browser should list the same files on your computer and on the Pico.
+9. **Make sure you have an SD card plugged in to the TS-Pico.**
+10. Double-click on __main.py__ to open it in the editor.
+11. Click on the main.py tab if it's not already the focus.
+12. Click the RUN icon (green with white "play" icon).
+13. In the Shell tab (usually at the bottom of your screen), you should see the following message:
+
+```
+MPY: soft reboot
+270000000
+````
 
 ## Testing procedure
 
