@@ -3,11 +3,11 @@ Thank you for agreeing to help the Pico team test the new firmware.
 
 ## Definitions
 
-**TS-Pico**: The whole enchillada: the assembled printed circuit board and all components.
-**Raspberry Pi Pico** or **Pico**: Just the Rasperry Pi Pico component. It may be socketed.
-**Flash ROM** or **Flash**: the SST 39SF040 chip on the TS-Pico. It is mounted in a socket.
-**P10**: The set of pins that, with a small connector, enables the /WR signal to the Flash ROM and static RAM. It is to the right of the Flash ROM.
-**UF2**: A special file that contains the MicroPython interpreter and core TS-Pico functionality code, pre-compiled for better performance.
+- **TS-Pico**: The whole enchillada: the assembled printed circuit board and all components.
+- **Raspberry Pi Pico** or **Pico**: Just the Rasperry Pi Pico component. It may be socketed.
+- **Flash ROM** or **Flash**: the SST 39SF040 chip on the TS-Pico. It is mounted in a socket.
+- **P10**: The set of pins that, with a small connector, enables the /WR signal to the Flash ROM and static RAM. It is to the right of the Flash ROM.
+- **UF2**: A special file that contains the MicroPython interpreter and core TS-Pico functionality code, pre-compiled for better performance.
 
 ## The testing board
 
@@ -35,6 +35,16 @@ New features include:
 - Appending to currently mounted TAP file on SAVE
 - "Looping" of TAP files, consistent with behavior in emulators (FUSE, ZEsarUX)
 - New commands for better user experience.
+
+## Download the TS-Pico beta image
+
+You'll need a copy of the beta software on your computer, especially if you run into really thorny problems. 
+
+As we work through testing, we may update the beta code and ask you to upgrade the version on your TS-Pico.
+
+We may ask you to restore to the original image in testing, too.
+
+[Download the TS-Pico beta](https://github.com/timex-sinclair-projects/TS-Pico/archive/refs/heads/Beta.zip)
 
 ## Restoring your TS-Pico
 
