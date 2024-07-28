@@ -59,12 +59,12 @@ You will need a [USB to Micro USB](https://www.google.com/search?q=micro+usb) ca
 1. Download the "src/src_new_v1.1" folder to your computer.
 2. Open Thonny.
 4. Ensure you have a [Files browser tab](images/Files%20browser.png) available. If you do not see it, go to View and select Files.
-5. Navigate to the __src_new_v1.1__ folder on your computer. Once you get there, you should see a TS folder and three files.
+5. Navigate to the *src_new_v1.1* folder on your computer. Once you get there, you should see a TS folder and three files.
 6. If the Files browser is one large window, click the Stop button to get the Pico's attention. Your Files browser should have a split, showing the Pico ([like this](images/Files-browser-split.png)).
-7. In Thonny, right-click on the TS folder and select "Upload to /". This will upload the folder and its contents to the Pico. **Note:** Don't try to upload this folder and the other files all at once. For some reason, Thonny gets confused and puts the files that should be in the TS folder at the top level.
+7. In Thonny, right-click on the TS folder and select ["Upload to /"](images/Upload%20to%20Pico.png). This will upload the folder and its contents to the Pico. **Note:** Don't try to upload this folder and the other files all at once. For some reason, Thonny gets confused and puts the files that should be in the TS folder at the top level.
 8. Select the 3 top level files (activity.log, config.ini, and main.py), right-click and select "Upload to /". Your Files browser should list the same files on your computer and on the Pico.
 9. **Make sure you have an SD card plugged in to the TS-Pico.** Don't make mistake David makes all the time.
-10. Double-click on __main.py__ to open it in the editor.
+10. Double-click on *main.py* to open it in the editor.
 11. Click on the main.py tab if it's not already the focus.
 12. Click the RUN icon (green with white "play" icon).
 13. In the Shell tab (usually at the bottom of your screen), you should see the following message:
