@@ -88,7 +88,7 @@ Disconnect the TS-Pico from your computer, re-install it in the expansion board,
 
 
 
-## Testing procedure
+## Testing procedures
 
 Our goals in this beta are to:
 1. Ensure the hardware works as advertised
@@ -96,10 +96,14 @@ Our goals in this beta are to:
 
 If you do not have a GitHub account, please [create one now](https://docs.github.com/en/get-started/start-your-journey/creating-an-account-on-github).
 
-### Repeatability is key
-
-It's take notes when you are testing the TS-Pico: we will need as much information as possible about issues when you report them, including all the steps you took from power-on or reset. The more information you provide, the easier it may be for us to replicate.
 
 ### Reporting issues
 
+Please report bugs, feature enhancements, suggestions [via the Issues tracker](https://github.com/timex-sinclair-projects/TS-Pico/issues).
+
+When you report an issue, check to make sure it has not already been reported. If it has, please add your observations to the existing issue.
+
+**Repeatability is key**
+
+It's best to take notes when you are testing the TS-Pico: we will need as much information as possible about issues when you report them, including all the steps you took from power-on or reset. The more information you provide, the easier it may be for us to replicate.
 
