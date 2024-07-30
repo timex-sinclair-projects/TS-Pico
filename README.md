@@ -5,10 +5,8 @@ The sdcard folder contains a zip file with the current SD card distribution.
 
 You can learn more about this project at https://www.ts-pico.com
 
-GitHub for the Pico PCB: https://github.com/jburrell7/TSPICO
+- [GitHub for the Pico PCB](https://github.com/timex-sinclair-projects/TS-Pico-Storage)
+- [GitHub for the expansion bus PCB](https://github.com/timex-sinclair-projects/TS2068_Extender)
+- [3D printable enclosure for the TS-Pico](https://www.thingiverse.com/thing:6392456)
 
-GitHub for the expansion bus PCB: https://github.com/timex-sinclair-projects/TS2068_Extender
-
-3D printable enclosure for the TS-Pico: https://www.thingiverse.com/thing:6392456
-
-The Wiki has guidance about using the TS-Pico. 
+The [Wiki](/timex-sinclair-projects/TS-Pico/wiki) has guidance about using the TS-Pico. 
