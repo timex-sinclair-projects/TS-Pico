@@ -27,7 +27,7 @@ Creates a new TAP file called *filename*.tap.
 #### How to test
 1. Start at the power-on state
 2. Enter a short program
-3. SAVE "*progname*"
+3. SAVE "*filename*"
 4. LOAD "tpi:dir" to confirm the file exists
 5. LOAD "tpi:*filename*.tap" to mount the file
 6. LOAD "" to load the first file in the TAP file
