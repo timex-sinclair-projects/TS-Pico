@@ -86,24 +86,47 @@ MPY: soft reboot
 
 Disconnect the TS-Pico from your computer, re-install it in the expansion board, and power on your TS-2068.
 
+# Beta testing procedures
 
+A large portion of beta testing is trying to break the software. The most common ways to do that are to feed the software input data it does not expect. Whether it's an out-of-bounds value, a buffer overflow, type mismatch... anything goes.
 
-## Testing procedures
+```
+A beta tester runs into a bar
+A beta tester crawls into a bar
+A beta tester moonwalks into a bar
+A beta tester jumps into a bar
+A beta tester sneaks into a bar
+A beta tester orders 1 beer
+A beta tester orders 2 beers
+A beta tester orders 0 beers
+A beta tester orders 999999999 beers
+A beta tester orders -1 beers
+A beta tester orders qwertyuip beers
+A beta tester orders a lizard in a cup
+A regular user walks into the bar and asks if he can use their toilet
+The bar erupts into flames and burns to the ground.
+```
 
 Our goals in this beta are to:
 1. Ensure the hardware works as advertised
 2. Find and squash bugs
 
+## Create a GitHub account to report issues
+
+We are reporting problems we find as issues on this GitHub. Feel free to report issues to the email list, too, but for tracking and fixing, we **need** you to report the problem on GitHub. For that, you will need a GitHub account.
+
 If you do not have a GitHub account, please [create one now](https://docs.github.com/en/get-started/start-your-journey/creating-an-account-on-github).
 
+## Reporting issues
 
-### Reporting issues
+Report bugs, feature enhancements, suggestions [via the Issues tracker](https://github.com/timex-sinclair-projects/TS-Pico/issues).
 
-Please report bugs, feature enhancements, suggestions [via the Issues tracker](https://github.com/timex-sinclair-projects/TS-Pico/issues).
-
-When you report an issue, check to make sure it has not already been reported. If it has, please add your observations to the existing issue.
+When you report an issue, check to make sure it has not already been reported. If it has, add your observations to the existing issue.
 
 **Repeatability is key**
 
 It's best to take notes when you are testing the TS-Pico: we will need as much information as possible about issues when you report them, including all the steps you took from power-on or reset. The more information you provide, the easier it may be for us to replicate.
 
+## What to test
+
+We are testing all of the implemented [commands](commands.md) of the TS-Pico.
