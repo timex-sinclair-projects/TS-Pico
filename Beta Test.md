@@ -11,7 +11,7 @@ Thank you for agreeing to help the Pico team test the new firmware.
 
 ## The testing board
 
-You have received standard TS-Pico hardware with a pre-programmed Raspberry Pi Pico and the Pico-custom ROM image on flash. 
+You have received standard TS-Pico hardware with a pre-programmed Raspberry Pi Pico and the TS-Pico customized ROM image on Flash. 
 
 The P10 jumper (to the right of the flash IC) should be connected on your TS-Pico. On a production TS-Pico, this jumper is open by default, so the /WR signal doesn´t reach either the Flash or SRAM. It must to be enabled for some of the features we'll test.
 
