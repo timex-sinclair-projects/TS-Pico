@@ -11,6 +11,7 @@ They also have a **How to test** section. Follow these directions precisely. The
 
 Once you've established that the command performs as expected (or not: remember, report it as an issue), try the same commands with different values. Try:
 - no *filename* where one is expected
+- a *filename* (or string of characters) where one is not expected
 - a *filename* that exceeds 10 characters
 - a *filename* with non-alphanumeric characters
 - the command in a program
