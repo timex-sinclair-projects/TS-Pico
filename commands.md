@@ -33,12 +33,6 @@ Get a listing of the current directory
 ### LOAD "tpi:tapdir"
 Get a listing of the files in the mounted TAP file
 
-### LOAD "tpi:config"
-Not implemented
-
-### LOAD "tpi:list"
-Not implemented
-
 ## SAVE Commands
 
 ### SAVE "*filename*"
@@ -110,41 +104,20 @@ Toggle command feedback verbosity ON/OFF.
 ### SAVE "TPI:ZX48" - ZX48
 Changes to ZX Spectrum 48 compatability mode.
 
-### SAVE "TPI:AUTOLF"
-Not implemented
-
-### SAVE "TPI:AUTOPG"
-Not implemented
-
-### SAVE "TPI:BMP"
-Not implemented
-
-### SAVE "TPI:CLPRINT"
-Not implemented
-
-### SAVE "TPI:CONFIG"
-Not implemented
-
-### SAVE "TPI:DELETE"
-Not implemented
-
-### SAVE "TPI:FRESET"
-Not implemented
-
-### SAVE "TPI:GETCONFIG"
-Not implemented
-
-### SAVE "TPI:MEMINFO"
-Not implemented
-
-### SAVE "TPI:NOAUTOLF"
-Not implemented
-
-### SAVE "TPI:OPPRINT"
-Not implemented
-
-### SAVE "TPI:PRNSZ"
-Not implemented
-
-### SAVE "TPI:STOP"
-Not implemented
+## Commands not yet implemented
+The following commands are on the to-do list. You're welcome to jump in and help implement them. :)
+- LOAD "tpi:config"
+- LOAD "tpi:list"
+- SAVE "TPI:AUTOLF"
+- SAVE "TPI:AUTOPG"
+- SAVE "TPI:BMP"
+- SAVE "TPI:CLPRINT"
+- SAVE "TPI:CONFIG"
+- SAVE "TPI:DELETE"
+- SAVE "TPI:FRESET"
+- SAVE "TPI:GETCONFIG"
+- SAVE "TPI:MEMINFO"
+- SAVE "TPI:NOAUTOLF"
+- SAVE "TPI:OPPRINT"
+- SAVE "TPI:PRNSZ"
+- SAVE "TPI:STOP"
