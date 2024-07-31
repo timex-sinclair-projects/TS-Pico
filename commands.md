@@ -2,6 +2,25 @@
 
 The TS-Pico implements its commands through the Timex/Sinclair's LOAD and SAVE commands.
 
+### Testing the commands
+Each command listed below includes a description of what the command does and expected output/feedback to the user.
+
+They also have a **How to test** section. Follow these directions precisely. They document the normal and expected uses of the command.
+
+#### Breaking the commands
+
+Once you've established that the command performs as expected (or not: remember, report it as an issue), try the same commands with different values. Try:
+- no *filename* where one is expected
+- a *filename* that exceeds 10 characters
+- a *filename* with non-alphanumeric characters
+- the command in a program
+- breaking out of the command mid-stream (shift+spacebar), before the TS-Pico has completed its operations
+- a canary (I don't know how you'll stuff a canary in the computer; canary not supplied)
+
+Use your imagination, use fat fingers to "mess up" a command... try the most outrageous idea you can imagine for the command.
+
+In short: break the TS-Pico.
+
 ## LOAD Commands
 
 ### LOAD "TPI:*filename.tap*"
