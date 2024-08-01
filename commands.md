@@ -32,6 +32,9 @@ LOAD "" will load a special program will ask you a few questions about whether t
 
 If you indicate that you want to keep the configuration, the Pico will reset and use the file you've loaded.
 
+#### LOAD "TPI:*nn"
+Loads a TAP file based on the index number.
+
 #### LOAD "tpi:*filename.rom*" or LOAD "tpi:*filename.bin*"
 LOAD "" will load a special program will ask you a few questions about whether to save on Static RAM or Flash and which of the available slots.
 
