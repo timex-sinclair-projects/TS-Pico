@@ -22,6 +22,8 @@ Use your imagination, use fat fingers to "mess up" a command... try the most out
 
 In short: break the TS-Pico.
 
+---
+
 ## LOAD Commands
 
 ### LOAD "tpi:*filename.tap*"
@@ -43,6 +45,8 @@ Get a listing of the current directory
 
 ### LOAD "tpi:tapdir"
 Get a listing of the files in the mounted TAP file
+
+---
 
 ## SAVE Commands
 
