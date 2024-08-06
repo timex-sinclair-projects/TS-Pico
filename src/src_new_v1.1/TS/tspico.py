@@ -15,7 +15,7 @@
 # - LOAD now caches all files on internal Flash, and streams each byte (David's optimization)
 # - Fixed LOADing non-existent filename from .TAP
 # - Fixed special characters and trailing spaces in filename SAVE
-# - New SAVE cmds: "tpi:blkrcv" [CODE n,m], "tpi:getlog" [CODE n, 0], "tpi:gethelp", "tpi:getinfo", "tpi:verbose", "tpi:append"
+# - New SAVE cmds: "tpi:blkrcv [CODE n,m], "tpi:getlog" [CODE n, 0], "tpi:gethelp", "tpi:getinfo", "tpi:verbose", "tpi:append"
 # - Incorrect commands now show description of error (if verbose=enabled)
 # - Incorporated some try..except blocks in troublesome, failing parts
 # - Two consecutives LOAD "" with no file mounted is now properly handled
@@ -52,7 +52,7 @@ from machine import Pin, freq, SPI
 
 from TS.sdcard import *
 
-from tspico_io import sel_bank, set_ctrl, set_dck, TS_IO, LOAD_TS, LOAD_ZX, LOAD_ZX_C, SAVE_TS, SAVE_ZX
+from TS.tspico_io import sel_bank, set_ctrl, set_dck, TS_IO, LOAD_TS, LOAD_ZX, LOAD_ZX_C, SAVE_TS, SAVE_ZX
 
 
 #####################
@@ -789,10 +789,12 @@ def SEND_MSG2(msg, st: bytes):                                              # Se
             return
             
         wrt(0x00)
-        wrt(0x64)
+        wrt(0x40)
         
         if (MQ.get() == 78):
-            wrt(0x00)
+#             wrt(0x00)
+            LOG("INFO: SEND_MSG2 finished. " + str(MQ.tx_fifo()) + " " + str(MQ.rx_fifo()), 0)
+    
             return
         
         msg = msg[640:]
@@ -808,9 +810,6 @@ def SEND_MSG2(msg, st: bytes):                                              # Se
         else:
             r = range(672)
         
-        LOG("INFO: SEND_MSG2 finished. " + str(MQ.tx_fifo()) + " " + str(MQ.rx_fifo()), 0)
-    
-    return
 
 
 ##########################
@@ -1041,6 +1040,7 @@ def CDIR(pre, cmd):                                                             
     ACTIVATE_SD()
     
     potential_new_path = cmd[10:]
+    
     if potential_new_path == ".." and TSP.cur_path.count("/") > 2:
         # remove the last element from the current path
         # unless the last element is TAP
@@ -1054,9 +1054,9 @@ def CDIR(pre, cmd):                                                             
         # move to the top
         new_path = "/sd/TAP"
           
-    elif dir_exists(TSP.cur_path + "/" + potential_new_path):
-        # it's a valid path
+    elif (dir_exists(TSP.cur_path + "/" + potential_new_path) and (potential_new_path in lista)):
         new_path = TSP.cur_path + "/" + potential_new_path
+        
     else:
         # no changes bc it doesn't meet any of the tests above
         new_path = TSP.cur_path
@@ -1125,8 +1125,6 @@ def GETHELP(pre, cmd):                                                 # Shows T
 
     global TSP
     
-    prev_VERBOSE = TSP.VERBOSE
-    
     nl = chr(13)
     
     msg = "%-32s" % ('LOAD cmds')
@@ -1155,11 +1153,7 @@ def GETHELP(pre, cmd):                                                 # Shows T
     msg += "%-32s" % ('"tpi:verbose"')
     msg += "%-32s" % ('"tpi:zx48"')
     
-    TSP.VERBOSE = True
-    
     SEND_MSG2(msg, 1)
-
-    TSP.VERBOSE = prev_VERBOSE 
 
     return
 
@@ -1362,10 +1356,17 @@ def MEMBOOT(pre, cmd):                                           # Changes ROM s
             json.dump(init_values, f)
             
         SEND_MSG('Change ROM to MEM=' + str(par1) + ', PAGE=' + str(par2), "", 1)
-        LOG("INFO: Change ROM to MEM=" + str(par1) + ", PAGE=" + str(par2) + " in MEMBOOT", 0)
+#         LOG("INFO: Change ROM to MEM=" + str(par1) + ", PAGE=" + str(par2) + " in MEMBOOT", 0)
+        
+        utime.sleep(.100)
         
         ROM.put(TSP.ROM_SM)
         BANK.put(TSP.bank_sm)
+        
+        utime.sleep(.100)
+        
+        while True:
+            print(MQ.get())
         
 #         while(MQ.tx_fifo() != 0):
 #             pass
@@ -1596,6 +1597,8 @@ def PROCESS_CMD(pre, LD_funct, SA_funct, EXT_LD_FUNCT, EXT_SA_FUNCT):           
     
     global TSP
     global MQ
+    global ROM
+    global BANK
     
     global files
     
@@ -1649,7 +1652,7 @@ def PROCESS_CMD(pre, LD_funct, SA_funct, EXT_LD_FUNCT, EXT_SA_FUNCT):           
                 TSP.f_name = TSP.cur_path + "/" + files[index]
                 MOUNT_FILE()
                 ACTIVATE_MQ()
-
+ 
             else:
                 SEND_MSG("Index mount error: " + str(index), "", 3)
                 
@@ -1659,15 +1662,17 @@ def PROCESS_CMD(pre, LD_funct, SA_funct, EXT_LD_FUNCT, EXT_SA_FUNCT):           
             ACTIVATE_MQ()
             SEND_MSG("Mounting dir info: ", rest_cmd, 1)
             
-        elif rest_cmd in files:                                                                                  # Is rest_cmd a valid file? 
+        elif rest_cmd in files:                                                                                  # Is rest_cmd a valid file?
+            print(rest_cmd)
+            print(files)
             TSP.f_name = TSP.cur_path + "/" + rest_cmd
             MOUNT_FILE()
             ACTIVATE_MQ()
             SEND_MSG("Mounting file: ", rest_cmd, 1)
             
-        elif rest_cmd[-4:].upper() == ".TAP":
-            TSP.f_name = TSP.cur_path + "/" + rest_cmd
-            SEND_MSG("Mounting file: ", rest_cmd, 1)
+#         elif rest_cmd[-4:].upper() == ".TAP":
+#             TSP.f_name = TSP.cur_path + "/" + rest_cmd
+#             SEND_MSG("Mounting file: ", rest_cmd, 1)
         
         else:
             SEND_MSG('Error! Invalid LOAD "tpi:"', rest_cmd, 5)                                       # If none of the above, raise error
@@ -1683,13 +1688,13 @@ def PROCESS_CMD(pre, LD_funct, SA_funct, EXT_LD_FUNCT, EXT_SA_FUNCT):           
             EXEC = SA_funct[cmd_exec]
             EXEC(pre, cmd)
             
-#         elif cmd_exec == "TPI:TEST":                                                                               # Remove in production!!!
-#             
-#             MQ.put(0x40)
-#             MQ.put(0x01)
-#             
-#             for i in range(10):
-#                 print(MQ.get())
+        elif cmd_exec == "TPI:TEST":                                                                               # Remove in production!!!
+            
+            MQ.put(0x40)
+            MQ.put(0x01)
+            
+            while True:
+                print(MQ.get())
 
         elif cmd_exec in EXT_SA_FUNCT:                                                                                # Is an external cmd?
             EXEC = EXT_SA_FUNCT[cmd_exec]
