@@ -412,7 +412,12 @@ def DIR_FILES():                                                                
 def LOG(msg, level):                                                                    # Adds a timestamped new entry to log_entries
     
     global log_entries
+    global log_to_serial
     global TSP
+    
+    if log_to_serial:                                                                    # If enabled, send log msg to console instead of logfile
+        print(msg)
+        return
     
     if TSP.LOG_LEVEL:                                                                    # TSP is not initialized at startup, so this check is required
         if level < TSP.LOG_LEVEL:
@@ -1040,6 +1045,7 @@ def CDIR(pre, cmd):                                                             
     ACTIVATE_SD()
     
     potential_new_path = cmd[10:]
+#     case_test = "<" + str(potential_new_path) + ">"
     
     if potential_new_path == ".." and TSP.cur_path.count("/") > 2:
         # remove the last element from the current path
@@ -1054,7 +1060,7 @@ def CDIR(pre, cmd):                                                             
         # move to the top
         new_path = "/sd/TAP"
           
-    elif (dir_exists(TSP.cur_path + "/" + potential_new_path) and (potential_new_path in lista)):
+    elif (dir_exists(TSP.cur_path + "/" + potential_new_path)):# and (case_test in lista)):
         new_path = TSP.cur_path + "/" + potential_new_path
         
     else:
@@ -1080,8 +1086,8 @@ def CDIR(pre, cmd):                                                             
         
     gc.collect()
     DIR_FILES()
-    os.umount("/sd")
     
+    os.umount("/sd")
     ACTIVATE_MQ()
     
     SEND_MSG(message, "Current: " + public_path(), status)
@@ -1728,6 +1734,7 @@ def TS2068_IO():                                                         # Main 
     global kill                                                        # boolean set to True when watchdog wants to end a misbehaving IO routine 
     global lista                                                       # all contents of current dir, in string format to be displayed by "TPI:DIR"
     global log_entries                                                 # log entries to be saved during next loop
+    global log_to_serial                                               # If TRUE, all logging messages will be displayed on screen instead of the logfile
     
     global ROM
     global BANK
@@ -1742,6 +1749,8 @@ def TS2068_IO():                                                         # Main 
     files = []
     lista = ""
     log_entries = ""
+    log_to_serial = True
+    
     led = Pin(25, Pin.OUT)
 
     init_values = LOAD_CONFIG()
@@ -1837,9 +1846,6 @@ def TS2068_IO():                                                         # Main 
     dead = False
     _thread.start_new_thread(BLINK_LED, (0.9, ))
     
-    LOG("INFO: Mounting SD Card...", 0)
-    SAVE_LOG()
-
     ACTIVATE_SD()
     
     dead = True
@@ -1930,8 +1936,8 @@ def TS2068_IO():                                                         # Main 
                 try:
                     PROCESS_CMD(pre, LD_funct, SA_funct, EXT_LD_FUNCT, EXT_SA_FUNCT)
                 except:
-                    LOG("ERROR: Invalid data received from PROCESS_CMD", 2)
-                    break
+                    LOG("ERROR: Invalid data received from PROCESS_CMD: " + str(pre), 2)
+                    continue
                 
                 if TSP.zx48:
                     ZX48_IO()
