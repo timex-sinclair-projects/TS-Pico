@@ -1045,7 +1045,6 @@ def CDIR(pre, cmd):                                                             
     ACTIVATE_SD()
     
     potential_new_path = cmd[10:]
-#     case_test = "<" + str(potential_new_path) + ">"
     
     if potential_new_path == ".." and TSP.cur_path.count("/") > 2:
         # remove the last element from the current path
@@ -1060,7 +1059,7 @@ def CDIR(pre, cmd):                                                             
         # move to the top
         new_path = "/sd/TAP"
           
-    elif (dir_exists(TSP.cur_path + "/" + potential_new_path)):# and (case_test in lista)):
+    elif (dir_exists(TSP.cur_path + "/" + potential_new_path)):
         new_path = TSP.cur_path + "/" + potential_new_path
         
     else:
@@ -1075,8 +1074,11 @@ def CDIR(pre, cmd):                                                             
     #message = "Changed dir to: "  + cmd[10:]
     #status = 1
     
-    os.chdir(new_path)
-    TSP.cur_path = os.getcwd()
+    try:
+        os.chdir(new_path)
+        TSP.cur_path = os.getcwd()
+    except:
+        status = 3
     
     if status == 1:
         message = "Changed dir to: "  + cmd[10:]
