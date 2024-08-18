@@ -29,7 +29,7 @@ In short: break the TS-Pico.
 ### LOAD "tpi:*filename.tap*"
 Mount a TAP file 
 
-#### LOAD "tpi:*filename.dck*"
+#### LOAD "tpi:*filename.dck*" <span style="color:red">NEW</span>
 LOAD "" will load a special program will ask you a few questions about whether to save the DCK image on Static RAM or Flash and which of the available slots.
 
 If you indicate that you want to keep the configuration, the Pico will reset and use the image you've loaded as a mounted DCK; otherwise you'll need to issue SAVE "tpi:memdock" CODE nn,mm to activate, with nn=1 to use the SRAM, nn=2 use the Flash, and mm an even number between 0 and 14 to select the slot. Any other values will result in error. Also, notice currently the TS-Pico doesn't validate whether there was a previous DCK image in the selected slot; actually, the selected slot gets wiped out prior to writing the image. Use with caution. As a security measure, you cannot write anything (DCK or ROM) on slots 0 and 1 on the Flash. It is advisable to use SRAM whenever possible; Flash should only be used to store images between reboots.
