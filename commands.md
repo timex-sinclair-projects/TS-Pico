@@ -30,7 +30,6 @@ In short: break the TS-Pico.
 Mount a TAP file 
 
 #### LOAD "tpi:*filename.dck*" ![new](https://github.com/user-attachments/assets/a5abbec9-3aef-4322-8198-2cc85a023aee)
-
 LOAD "" will load a special program will ask you a few questions about whether to save the DCK image on Static RAM or Flash and which of the available slots.
 
 If you indicate that you want to keep the configuration, the Pico will reset and use the image you've loaded as a mounted DCK; otherwise you'll need to issue SAVE "tpi:memdock" CODE nn,mm to activate, with nn=1 to use the SRAM, nn=2 use the Flash, and mm an even number between 0 and 14 to select the slot. Any other values will result in error. Also, notice currently the TS-Pico doesn't validate whether there was a previous DCK image in the selected slot; actually, the selected slot gets wiped out prior to writing the image. Use with caution. As a security measure, you cannot write anything (DCK or ROM) on slots 0 and 1 on the Flash. It is advisable to use SRAM whenever possible; Flash should only be used to store images between reboots.
@@ -40,14 +39,15 @@ From this moment on, the image will act exactly as if a physical cartridge is in
 #### LOAD "TPI:*nn"
 Loads a TAP file based on the index number.
 
-#### LOAD "tpi:*filename.rom*" 
+#### LOAD "tpi:*filename.rom*" ![new](https://github.com/user-attachments/assets/a5abbec9-3aef-4322-8198-2cc85a023aee)
 LOAD "" will load a special program will ask you a few questions about whether to save the ROM image on Static RAM or Flash and which of the available slots.
 
 Unlike with DCKs, you must manually select the newly saved ROM to be active. Type SAVE "tpi:memboot" CODE nn,mm again with nn=1 to use the SRAM, nn=2 use the Flash. This time, mm can be any number  between 0 and 15. Again, it is better to use the SRAM instead of the Flash, unlike you want to keep the image between reboots. Same restrictions as the DCK image apply; you cannot use Flash slots 0 and 1
 
 Also, notice that in some very limited cases, as the ROM is switched on-the-fly, depending on the cycle the processor is caught when switching the ROM, the TS could hang. If this happens, just reset. The Pico will reset as well, and use the newly switched ROM. But in the next cycle, the TS will revert to stock ROM, to prevent the system from not booting at all if the ROM is corrupted. This should be configured as a startup parameter.
 
-#### LOAD "tpi:*filename.bin*"
+#### LOAD "tpi:*filename.bin*" ![new](https://github.com/user-attachments/assets/a5abbec9-3aef-4322-8198-2cc85a023aee)
+
 This command will mount a binary file on the Pico internal flash, and have it ready for streaming to the TS with the command SAVE "tpi:blckreceive" CODE nn,mm (see below).
 
 ### LOAD "tpi:dir"
@@ -71,7 +71,7 @@ Creates a new TAP file called *filename*.tap.
 5. LOAD "tpi:*filename*.tap" to mount the file
 6. LOAD "" to load the first file in the TAP file
 
-### SAVE "TPI:APPEND"
+### SAVE "TPI:APPEND" ![new](https://github.com/user-attachments/assets/a5abbec9-3aef-4322-8198-2cc85a023aee)
 Enable append to mounted TAP file. Instead of SAVE "*filename*" creating a new TAP file, *filename* will be appended to the currently mounted TAP file. IF no file is mounted, an error occurs
 
 #### How to test
@@ -86,7 +86,7 @@ Enable append to mounted TAP file. Instead of SAVE "*filename*" creating a new T
 9. SAVE "*filename3*" (a unique filename)
 10. LOAD "tpi:tapdir" to list the files in the TAP file
 
-### SAVE "TPI:BLKRCV" [CODE nn,mm]
+### SAVE "TPI:BLKRCV" [CODE nn,mm] ![new](https://github.com/user-attachments/assets/a5abbec9-3aef-4322-8198-2cc85a023aee)
 Stream to the TS a binary file, previously mounted with LOAD "tpi:*filename.bin*". As an example, generate a small file (100-200 bytes) with known content, name it as *something.bin*, and then execute this small program:
 
 10 LOAD "tpi:*something.bin*"
@@ -116,13 +116,13 @@ Unmount a mounted TAP file
 Move the internal file pointer to the next block in the TAP file
 Moves pointer to next block in TAP file; also can skip 'CODE n' # of blocks forward
 
-### SAVE "TPI:GETHELP"
+### SAVE "TPI:GETHELP" ![new](https://github.com/user-attachments/assets/a5abbec9-3aef-4322-8198-2cc85a023aee)
 Lists the available commands.
 
-### SAVE "TPI:GETINFO"
+### SAVE "TPI:GETINFO" ![new](https://github.com/user-attachments/assets/a5abbec9-3aef-4322-8198-2cc85a023aee)
 Shows TS-Pico internal status
 
-### SAVE "TPI:GETLOG" CODE nn, 0
+### SAVE "TPI:GETLOG" CODE nn, 0 ![new](https://github.com/user-attachments/assets/a5abbec9-3aef-4322-8198-2cc85a023aee)
 Shows the last nn bytes of the activity.log file
 
 ### SAVE "TPI:MD *<dirname>*"
