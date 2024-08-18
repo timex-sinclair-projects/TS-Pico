@@ -29,7 +29,7 @@ In short: break the TS-Pico.
 ### LOAD "tpi:*filename.tap*"
 Mount a TAP file 
 
-#### LOAD "tpi:*filename.dck*" ![New-PNG-HD](https://github.com/user-attachments/assets/2efc94ff-667d-47a8-98bd-3ce2ad18776b)
+#### LOAD "tpi:*filename.dck*" ![new](https://github.com/user-attachments/assets/a5abbec9-3aef-4322-8198-2cc85a023aee)
 
 LOAD "" will load a special program will ask you a few questions about whether to save the DCK image on Static RAM or Flash and which of the available slots.
 
