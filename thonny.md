@@ -4,7 +4,8 @@ You will need [Thonny](https://thonny.org/) [installed on your computer](https:/
 
 ## Download Thonny
 
-[Thonny](https://thonny.org/) [installed on your computer](https://projects.raspberrypi.org/en/projects/getting-started-with-the-pico/2). 
+1. Download [Thonny](https://thonny.org/).
+2. [Install Thoony on your computer](https://projects.raspberrypi.org/en/projects/getting-started-with-the-pico/2). 
 
 ## Configure Thonny
 Once you've installed Thonny but before connecting your TS-Pico, you need to tell Thonny how to find your TS-Pico.
