@@ -15,3 +15,4 @@ Once you've installed Thonny but before connecting your TS-Pico, you need to tel
 3. Select [**Options**](images/options-dialog.png).
 4. Under [**What kind of interpreter should Thonny use for running your code?**](images/select-interpeter.png) select **MicroPython (Raspberry Pi Pico)**.
 5. Under **Port of WebREPL**, **Try to detect port automatically** is selected.
+<img src="images/options-dialog.png" alt="Install this jumper" width="800">
