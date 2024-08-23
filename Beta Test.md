@@ -36,6 +36,12 @@ New features include:
 - "Looping" of TAP files, consistent with behavior in emulators (FUSE, ZEsarUX)
 - New commands for better user experience.
 
+## Downloa and install Thonny on your computer
+
+You will need [Thonny](thonny.md) installed on your computer to restore the TS-Pico to baseline and update the TS-Pico.
+
+You will also need a [USB to Micro USB](https://www.google.com/search?q=micro+usb) cable to connect the TS-Pico to your computer.
+
 ## Download the TS-Pico beta image
 
 You'll need a copy of the beta software on your computer, especially if you run into really thorny problems. 
@@ -49,17 +55,6 @@ We may ask you to restore to the original image in testing, too.
 ## Restoring your TS-Pico
 
 There may be times when you need to "wipe" the firmware and return the TS-Pico to the state it was when you received it.
-
-You will need a [USB to Micro USB](https://www.google.com/search?q=micro+usb) cable and [Thonny](https://thonny.org/) [installed on your computer](https://projects.raspberrypi.org/en/projects/getting-started-with-the-pico/2). 
-
-#### Configure Thonny
-Once you've installed Thonny but before connecting your TS-Pico, you need to tell Thonny how to find your TS-Pico.
-
-1. Open Thonny.
-2. Go to the **Tools** menu.
-3. Select [**Options**](images/options-dialog.png).
-4. Under [**What kind of interpreter should Thonny use for running your code?**](images/select-interpeter.png) select **MicroPython (Raspberry Pi Pico)**.
-5. Under **Port of WebREPL**, **Try to detect port automatically** is selected.
 
 ### First, wipe the Pico and restore the UF2 firmware
 1. Remove the TS-Pico from the expansion slot board.
