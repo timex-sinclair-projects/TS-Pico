@@ -1194,7 +1194,7 @@ def GETINFO(pre, cmd):                                                 # Shows T
     msg = " * TS-Pico interface status *" + nl
     msg += cop + " 2023, 2024 TS Pico Dev Team" + nl
     msg += "--------------------------------"
-    msg += ">FW Rev.: 1.1; uPython: 1.22.0" + nl
+    msg += ">FW Rev.: 1.1b; uPython: 1.22.0" + nl
     msg += ">Board Rev.: V2.2" + nl
     msg += ">Pico Free RAM: " + memfree + " Kb." + nl
     msg += fl_stat
