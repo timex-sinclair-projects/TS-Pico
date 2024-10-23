@@ -52,7 +52,7 @@ from machine import Pin, freq, SPI
 
 from TS.sdcard import *
 
-from TS.tspico_io import sel_bank, set_ctrl, set_dck, TS_IO, LOAD_TS, LOAD_ZX, LOAD_ZX_C, SAVE_TS, SAVE_ZX
+from tspico_io import sel_bank, set_ctrl, set_dck, TS_IO, LOAD_TS, LOAD_ZX, LOAD_ZX_C, SAVE_TS, SAVE_ZX
 
 
 #####################
