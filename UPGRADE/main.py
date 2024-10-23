@@ -3,8 +3,8 @@ import time, utime, sys
 from gc import mem_free, collect
 from machine import freq, Pin
 
-from TS.tspico import TS2068_IO
-# from tspico import TS2068_IO
+# from TS.tspico import TS2068_IO
+from tspico import TS2068_IO
 
 U6_EN = Pin(12, Pin.OUT, Pin.PULL_UP)
 WAIT = Pin(14, Pin.OUT, Pin.PULL_DOWN)
@@ -26,7 +26,7 @@ print(freq())
 
 log_msg = ""
 
-utime.sleep(.5)
+# utime.sleep(.5)
 
 while True:
     
