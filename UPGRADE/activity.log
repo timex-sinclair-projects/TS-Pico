@@ -1,1 +1,30 @@
 Starting new log file....
+[30935938] WARNING: Mismatch block length in LOAD_TS; ignoring
+[31231473] WARNING: Mismatch block length in LOAD_TS; ignoring
+[31582286] WARNING: Mismatch block length in LOAD_TS; ignoring
+[31871008] WARNING: Mismatch block length in LOAD_TS; ignoring
+[32402252] WARNING: Mismatch block length in LOAD_TS; ignoring
+[32691087] WARNING: Mismatch block length in LOAD_TS; ignoring
+[34119121] WARNING: reached end of offset table, rewinding...
+[99166811] WARNING: no file mounted in TAPDIR
+[101939917] FATAL ERROR!!!:Traceback (most recent call last):
+  File "main.py", line 36, in <module>
+  File "TS/tspico.py", line 1883, in TS2068_IO
+  File "TS/tspico_io.py", line 271, in LOAD_TS
+MemoryError: memory allocation failed, allocating 4294967295 bytes
+[6078650] WARNING: no file mounted in LOAD_TS
+[6285978] WARNING: no file mounted in LOAD_TS
+[14217262] WARNING: no file mounted in TAPDIR
+[16700866] WARNING: no file mounted in LOAD_TS
+[16906953] WARNING: no file mounted in LOAD_TS
+[38512305] WARNING: no file mounted in LOAD_TS
+[38718459] WARNING: no file mounted in LOAD_TS
+[43819557] WARNING: no file mounted in LOAD_TS
+[44025757] WARNING: no file mounted in LOAD_TS
+[81058727] WARNING: no file mounted in TAPDIR
+[88956702] WARNING: no file mounted in LOAD_TS
+[89163649] WARNING: no file mounted in LOAD_TS
+[99965426] WARNING: no file mounted in TAPDIR
+[128208963] WARNING: no file mounted in TAPDIR
+[133586856] WARNING: no file mounted in LOAD_TS
+[133794355] WARNING: no file mounted in LOAD_TS

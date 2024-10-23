@@ -84,6 +84,7 @@ class PICO_STATUS():                                                            
             self.ROM_SM = init_values["ROM_SM"]                                 # Bit pattern for Flash/SRAM activation during DCK/ROM access. Default = 0x0A, or 1010 meaning both assigned to Flash
             self.LOG_LEVEL = init_values["LOG_LEVEL"]                           # Log level: 0 info, 1 warning, 2 errors, 3 critical. Default = 1 
             self.VERBOSE = init_values["VERBOSE"]                               # Verbosity of status messages. Default = False, no verbosity. 
+            self.FW_VERSION = init_values["FW_VERSION"]                         # Current firmware version. 
 
         except:                                                                 # if fail, assume hard-wired values
             
@@ -92,6 +93,7 @@ class PICO_STATUS():                                                            
             self.ROM_SM = 10
             self.LOG_LEVEL = 2
             self.VERBOSE = False
+            self.FW_VERSION = "Unknonw"
             
             err_msg = "ERROR: Failed to load configuration values; using default hard-wired values"
             err_st = 2
@@ -278,12 +280,12 @@ def DCK_IMAGE():                                                                
     f_in.readinto(header)
 
     if header[0] != 0x00:
-        LOG("CRITICAL ERROR! Not a DOCK image; aborting...", 3)
+        LOG("CRITICAL ERROR! Not a valid DOCK image; wrong header. Aborting...", 3)
         
         f_in.close()
         f_out.close()
         
-        return
+        return False
 
     LOG("INFO: DCK header:" + str(header), 0)
 
@@ -294,23 +296,25 @@ def DCK_IMAGE():                                                                
         elif header[el] ==0x00:
             f_out.write(empty)
         else:
-            LOG("CRITICAL ERROR! Not a DOCK image; aborting...", 3)
-            return
+            LOG("CRITICAL ERROR! Not a valid DOCK image; wrong chunk type. Aborting...", 3)
+            return False
 
     LOG("INFO: Image of DCK file generated succesfully", 0)
     
     f_in.close()
     f_out.close()
     
-    return
+    return True
 
 
 def DIR_FILES():                                                                             # Get all files and directories from current path
     
     global files
     global lista
+    global files_upper
     
     files = []
+    files_upper = []
     lista = ""
     header = ""
     
@@ -375,9 +379,9 @@ def DIR_FILES():                                                                
 #             new_item = new_item[4:]
             dirinfo.append(new_item)
             files.append(archs[0])
-            
+            files_upper.append(archs[0].upper())
             i += 1
-            
+    
     header = "Path:" + public_path()
     header = header[:32]
     header = "%-32s" % (header)
@@ -412,7 +416,11 @@ def DIR_FILES():                                                                
 def LOG(msg, level):                                                                    # Adds a timestamped new entry to log_entries
     
     global log_entries
+    global log_to_serial
     global TSP
+    
+    if log_to_serial:                                                                    # If enabled, send log msg to console instead of logfile
+        print(msg)
     
     if TSP.LOG_LEVEL:                                                                    # TSP is not initialized at startup, so this check is required
         if level < TSP.LOG_LEVEL:
@@ -430,8 +438,6 @@ def MOUNT_FILE():                                                               
     global led
 
     led.value(1)
-    
-    img = []
     
     TSP.offset = 0
     TSP.tap_idx = 0
@@ -455,12 +461,17 @@ def MOUNT_FILE():                                                               
     if TSP.f_name[-4:].upper() in [".BIN", ".DCK", ".ROM"]:
         
         COPY_FILE(TSP.f_name, "/TMP/temp.bin")
-        
+        led.value(1)
+
         if TSP.f_name[-4:].upper() == ".DCK":
         
-            DCK_IMAGE()
-            COPY_FILE("/TS/dckupdate.tap", "/TMP/temp.tap")              # Special 'seudo' TAP that contains Flash/SRAM DCK update program
-    
+            if DCK_IMAGE():
+                COPY_FILE("/TS/dckupdate.tap", "/TMP/temp.tap")              # Special 'seudo' TAP that contains Flash/SRAM DCK update program
+                led.value(1)
+            else:
+                err_level = 2
+                msg = "ERROR: creating DCK image for " + TSP.f_name + ". See logfile for details"
+
         else:
             
             len_hi = int(TSP.totlen / 256)
@@ -480,13 +491,26 @@ def MOUNT_FILE():                                                               
         
     elif TSP.f_name[-4:].upper() == ".TAP":
         
-        COPY_FILE(TSP.f_name, "/TMP/temp.tap")
-        OFF_TABLE()
+        with open(TSP.f_name, "rb") as f_check:
             
+            file_type = f_check.read(7)
+            if file_type.decode() == "ZXTape!":
+                msg = "ERROR!: Wrong file type while mounting: " + TSP.f_name + ". It's a TZX file"
+                err_level = 2
+                
+            if ((int(file_type[0]) > 19)):
+                msg = "INFO: Non-standard first block while mounting file " + TSP.f_name + ". Expected 19, read " + str(int(file_type[0]))
+                
+        if err_level < 2:    
+            COPY_FILE(TSP.f_name, "/TMP/temp.tap")
+            OFF_TABLE()
     else:
         msg = "ERROR!: Wrong filename while mounting: " + TSP.f_name
         err_level = 2
         
+    if err_level > 1:
+        BLINK_ERROR()
+    
     LOG(msg, err_level)
     led.value(0)
     
@@ -500,7 +524,7 @@ def MOUNT_FILE():                                                               
     except:
         pass
     
-    return
+    return (err_level == 0)
         
 
 def NEW_HDR(type_hdr: int, fname, long: int):                      # This routine returns a new TAP header with the required parameters: header type, file name, and length of data block
@@ -590,7 +614,8 @@ def OFF_TABLE():                                                             # B
         if (code_blk == 0):
             hdr = " Y"
             try:
-                name = rd_bytes[4:14].decode()
+                name_raw = rd_bytes[4:14].decode()
+                name = ''.join(' ' if ((ord(l) <= 30) or (ord(l) >= 127)) else l for l in name_raw)
                 blk_type = blks[rd_bytes[3]]
             except:
                 name = "??????????"
@@ -611,91 +636,6 @@ def OFF_TABLE():                                                             # B
     arch.close()
     gc.collect()
     
-    return
-
-
-def PERFORM_UPDATE():
-    
-    global led
-    
-    try:
-        os.chdir("/sd/UPD")
-        update = True
-        
-    except:
-        update = False
-        
-    if update:
-        
-        success = True
-        
-        led.value(1)
-        
-        LOG("CRITICAL: UPD found, starting update process.", 3)
-        SAVE_LOG()
-        
-        with open ("update.json", "r") as upd_file:
-            upd_init = json.load(upd_file)
-        
-        for el in upd_init["dirs"]:
-            
-            if not success:
-                break
-            
-            try:
-                REMOVE_DIR(el)
-            except:
-                pass
-            
-            try:
-                os.mkdir(el)
-                
-            except:                
-                LOG("CRITICAL: Unable to create folder " + el + " during Update. Deleting /sd/UPD and aborting.", 3)
-                SAVE_LOG()
-                
-                success = False
-                
-        for el in upd_init:
-            
-            if not success:
-                break
-        
-            if el == "dirs":
-                continue
-            
-            try:
-                COPY_FILE(el, upd_init[el]+el)
-            except:
-                LOG("CRITICAL: Unable to copy file " + el + " during Update. Deleting /sd/UPD and aborting.", 3)
-                SAVE_LOG()
-                
-                success = False
-
-        if success:
-                
-            LOG("CRITICAL: UPDATE finished successfully. Cleaning up update files.", 3)
-            
-            os.chdir("/sd")
-            REMOVE_DIR('/sd/UPD')
-            
-            LOG("CRITICAL: All update files cleaned up. Waiting for shutdown.", 3)
-            SAVE_LOG()
-            
-            os.umount("/sd")
-            
-            while True:
-                led.toggle()
-                utime.sleep(1)
-        else:        
-            
-            os.chdir("/")
-            REMOVE_DIR("/sd/UPD")
-            os.umount("/sd")
-            
-            while True:
-                BLINK_ERROR()
-            
     return
 
 
@@ -771,10 +711,6 @@ def SEND_MSG2(msg, st: bytes):                                              # Se
         
         dead = False
 
-#         while busy:
-#             pass
-#         _thread.start_new_thread(CHK_STATUS, (MQ, 5))
-
         wrt(0x0D)
         for i in r:
             wrt(msg[i])
@@ -789,10 +725,12 @@ def SEND_MSG2(msg, st: bytes):                                              # Se
             return
             
         wrt(0x00)
-        wrt(0x64)
+        wrt(0x40)
         
         if (MQ.get() == 78):
-            wrt(0x00)
+#             wrt(0x00)
+            LOG("INFO: SEND_MSG2 finished. " + str(MQ.tx_fifo()) + " " + str(MQ.rx_fifo()), 0)
+    
             return
         
         msg = msg[640:]
@@ -808,9 +746,6 @@ def SEND_MSG2(msg, st: bytes):                                              # Se
         else:
             r = range(672)
         
-        LOG("INFO: SEND_MSG2 finished. " + str(MQ.tx_fifo()) + " " + str(MQ.rx_fifo()), 0)
-    
-    return
 
 
 ##########################
@@ -935,7 +870,7 @@ def public_path():                                                              
     
     try:
         #cur_path = os.getcwd()
-        return ("/" + TSP.cur_path[8:])
+        return ("/" + TSP.cur_path[4:])
     
     except OSError:
         return "OS Error"
@@ -1041,6 +976,7 @@ def CDIR(pre, cmd):                                                             
     ACTIVATE_SD()
     
     potential_new_path = cmd[10:]
+    
     if potential_new_path == ".." and TSP.cur_path.count("/") > 2:
         # remove the last element from the current path
         # unless the last element is TAP
@@ -1050,13 +986,16 @@ def CDIR(pre, cmd):                                                             
         path_list.pop()   # remove the last element
         new_path = "/".join(path_list)
         
+    elif potential_new_path == ".." and TSP.cur_path.count("/") == 2:
+        new_path = "/sd/TAP"
+        
     elif potential_new_path == "/":
         # move to the top
         new_path = "/sd/TAP"
           
-    elif dir_exists(TSP.cur_path + "/" + potential_new_path):
-        # it's a valid path
+    elif (dir_exists(TSP.cur_path + "/" + potential_new_path)):
         new_path = TSP.cur_path + "/" + potential_new_path
+        
     else:
         # no changes bc it doesn't meet any of the tests above
         new_path = TSP.cur_path
@@ -1069,8 +1008,11 @@ def CDIR(pre, cmd):                                                             
     #message = "Changed dir to: "  + cmd[10:]
     #status = 1
     
-    os.chdir(new_path)
-    TSP.cur_path = os.getcwd()
+    try:
+        os.chdir(new_path)
+        TSP.cur_path = os.getcwd()
+    except:
+        status = 3
     
     if status == 1:
         message = "Changed dir to: "  + cmd[10:]
@@ -1080,8 +1022,8 @@ def CDIR(pre, cmd):                                                             
         
     gc.collect()
     DIR_FILES()
-    os.umount("/sd")
     
+    os.umount("/sd")
     ACTIVATE_MQ()
     
     SEND_MSG(message, "Current: " + public_path(), status)
@@ -1113,7 +1055,7 @@ def FWD(pre, cmd):                                                              
         TSP.offset = TSP.offset_tbl[TSP.tap_idx][0]
         gc.collect()
 
-        msg = "Moved ahed to block # " + str(TSP.tap_idx)
+        msg = "Moved ahead to block # " + str(TSP.tap_idx)
         st = 1
 
     SEND_MSG(msg, "", st)
@@ -1125,8 +1067,6 @@ def GETHELP(pre, cmd):                                                 # Shows T
 
     global TSP
     
-    prev_VERBOSE = TSP.VERBOSE
-    
     nl = chr(13)
     
     msg = "%-32s" % ('LOAD cmds')
@@ -1134,6 +1074,7 @@ def GETHELP(pre, cmd):                                                 # Shows T
     msg += "%-32s" % ('"tpi:dir"  ')
     msg += "%-32s" % ('"tpi:path" ')
     msg += "%-32s" % ('"tpi:tapdir" ')
+    msg += "%-32s" % ('"tpi:&nn" ')
     msg += "%-32s" % (' ')
     msg += "%-32s" % ('SAVE cmds: []-> optional')
     msg += "%-32s" % ('=========================')
@@ -1155,11 +1096,7 @@ def GETHELP(pre, cmd):                                                 # Shows T
     msg += "%-32s" % ('"tpi:verbose"')
     msg += "%-32s" % ('"tpi:zx48"')
     
-    TSP.VERBOSE = True
-    
     SEND_MSG2(msg, 1)
-
-    TSP.VERBOSE = prev_VERBOSE 
 
     return
 
@@ -1192,7 +1129,7 @@ def GETINFO(pre, cmd):                                                 # Shows T
     msg = " * TS-Pico interface status *" + nl
     msg += cop + " 2023, 2024 TS Pico Dev Team" + nl
     msg += "--------------------------------"
-    msg += ">FW Rev.: 1.1; uPython: 1.22.0" + nl
+    msg += "%-32s" % (">FW Rev.:" + TSP.FW_VERSION + "; uPython: 1.20.0") + nl
     msg += ">Board Rev.: V2.2" + nl
     msg += ">Pico Free RAM: " + memfree + " Kb." + nl
     msg += fl_stat
@@ -1202,7 +1139,7 @@ def GETINFO(pre, cmd):                                                 # Shows T
     msg += ">Mounted file: " 
         
     if TSP.f_name:
-        msg += "/" + TSP.f_name[8:] + nl
+        msg += "/" + TSP.f_name[4:] + nl
     else:
         msg += "none" + nl
     
@@ -1266,8 +1203,8 @@ def GETLOG(pre, cmd):                                                 # Shows th
 
 def LOAD_CONFIG():
         
-    init_values = []
-    return_values = []
+    init_values = {}
+    return_values = {}
     
     try:
         with open("config.ini", "r") as f:                      # We first try to load config values from config.ini file
@@ -1299,6 +1236,10 @@ def LOAD_CONFIG():
         init_values["ROM_SM"] = 10                              # Flash/SRAM activation pattern bitmap for DCK access (MSB=10) and ROM access (LSB=10)
         init_values["LOG_LEVEL"] = 2                            # Only log errors and up
         init_values["VERBOSE"] = False                          # Disable verbosity on commands
+        init_values["FW_VERSION"] = "Unknown"
+        
+    if not "FW_VERSION" in init_values:
+        init_values["FW_VERSION"] = "1.00"
             
     SAVE_LOG()
     
@@ -1362,7 +1303,9 @@ def MEMBOOT(pre, cmd):                                           # Changes ROM s
             json.dump(init_values, f)
             
         SEND_MSG('Change ROM to MEM=' + str(par1) + ', PAGE=' + str(par2), "", 1)
-        LOG("INFO: Change ROM to MEM=" + str(par1) + ", PAGE=" + str(par2) + " in MEMBOOT", 0)
+#         LOG("INFO: Change ROM to MEM=" + str(par1) + ", PAGE=" + str(par2) + " in MEMBOOT", 0)
+        
+        utime.sleep(.100)
         
         ROM.put(TSP.ROM_SM)
         BANK.put(TSP.bank_sm)
@@ -1480,8 +1423,9 @@ def UNMOUNT(pre, cmd):                                                          
     
     SEND_MSG("Unmounting file. ", "", 1)
     
-    TSP.f_name = []
+    TSP.f_name = ""
     TSP.offset_tbl = []
+    TSP.offset = 0
     TSP.tap_idx = 0
     TSP.append = False
     
@@ -1596,8 +1540,11 @@ def PROCESS_CMD(pre, LD_funct, SA_funct, EXT_LD_FUNCT, EXT_SA_FUNCT):           
     
     global TSP
     global MQ
+    global ROM
+    global BANK
     
     global files
+    global files_upper
     
     TSP.zx48 = False
     cur_fname = TSP.f_name
@@ -1636,8 +1583,13 @@ def PROCESS_CMD(pre, LD_funct, SA_funct, EXT_LD_FUNCT, EXT_SA_FUNCT):           
         elif cmd_exec in  EXT_LD_FUNCT:                                                           # Is it an external cmd?
             EXEC = EXT_LD_FUNCT[cmd_exec]
             EXEC(pre, cmd)
-
-        elif rest_cmd[0] == '*':                                                                    # Is it a shortcut (LOAD "tpi:*nn")
+            
+        elif (cmd_exec in SA_funct) or (cmd_exec[:7] in SA_funct) or (cmd_exec in EXT_SA_FUNCT):         # Is valid, i.e. exists in dictionary?
+            
+            SEND_MSG("Wrong syntax. Did you mean", 'SAVE ' + cmd_exec + "?", 3)
+            LOG("ERROR: Wrong syntax in LOAD command; probably it's SAVE", 2)
+            
+        elif rest_cmd[0] == '&':                                                                    # Is it a shortcut (LOAD "tpi:*nn")
 
             try:
                 index = int(rest_cmd[1:])
@@ -1645,11 +1597,19 @@ def PROCESS_CMD(pre, LD_funct, SA_funct, EXT_LD_FUNCT, EXT_SA_FUNCT):           
                 index = 1000
                 
             if files[index]:
-                SEND_MSG("Mounting file: " + files[index], "", 1)
+                prev_file = TSP.f_name
                 TSP.f_name = TSP.cur_path + "/" + files[index]
-                MOUNT_FILE()
+                if MOUNT_FILE():
+                    msg = "File mounted OK"
+                    status = 1
+#                     SEND_MSG("File mounted OK", files[index], 1)
+                else:
+                    msg = "Error mounting file: "
+                    status = 3
+                    TSP.f_name = prev_file
                 ACTIVATE_MQ()
-
+                SEND_MSG(msg, files[index], status)
+ 
             else:
                 SEND_MSG("Index mount error: " + str(index), "", 3)
                 
@@ -1659,18 +1619,25 @@ def PROCESS_CMD(pre, LD_funct, SA_funct, EXT_LD_FUNCT, EXT_SA_FUNCT):           
             ACTIVATE_MQ()
             SEND_MSG("Mounting dir info: ", rest_cmd, 1)
             
-        elif rest_cmd in files:                                                                                  # Is rest_cmd a valid file? 
-            TSP.f_name = TSP.cur_path + "/" + rest_cmd
-            MOUNT_FILE()
-            ACTIVATE_MQ()
-            SEND_MSG("Mounting file: ", rest_cmd, 1)
+        elif rest_cmd.upper() in files_upper:                                                                                  # Is rest_cmd a valid file?
+            prev_file = TSP.f_name
+            idx_upper = files_upper.index(rest_cmd.upper())
+            TSP.f_name = TSP.cur_path + "/" + files[idx_upper]
             
-        elif rest_cmd[-4:].upper() == ".TAP":
-            TSP.f_name = TSP.cur_path + "/" + rest_cmd
-            SEND_MSG("Mounting file: ", rest_cmd, 1)
+            if MOUNT_FILE():
+                msg = "File mounted OK"
+                status = 1
+            else:
+                msg = "Error mounting file:"
+                status = 3
+                TSP.f_name = prev_file
+                
+            ACTIVATE_MQ()
+            SEND_MSG(msg, rest_cmd, status)
+            
         
         else:
-            SEND_MSG('Error! Invalid LOAD "tpi:"', rest_cmd, 5)                                       # If none of the above, raise error
+            SEND_MSG('Error! Invalid command LOAD "tpi:"', rest_cmd, 5)                                       # If none of the above, raise error
             LOG("ERROR: File does not exist in LOAD", 2)
             
     else:                                                                                                 # ...or it's a "SAVE:tpi:..." command
@@ -1683,17 +1650,21 @@ def PROCESS_CMD(pre, LD_funct, SA_funct, EXT_LD_FUNCT, EXT_SA_FUNCT):           
             EXEC = SA_funct[cmd_exec]
             EXEC(pre, cmd)
             
-#         elif cmd_exec == "TPI:TEST":                                                                               # Remove in production!!!
-#             
-#             MQ.put(0x40)
-#             MQ.put(0x01)
-#             
-#             for i in range(10):
-#                 print(MQ.get())
+        elif cmd_exec == "TPI:TEST":                                                                               # Remove in production!!!
+            
+            MQ.put(0x40)
+            MQ.put(0x01)
+            
+            while True:
+                print(MQ.get())
 
         elif cmd_exec in EXT_SA_FUNCT:                                                                                # Is an external cmd?
             EXEC = EXT_SA_FUNCT[cmd_exec]
             EXEC(pre, cmd)
+            
+        elif (cmd_exec in LD_funct) or (cmd_exec in EXT_LD_FUNCT):
+            SEND_MSG("Wrong syntax. Did you mean", 'LOAD ' + cmd_exec + "?", 3)
+            LOG("ERROR: Wrong syntax in SAVE command; probably it's LOAD", 2)
             
         else:
             SEND_MSG("Unrecognized command: " + cmd_exec,'SAVE "tpi:gethelp" for info', 5)                                                      # If none of the above, raise error
@@ -1723,6 +1694,7 @@ def TS2068_IO():                                                         # Main 
     global kill                                                        # boolean set to True when watchdog wants to end a misbehaving IO routine 
     global lista                                                       # all contents of current dir, in string format to be displayed by "TPI:DIR"
     global log_entries                                                 # log entries to be saved during next loop
+    global log_to_serial                                               # If TRUE, all logging messages will be displayed on screen instead of the logfile
     
     global ROM
     global BANK
@@ -1737,6 +1709,8 @@ def TS2068_IO():                                                         # Main 
     files = []
     lista = ""
     log_entries = ""
+    log_to_serial = False
+    
     led = Pin(25, Pin.OUT)
 
     init_values = LOAD_CONFIG()
@@ -1832,9 +1806,6 @@ def TS2068_IO():                                                         # Main 
     dead = False
     _thread.start_new_thread(BLINK_LED, (0.9, ))
     
-    LOG("INFO: Mounting SD Card...", 0)
-    SAVE_LOG()
-
     ACTIVATE_SD()
     
     dead = True
@@ -1842,9 +1813,15 @@ def TS2068_IO():                                                         # Main 
     while busy:
         pass
     
-    PERFORM_UPDATE()
-    
-    os.chdir(TSP.cur_path)
+    try:
+        os.chdir(TSP.cur_path)
+    except:
+        LOG("CRITICAL ERROR! Cannot mount /TAP directory; aborting.", 3)
+        SAVE_LOG()
+        
+        while True:
+            BLINK_ERROR()
+       
     DIR_FILES()
     
     os.umount("/sd")
@@ -1925,8 +1902,8 @@ def TS2068_IO():                                                         # Main 
                 try:
                     PROCESS_CMD(pre, LD_funct, SA_funct, EXT_LD_FUNCT, EXT_SA_FUNCT)
                 except:
-                    LOG("ERROR: Invalid data received from PROCESS_CMD", 2)
-                    break
+                    LOG("ERROR: Invalid data received from PROCESS_CMD: " + str(pre), 2)
+                    continue
                 
                 if TSP.zx48:
                     ZX48_IO()
