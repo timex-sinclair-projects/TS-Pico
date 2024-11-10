@@ -663,6 +663,10 @@ def SEND_MSG(msg, msg1, st: bytes):                                             
     
     wrt = MQ.put
     
+    wrt(0x40)
+    wrt(0x01)
+    
+ 
     if TSP.VERBOSE:
     
         wrt(0x40)
@@ -1465,6 +1469,16 @@ def ZX48(pre, cmd):                                                           # 
     return 
 
 
+def NOP(pre, cmd):                                                           # Test for Ryan's Timex Commander Program
+    
+    global MQ
+    
+    MQ.put(0x40)
+    MQ.put(0x1)
+    
+    return
+
+
 ##################################
 # PRE HEADER PROCESSING ROUTINES #
 ##################################
@@ -1556,9 +1570,6 @@ def PROCESS_CMD(pre, LD_funct, SA_funct, EXT_LD_FUNCT, EXT_SA_FUNCT):           
     
     long = pre[7] + 256*pre[8] + 3
     rl = range(long)
-    
-    wrt(0x40)
-    wrt(0x01)
     
     for l in rl:
         cmd[l] = MQ.get()
@@ -1791,6 +1802,7 @@ def TS2068_IO():                                                         # Main 
         "TPI:OPPRINT" : SA_NOT_IMP,
         "TPI:PRNSZ" : SA_NOT_IMP,
         "TPI:STOP" : SA_NOT_IMP,
+        "TPI:NOP" : NOP,                                                                      # This is to test Ryan's new Commander
         }
     
     # Placeholders for External LD/SA commands
