@@ -1,3 +1,8 @@
+##############################
+# DATE: 12/01/2024 11:37 GMT-3 
+##############################
+
+
 #############
 # CHANGELOG #
 #############
@@ -52,12 +57,20 @@ from machine import Pin, freq, SPI
 
 from TS.sdcard import *
 
+# from TS.tspico_io import sel_bank, set_ctrl, set_dck, TS_IO, LOAD_TS, LOAD_ZX, LOAD_ZX_C, SAVE_TS, SAVE_ZX
 from tspico_io import sel_bank, set_ctrl, set_dck, TS_IO, LOAD_TS, LOAD_ZX, LOAD_ZX_C, SAVE_TS, SAVE_ZX
 
 
 #####################
 # SERVICE FUNCTIONS #
 #####################
+
+@asm_pio(
+    autopull=True,
+    pull_thresh=8,
+)
+def NULL_SM():
+    nop()
 
 
 class PICO_STATUS():                                                            # Class for the object that holds TS-Pico's current status
@@ -84,7 +97,8 @@ class PICO_STATUS():                                                            
             self.ROM_SM = init_values["ROM_SM"]                                 # Bit pattern for Flash/SRAM activation during DCK/ROM access. Default = 0x0A, or 1010 meaning both assigned to Flash
             self.LOG_LEVEL = init_values["LOG_LEVEL"]                           # Log level: 0 info, 1 warning, 2 errors, 3 critical. Default = 1 
             self.VERBOSE = init_values["VERBOSE"]                               # Verbosity of status messages. Default = False, no verbosity. 
-            self.FW_VERSION = init_values["FW_VERSION"]                         # Current firmware version. 
+            self.FW_VERSION = init_values["FW_VERSION"]                         # Current firmware version.
+            self.ROM_VERSION = init_values["ROM_VERSION"]                       # Current ROM version.
 
         except:                                                                 # if fail, assume hard-wired values
             
@@ -94,6 +108,7 @@ class PICO_STATUS():                                                            
             self.LOG_LEVEL = 2
             self.VERBOSE = False
             self.FW_VERSION = "Unknonw"
+            self.ROM_VERSION = "1.0"
             
             err_msg = "ERROR: Failed to load configuration values; using default hard-wired values"
             err_st = 2
@@ -104,6 +119,15 @@ class PICO_STATUS():                                                            
 def ACTIVATE_MQ():                                                                                # Re-enable TX/RX SM, after a SDCard access
 
     global MQ
+    
+    while True:
+        try:
+            os.umount("/sd")
+        except:
+            break
+    
+    U3_CS = Pin(28, Pin.OUT, Pin.PULL_UP)
+    U3_CS.value(1)
 
     MQ = StateMachine(0, TS_IO, freq=15_000_000, out_base=Pin(2, Pin.OUT),
                       in_base=Pin(2, Pin.IN), jmp_pin=Pin(11),
@@ -121,6 +145,10 @@ def ACTIVATE_SD():                                                              
     D1          = Pin(3,  Pin.IN)
     D2          = Pin(4,  Pin.IN)
 
+    MQ = StateMachine(0, NULL_SM, freq=15_000_000)
+    MQ.active(1)
+    MQ.active(0)
+    
     try:
         spi = SPI(0, sck=D0, mosi=D1, miso=D2)
         sd = SDCard(spi, U3_CS)
@@ -135,6 +163,40 @@ def ACTIVATE_SD():                                                              
             BLINK_ERROR()
         
     return spi
+
+
+def BACKUP_DIR(d, dest_dir):                                                               # Recursively backs-up folders and files of a provided "d" folder; typically d="/" (root of the Flash)
+                                                                                           # and dest_dir = /sd/BACKUP
+    if os.stat(d)[0] & 0x4000:  # Dir
+        
+        copy_path = str(dest_dir) + str(d)
+        
+        if (copy_path == dest_dir + "/"):
+            copy_path = dest_dir
+            
+        try:
+            os.mkdir(copy_path)
+        except:
+            FINISH("Fatal error. Could not create folder " + copy_path + ". Verify SD Card contents. Terminating", False)
+        
+        for f in os.ilistdir(d):
+            if f[0].startswith("sd"):
+                continue
+            
+            if f[1] & 0x8000:
+                copy_src = d + '/' + f[0]
+                copy_dst = copy_path + '/' + f[0]
+                LOG("Copying file " + copy_src + " to " + copy_dst, 4)
+                
+                COPY_FILE(copy_src, copy_dst)
+                continue
+            
+            if f[0] not in ('.', '..'):
+                folder_name = d + '/' + f[0]
+                LOG("Processing folder " + folder_name, 4)
+                BACKUP_DIR(folder_name, dest_dir)  # File or Dir
+        
+    return
 
 
 def BLINK_ERROR():                                                             # An onboard LED-blinking routine. This for an error condition. Interval is fixed
@@ -235,16 +297,21 @@ def COPY_FILE(src_file, dst_file):                                              
     buf = bytearray(512)
     bytes_rd = 0
     
-    _thread.start_new_thread(BLINK_LED, (0.1, ))                                          
-
+    led.value(1)
+    
     with open(src_file, 'rb') as file_in:
         with open(dst_file, 'wb') as file_out:
             
             bytes_rd = file_in.readinto(buf)
-            
+            i = 0
             while bytes_rd  > 0:
                 file_out.write(buf[:bytes_rd])
                 bytes_rd = file_in.readinto(buf)
+                
+                i += 1
+                if (i >= 15):
+                    led.toggle()
+                    i = 0
                             
     led.value(0)
     dead = True
@@ -260,8 +327,7 @@ def COPY_FILE(src_file, dst_file):                                              
 
 def DCK_IMAGE():                                                                              # Generates a full 64Kb image from a .DCK file
                                                                                               # This will be used by the Flash write pgm
-    global TSP
-
+    gc.collect()
     header = bytearray(9)
     chunk_len = 8192
     empty = bytearray(chunk_len)
@@ -269,40 +335,43 @@ def DCK_IMAGE():                                                                
     
     LOG("INFO: Start processing DCK file", 0)
     
-    try:
-        os.remove("/TMP/temp.bin")
-    except:
-        pass
+#     try:
+#         os.remove("/TMP/temp.bin")
+#     except:
+#         pass
 
-    f_in = open(TSP.f_name, "rb")
-    f_out = open("/TMP/temp.bin", "wb")
+    f_in = open("/TMP/temp.bin", "rb")
+    f_out = open("/TMP/temp_dck.bin", "wb")
 
     f_in.readinto(header)
 
-    if header[0] != 0x00:
-        LOG("CRITICAL ERROR! Not a valid DOCK image; wrong header. Aborting...", 3)
-        
-        f_in.close()
-        f_out.close()
-        
-        return False
+#     if header[0] != 0x00:
+#         LOG("CRITICAL ERROR! Not a valid DOCK image; wrong header. Aborting...", 3)
+#         
+#         f_in.close()
+#         f_out.close()
+#         
+#         return False
 
     LOG("INFO: DCK header:" + str(header), 0)
 
     for el in range(1, 9):
-        if header[el] == 0x02:
-            f_in.readinto(cur_chunk)
-            f_out.write(cur_chunk)
-        elif header[el] ==0x00:
+        if header[el] ==0x00:
             f_out.write(empty)
         else:
-            LOG("CRITICAL ERROR! Not a valid DOCK image; wrong chunk type. Aborting...", 3)
-            return False
+            f_in.readinto(cur_chunk)
+            f_out.write(cur_chunk)
+# 
+#             LOG("CRITICAL ERROR! Not a valid DOCK image; wrong chunk type. Aborting...", 3)
+#             return False
 
     LOG("INFO: Image of DCK file generated succesfully", 0)
     
     f_in.close()
     f_out.close()
+    
+    os.remove("/TMP/temp.bin")
+    os.rename("/TMP/temp_dck.bin", "/TMP/temp.bin")
     
     return True
 
@@ -413,6 +482,25 @@ def DIR_FILES():                                                                
     return 
 
 
+def FINISH(msg, success):                                                                 # For use with UPDATE() function. Logs the final status msg, and blinks LED at different intervals, to indicate 
+                                                                                          # either success or fail. msg=text to be displayed/logged; success=boolean if status is ok or failed
+    if success:
+        interval = 0.8
+    else:
+        interval = 0.08
+    
+    led = Pin(25, Pin.OUT)
+    
+    LOG(msg, 4)
+    SAVE_LOG()
+    
+    os.umount("/sd")
+    
+    while True:
+        led.toggle()
+        time.sleep(interval)
+        
+
 def LOG(msg, level):                                                                    # Adds a timestamped new entry to log_entries
     
     global log_entries
@@ -436,8 +524,9 @@ def MOUNT_FILE():                                                               
                                                                                              # and performs actions according to file type
     global TSP
     global led
-
-    led.value(1)
+    
+    U3_CS = Pin(28, Pin.OUT, Pin.PULL_UP)
+    U3_CS.value(1)
     
     TSP.offset = 0
     TSP.tap_idx = 0
@@ -471,7 +560,7 @@ def MOUNT_FILE():                                                               
             else:
                 err_level = 2
                 msg = "ERROR: creating DCK image for " + TSP.f_name + ". See logfile for details"
-
+                
         else:
             
             len_hi = int(TSP.totlen / 256)
@@ -489,6 +578,9 @@ def MOUNT_FILE():                                                               
             with open("/TMP/temp.tap", "wb") as f_out:                            # And we update the seudo TAP
                 f_out.write(buf)
         
+#         os.umount("/sd")
+        ACTIVATE_MQ()
+        
     elif TSP.f_name[-4:].upper() == ".TAP":
         
         with open(TSP.f_name, "rb") as f_check:
@@ -504,9 +596,16 @@ def MOUNT_FILE():                                                               
         if err_level < 2:    
             COPY_FILE(TSP.f_name, "/TMP/temp.tap")
             OFF_TABLE()
+        
+#         os.umount("/sd")            
+        ACTIVATE_MQ()
+        
     else:
         msg = "ERROR!: Wrong filename while mounting: " + TSP.f_name
         err_level = 2
+        
+#         os.umount("/sd")            
+        ACTIVATE_MQ()
         
     if err_level > 1:
         BLINK_ERROR()
@@ -519,10 +618,10 @@ def MOUNT_FILE():                                                               
     except:
         pass
     
-    try:
-        os.umount("/sd")
-    except:
-        pass
+#     try:
+#         os.umount("/sd")
+#     except:
+#         pass
     
     return (err_level == 0)
         
@@ -639,6 +738,42 @@ def OFF_TABLE():                                                             # B
     return
 
 
+def RESTORE_FILES(src, dst):                                                             # Restores prev backed-up files; typically scr=/sd/BACKUP - dst = / (root of the Flash)
+
+    if os.stat(src)[0] == 0x4000:
+    
+        for el in os.listdir(src):
+            f_name = src + '/' + el
+            
+            if (dst == "/"):
+                new_path = dst + el
+            else:
+                new_path = dst + '/' + el
+                
+            if os.stat(f_name)[0] == 0x4000:
+                
+                LOG("Restoring folder " + f_name, 4)
+                SAVE_LOG()
+                
+                try:
+                    os.mkdir(new_path)
+                    LOG("RESTORE: folder " + new_path + " not found; succesfully created", 4)
+                    SAVE_LOG()
+                
+                except:
+                    LOG("WARNING: Folder " + new_path + " already exists during RESTORE. Moving on", 4)
+                    SAVE_LOG()
+                
+                RESTORE_FILES(f_name, new_path)
+                
+            else:
+                
+                LOG("Restoring file " + f_name + " to " +  new_path, 4)
+                SAVE_LOG()
+                
+                COPY_FILE(f_name, new_path)
+
+
 def SAVE_LOG():                                                                         # Saves log_entries to the 'activity.log' file in flash
     
     global busy
@@ -663,10 +798,6 @@ def SEND_MSG(msg, msg1, st: bytes):                                             
     
     wrt = MQ.put
     
-    wrt(0x40)
-    wrt(0x01)
-    
- 
     if TSP.VERBOSE:
     
         wrt(0x40)
@@ -692,64 +823,78 @@ def SEND_MSG(msg, msg1, st: bytes):                                             
     return
 
 
-def SEND_MSG2(msg, st: bytes):                                              # Sends a SCROLLING status message back to the TS,
+def SEND_MSG2(msg, st: bytes):                                                                # Sends a SCROLLING status message back to the TS,
                                                                                               # once a command is finished
-    global MQ                                                                                          
-                                                                                                  
+    global MQ
+    global TSP
+    
     global kill
     global dead
         
     wrt = MQ.put
     r = range(640)
     
-    scroll = "press N to stop: "
+    scroll = "scroll? (Y/n)" + chr(13)
+    last_run = False
+    
+    if TSP.ROM_VERSION == "1.1":
+        new_rom = True
+        end_char = 0x03
+    else:    
+        new_rom = False
+        end_char = 0x00
     
     wrt(0x40)
     wrt(0x86)
     wrt(st)
     wrt(0x0D)
-    
-    fff = MQ.get()
+
+    while (MQ.rx_fifo() > 0):
+        MQ.get()
     
     while True:
         
-        dead = False
-
-        wrt(0x0D)
+        if not new_rom:
+            wrt(0x0D)
         for i in r:
             wrt(msg[i])
-        wrt(0x0D)        
+        wrt(0x0D)
+        
         for m in scroll:
             wrt(m)
             
-        dead = True
-        
-        if kill:
-            LOG("ERROR: SEND_MSG2 failed! " + str(MQ.tx_fifo()) + " " + str(MQ.rx_fifo()), 2)
-            return
-            
+        if last_run:
+            break
+
         wrt(0x00)
+        
+        msg= msg[640:]
+        
+        if len(msg) < 640:
+            r = range(len(msg))
+            if new_rom:
+                last_run = True
+                scroll = " "
+            else:
+                scroll = "--- End of list (N to exit) ---"+ chr(13)
+                  
         wrt(0x40)
         
         if (MQ.get() == 78):
-#             wrt(0x00)
-            LOG("INFO: SEND_MSG2 finished. " + str(MQ.tx_fifo()) + " " + str(MQ.rx_fifo()), 0)
-    
             return
         
-        msg = msg[640:]
-        
         if not msg:
-            wrt(0x00)
             break
         
-        if (len(msg) <= 672):
-            r = range(len(msg))
-            scroll = "--- End of list (N to exit) ---"
-            
-        else:
-            r = range(672)
-        
+    wrt(end_char)
+
+    while(MQ.tx_fifo() != 0):
+        pass
+
+    while(MQ.rx_fifo() != 0):
+        print(MQ.get())
+    
+    print(MQ.tx_fifo(), MQ.rx_fifo())
 
 
 ##########################
@@ -1027,12 +1172,25 @@ def CDIR(pre, cmd):                                                             
     gc.collect()
     DIR_FILES()
     
-    os.umount("/sd")
+#     os.umount("/sd")
     ACTIVATE_MQ()
     
-    SEND_MSG(message, "Current: " + public_path(), status)
-    
-    return
+    par1 = (pre[4] * 256) + pre[3]
+    par2 = (pre[6] * 256) + pre[5]
+
+    if par1 == 1 and par2 == 0:
+        DIR()
+#         if len(lista) <= 672:
+#             prev_VERBOSE = TSP.VERBOSE
+#             TSP.VERBOSE = True
+#             SEND_MSG(lista, "", 1)
+#             TSP.VERBOSE = prev_VERBOSE
+#         else:
+#             SEND_MSG2(lista, 1)                                                                    # if not, call scrolling message routine
+    else:
+        SEND_MSG(message, "Current: " + public_path(), status)
+
+    return 
 
 
 def FWD(pre, cmd):                                                                                     # Moves pointer to next block in TAP file; also 
@@ -1134,7 +1292,8 @@ def GETINFO(pre, cmd):                                                 # Shows T
     msg += cop + " 2023, 2024 TS Pico Dev Team" + nl
     msg += "--------------------------------"
     msg += "%-32s" % (">FW Rev.:" + TSP.FW_VERSION + "; uPython: 1.20.0") + nl
-    msg += ">Board Rev.: V2.2" + nl
+    msg += ">Default ROM version: " + TSP.ROM_VERSION + nl
+    msg += ">Board Rev.: V2.2;" + nl
     msg += ">Pico Free RAM: " + memfree + " Kb." + nl
     msg += fl_stat
     
@@ -1245,6 +1404,9 @@ def LOAD_CONFIG():
     if not "FW_VERSION" in init_values:
         init_values["FW_VERSION"] = "1.00"
             
+    if not "ROM_VERSION" in init_values:
+        init_values["ROM_VERSION"] = "1.00"
+        
     SAVE_LOG()
     
     return init_values            
@@ -1270,7 +1432,7 @@ def MDIR(pre, cmd):                                                             
         LOG("ERROR: " + message, 2)
         status = 3
     
-    os.umount("/sd")
+#     os.umount("/sd")
     ACTIVATE_MQ()
     
     SEND_MSG(message, "", status)
@@ -1413,7 +1575,7 @@ def RMDIR(pre, cmd):                                                        # Ou
         LOG("ERROR: " + message, 2)
         status = 3
     
-    os.umount("/sd")
+#     os.umount("/sd")
     ACTIVATE_MQ()
     
     SEND_MSG(message, "", status)
@@ -1438,6 +1600,232 @@ def UNMOUNT(pre, cmd):                                                          
         os.remove("/TMP/temp.tap")    
     except:
         pass
+    
+    return 
+
+
+def UPGRADE(pre, cmd):
+    
+    global TSP
+    global log_to_serial
+    global buf                                                                             # global buffer to be used by COPY_FILE
+    
+    prev_VERBOSE = TSP.VERBOSE
+    TSP.VERBOSE = True
+    SEND_MSG("Upgrade started.DON'T INTERRUPT", "after the first 10 blinks!", 1)
+    
+    last_run = {}                                                           # dictionary to hold last upgrade run's status
+    new_values = {}                                                         # dictionary of upgraded config.ini values
+    upgrade_dict = {}                                                       # dictionary of files to be upgraded
+    restored = False
+    
+    led = Pin(25, Pin.OUT)
+    U6_EN = Pin(12, Pin.OUT, Pin.PULL_UP)
+    
+    U6_EN.value(1)                                                          # We disable U6_ENABLE, just in case.....
+    
+    buf = bytearray(32768)
+    
+    for i in range(20):                                                     # We give the user 10s and 20 LED blinks to abort installation
+        time.sleep(.5)
+        led.toggle()
+
+    led.value(1)
+    
+    log_to_serial = True
+    LOG("**********************************************", 4)
+    LOG("TS Pico Upgrade setup (c) 2024 TS-Pico DevTeam", 4)
+    LOG("IMPORTANT!!!! DO *NOT* INTERRUPT THIS SEQUENCE!!!!", 4)
+    LOG("**********************************************", 4)
+    SAVE_LOG()
+    
+    time.sleep(1)
+
+    LOG("Mounting SD Card", 4)
+    SAVE_LOG()
+
+    try:
+        ACTIVATE_SD()
+    except:
+        FINISH("Fatal error. Could not mount SD Card. Terminating", False)
+
+    led.value(0)
+
+    LOG("TS-Pico Upgrade Setup initialized ok", 4)
+    LOG("SD Card mounted ok", 4)
+    SAVE_LOG()
+    
+    try:
+        with open("/upgrade.ini", "r") as f:                             # Try to determine last run's status
+            last_run = json.load(f)
+            last_run_status = last_run["status"]
+    except:
+        last_run_status = "None"
+
+    LOG("Previous run status: " + last_run_status, 4)
+    SAVE_LOG()
+    
+    try:
+        os.chdir("/sd/UPGRADE")
+    except:
+        FINISH("Fatal error. Could not find UPGRADE folder on the SD Card. Terminating", False)
+
+    LOG("UPGRADE folder found in SD Card", 4)
+    SAVE_LOG()
+
+    if last_run_status == "BACKUP_PERFORMED":                                # If last run was unsuccessfull, but the backup creation wasn't, we restore that backup 
+                                                                             # in case something went wrong last time
+        LOG("Previous run was unsuccessful. Attempting to roll back...", 4)
+        SAVE_LOG()
+        
+        try:
+            RESTORE_FILES("/sd/UPGRADE/BACKUP", "/")                                      # if so, restore backup
+            LOG("System rolled back successfully. Continue with upgrade process", 4)
+            SAVE_LOG()
+            
+            restored = True
+            
+        except Exception as err:
+            LOG("System roll back failed. Reason: ", 4)
+            
+            with open("/activity.log", "a") as log:
+                sys.print_exception(err, log)
+            
+            FINISH("Fatal error. Could not rollback system. ", False)
+
+    try:
+        with open("/config.ini", "r") as f:                                  # try to load config values from config.ini file
+            init_values = json.load(f)
+    except:
+        pass
+            
+    try:
+        with open("/sd/UPGRADE/config.ini", "r") as f:                      # load values from config.ini file on the /sd/UPGRADE folder
+            new_values = json.load(f)
+    except:
+        FINISH("Fatal error. Could not find config.ini file in UPGRADE folder. Terminating", False)
+
+    LOG("Current firmware version: " + TSP.FW_VERSION, 4)
+    
+    LOG("New firmware version: " + new_values["FW_VERSION"], 4)
+
+    if (TSP.FW_VERSION == new_values["FW_VERSION"]):
+       FINISH("Current version is the same as upgrade. Nothing to do. Terminating", True)
+       
+    SAVE_LOG()
+    os.chdir("/sd/UPGRADE")
+    
+    if restored:
+        LOG("Bypass system backup due to recent succesful RESTORE", 4)
+        SAVE_LOG
+        
+    else:
+        
+        if "BACKUP" in os.listdir():
+            
+            LOG("Removing old BACKUP folder from previous run", 4)
+            
+            try:
+                REMOVE_DIR("/sd/UPGRADE/BACKUP")
+                LOG("Previous BACKUP folder removed", 4)
+                SAVE_LOG()
+            except:
+                FINISH("Error removing previous backup folder. Terminating", False)
+                
+        dest_dir = "/sd/UPGRADE/BACKUP"
+        
+        LOG("Starting current firmware backup", 4)
+        SAVE_LOG()
+                 
+        led.toggle()
+        time.sleep(.1)                                                      # Short LED blink = stage 1 completed ok (initialization)
+        led.toggle()
+        
+        BACKUP_DIR("/", dest_dir)
+        os.chdir("/")
+
+        with open("/upgrade.ini", "w") as f:
+            last_run["status"] = "BACKUP_PERFORMED"
+            json.dump(last_run, f)
+
+    LOG("Firmware backup finished ok", 4)
+    LOG("Processing new files", 4)
+    
+    time.sleep(1)
+
+    led.value(0)
+    time.sleep(.1)
+    led.toggle()
+    time.sleep(.1)                                                      # Two short LED blinks = stage 2 completed ok (backup)
+    led.toggle()
+    time.sleep(.1)
+    led.toggle()
+    led.value(1)
+
+    os.chdir("/sd/UPGRADE")
+    
+    with open("/sd/UPGRADE/upgrade.json", "r") as f:                                  # try to load config values from config.ini file
+        upgrade_dict = json.load(f)
+    
+    for el in upgrade_dict["dirs"]:
+        
+        try:
+            REMOVE_DIR(el)
+        except:
+            LOG("Warning: could not remove folder " + el + "; continue process...", 4)
+            SAVE_LOG()
+            pass
+        
+        try:
+            os.mkdir(el)
+            
+        except:                
+            FINISH("Fatal error: unable to create folder " + el + " during Update. Terminating.", False)
+            
+    for el in upgrade_dict:
+        
+        if el == "dirs":
+            continue
+        
+        if el == "main.py":
+            os.rename("/main.py", "/main.old")
+            LOG("'main.py' renamed to 'main.old'", 4)
+            SAVE_LOG()
+        try:
+            COPY_FILE(el, upgrade_dict[el]+el)
+            LOG("File " + upgrade_dict[el]+el + " copied successfully", 4)
+        except:
+            FINISH("Fatal error: unable to copy file " + el + " during Update. Terminating", log_ena, False)
+
+    os.remove("/main.old")
+    LOG("'main.old' removed ok", 4)
+    
+    with open("/upgrade.ini", "w") as f:
+        last_run["status"] = "UPGRADE_PERFORMED"
+        json.dump(last_run, f)
+
+    try:
+        new_folder = "/sd/UPGRADE/BACKUP_FIRMWARE_V" + TSP.FW_VERSION
+        os.rename("/sd/UPGRADE/BACKUP", new_folder)
+            
+    except:
+        LOG("Error attempting to rename UPGRADE/BACKUP folder; trying another name", 4)
+        SAVE_LOG()
+        
+        try:
+            num = str(len(os.listdir("/sd/UPGRADE")) - 10)                                              # At this point, there are 6 elements on the '/' folder. So, subsequent BACKUP files 
+            new_folder = "/sd/UPGRADE/BACKUP_FIRMWARE_V" + new_values["FW_VERSION"] + "[" + num + "]"                # will be named BACKUP_FIRMWARE_V1.1c[1], ....FIRMWARE_V1.1c[2], etc
+
+            os.rename("/sd/UPGRADE/BACKUP", new_folder)
+            
+        except:
+            LOG("WARNING: Error renaming folder " + new_folder, 4)
+            SAVE_LOG()
+            
+    LOG("Finished renaming BACKUP folder", 4)
+    SAVE_LOG()
+
+    FINISH("All process finished successfully. Check the activity.log file for more info", True)
     
     return 
 
@@ -1474,7 +1862,7 @@ def NOP(pre, cmd):                                                           # T
     global MQ
     
     MQ.put(0x40)
-    MQ.put(0x1)
+    MQ.put(0x01)
     
     return
 
@@ -1571,6 +1959,9 @@ def PROCESS_CMD(pre, LD_funct, SA_funct, EXT_LD_FUNCT, EXT_SA_FUNCT):           
     long = pre[7] + 256*pre[8] + 3
     rl = range(long)
     
+    wrt(0x40)
+    wrt(0x01)
+    
     for l in rl:
         cmd[l] = MQ.get()
     
@@ -1646,7 +2037,6 @@ def PROCESS_CMD(pre, LD_funct, SA_funct, EXT_LD_FUNCT, EXT_SA_FUNCT):           
             ACTIVATE_MQ()
             SEND_MSG(msg, rest_cmd, status)
             
-        
         else:
             SEND_MSG('Error! Invalid command LOAD "tpi:"', rest_cmd, 5)                                       # If none of the above, raise error
             LOG("ERROR: File does not exist in LOAD", 2)
@@ -1717,6 +2107,7 @@ def TS2068_IO():                                                         # Main 
     busy = False
     dead = True
     kill = False
+    
     files = []
     lista = ""
     log_entries = ""
@@ -1786,7 +2177,8 @@ def TS2068_IO():                                                         # Main 
         "TPI:MEMBOOT" : MEMBOOT,
         "TPI:MEMDOCK" : MEMDOCK,
         "TPI:REW" : REW,
-        "TPI:RM " : RMDIR, 
+        "TPI:RM " : RMDIR,
+        "TPI:UPGRADE" : UPGRADE,
         "TPI:VERBOSE" : VERB_TOGGLE, 
         "TPI:ZX48" : ZX48,
         "TPI:AUTOLF" : SA_NOT_IMP,
@@ -1827,16 +2219,16 @@ def TS2068_IO():                                                         # Main 
     
     try:
         os.chdir(TSP.cur_path)
+        DIR_FILES()
+    
     except:
         LOG("CRITICAL ERROR! Cannot mount /TAP directory; aborting.", 3)
         SAVE_LOG()
         
         while True:
             BLINK_ERROR()
-       
-    DIR_FILES()
-    
-    os.umount("/sd")
+            
+#     os.umount("/sd")
     
     ACTIVATE_MQ()
     
@@ -1875,11 +2267,12 @@ def TS2068_IO():                                                         # Main 
                 
                 MQ, TSP, new_logs = SAVE_TS(MQ, TSP)
                 log_entries += new_logs
+                gc.collect()
                 
                 DIR_FILES()
                 
                 try:
-                    os.umount("/sd")
+#                     os.umount("/sd")
                     ACTIVATE_MQ()
                     
                 except:
