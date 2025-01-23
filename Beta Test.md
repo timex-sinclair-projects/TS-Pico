@@ -36,7 +36,7 @@ New features include:
 - "Looping" of TAP files, consistent with behavior in emulators (FUSE, ZEsarUX)
 - New commands for better user experience.
 
-## Downloa and install Thonny on your computer
+## Download and install Thonny on your computer
 
 You will need [Thonny](thonny.md) installed on your computer to restore the TS-Pico to baseline and update the TS-Pico.
 
