@@ -8,10 +8,10 @@
 ## Table of Contents
 
 - [General Description and Operation](#general-description-and-operation)
-- [Installing the TS Pico](#installing-the-ts-pico)
+- [Installing the TS-Pico](#installing-the-ts-pico)
 - [Getting Started: Your First Steps](#getting-started-your-first-steps)
-- [Exploring the TS Pico Hardware](#exploring-the-ts-pico-hardware)
-- [Understanding the TS Pico Commands](#understanding-the-ts-pico-commands)
+- [Exploring the TS-Pico Hardware](#exploring-the-ts-pico-hardware)
+- [Understanding the TS-Pico Commands](#understanding-the-ts-pico-commands)
 - [Basic File Operations - Your Daily Toolkit](#basic-file-operations---your-daily-toolkit)
 - [Directory Navigation - Organizing Your Files](#directory-navigation---organizing-your-files)
 - [Working with TAP Files - The Heart of the System](#working-with-tap-files---the-heart-of-the-system)
@@ -23,7 +23,7 @@
 - [System Information and Diagnostics](#system-information-and-diagnostics)
 - [Troubleshooting Guide](#troubleshooting-guide)
 - [What's Next? Upgrades and Extensions](#whats-next-upgrades-and-extensions)
-- [The TS Pico Community](#the-ts-pico-community)
+- [The TS-Pico Community](#the-ts-pico-community)
 - [Quick Reference Card](#quick-reference-card)
 - [Appendix A: External Commands for Developers](#appendix-a-external-commands-for-developers)
 - [Appendix B: Machine Language Flash Programming](#appendix-b-machine-language-flash-programming)
@@ -35,61 +35,67 @@
 
 ### Welcome to the Future of Your TS 2068!
 
-Thank you for selecting the Timex Pico Interface, or the TS Pico, as we like to call it. You're about to transform your vintage TS 2068 into a modern, capable machine while keeping all the charm and character that made you fall in love with it in the first place.
+Thank you for selecting the Timex Pico Interface, or the TS-Pico, as we like to call it. You're about to transform your vintage TS 2068 into a modern, capable machine while keeping all the charm and character that made you fall in love with it in the first place.
 
-### What Exactly Is the TS Pico?
+### What Exactly Is the TS-Pico?
 
-Think of the TS Pico as a bridge between your classic computer and today's technology. It's like having a modern hard drive, but one that speaks the language your TS 2068 understands perfectly. This new interface was developed specifically for the Timex Sinclair 2068 computer, and it brings together the best of both worlds: the nostalgia and simplicity of your vintage machine with the convenience and reliability of modern storage.
+Think of the TS-Pico as a bridge between your classic computer and today's technology. It's like having a modern hard drive, but one that speaks the language your TS 2068 understands perfectly. This new interface was developed specifically for the Timex Sinclair 2068 computer, and it brings together the best of both worlds: the nostalgia and simplicity of your vintage machine with the convenience and reliability of modern storage.
 
 ### The Technology Behind the Magic
 
-At its heart, the TS Pico is powered by a Raspberry Pi Pico - a tiny but powerful computer that acts as your TS 2068's new best friend. Programmed in MicroPython (a streamlined version of the popular Python programming language), the TS Pico allows you to save and load programs from TAP files stored on a standard micro SD card - the same kind you might use in a smartphone or tablet.
+At its heart, the TS-Pico is powered by a Raspberry Pi Pico - a tiny but powerful computer that acts as your TS 2068's new best friend. Programmed in MicroPython (a streamlined version of the popular Python programming language), the TS-Pico allows you to save and load programs from TAP files stored on a standard micro SD card - the same kind you might use in a smartphone or tablet.
 
-But that's not all. Your TS Pico comes equipped with an impressive 512KB of Flash memory. To put that in perspective, that's enough space to store dozens of your favorite programs instantly accessible without even touching the SD card. Some of this Flash memory holds the TS Pico's advanced operating system - think of it as the brain that makes everything work smoothly. The rest is available for your use, acting like super-fast storage for your most frequently used programs.
+But that's not all. Your TS-Pico comes equipped with an impressive 512KB of Flash memory. To put that in perspective, that's enough space to store several of your favorite cartridge programs, instantly accessible, without even touching the SD card. Some of this Flash memory holds the TS-Pico's advanced operating system - think of it as the brain that makes everything work smoothly. The rest is available for your use, which you can use as super-fast storage for your cartridges.
 
 On top of that, you get another 512KB of static RAM (SRAM) - all of which is available to you. This is like having extra workspace for your computer to stretch out and handle bigger, more complex programs than ever before.
 
 ### A Word About Safety
 
-Now, we need to have a brief but important conversation about taking care of your TS Pico. While we've designed it to be robust and reliable, it's still a sophisticated piece of electronics. The TS Pico is difficult to break, but not impossible. 
+Now, we need to have a brief but important conversation about taking care of your TS-Pico. While we've designed it to be robust and reliable, it's still a sophisticated piece of electronics. The TS-Pico is difficult to break, but not impossible. 
 
-**Here's the important part:** If you don't have experience with electronics or programming at the hardware level, please stick to using the TS Pico as described in this manual. Don't attempt to modify the hardware or reprogram the firmware unless you really know what you're doing. While we encourage experimentation and learning, it is possible to cause irreparable damage to the interface or even to your precious TS 2068 if things go wrong.
+**Here's the important part:** If you don't have experience with electronics or programming at the hardware level, please stick to using the TS-Pico as described in this manual. Don't attempt to modify the hardware or reprogram the firmware unless you really know what you're doing. While we encourage experimentation and learning, it is possible to cause irreparable damage to the interface or even to your precious TS 2068 if things go wrong.
 
-Think of it like this: you wouldn't try to repair your car's engine without proper knowledge and tools, right? The same principle applies here. But don't worry - everything you need to use and enjoy your TS Pico is covered in this manual, and it's all designed to be safe and straightforward.
+But don't worry - everything you need to use and enjoy your TS-Pico is covered in this manual, and it's all designed to be safe and straightforward.
 
 ---
 
-## Installing the TS Pico
+## Installing the TS-Pico
 
 ### Before You Begin
 
-Installation is straightforward, but let's take it step by step. The most important thing is to be gentle and patient. Your TS 2068 and TS Pico are both vintage and modern electronics respectively, and they deserve to be treated with care.
+Installation is straightforward, but let's take it step by step. The most important thing is to be gentle and patient. Your TS 2068 and TS-Pico are both vintage and modern electronics respectively, and they deserve to be treated with care.
 
 ### Safety First: Powering Down
 
-**Always, always, always turn off your TS 2068 before connecting or disconnecting anything.** This isn't just a suggestion - it's essential for protecting both your computer and your new TS Pico. Connecting or disconnecting electronics while they're powered on can cause damage that's expensive (or impossible) to repair.
+**Always, always, always turn off your TS 2068 before connecting or disconnecting anything.** This isn't just a suggestion - it's essential for protecting both your computer and your new TS-Pico. Connecting or disconnecting electronics while they're powered on can cause damage to your TS 2068 that's expensive (or impossible) to repair.
 
-Once your TS 2068 is turned off, take a moment to remove any cartridges that might be plugged into the computer. This gives you clear access to the expansion connector and eliminates any possibility of conflicts.
+Once your TS 2068 is turned off, take a moment to remove any cartridges that might be plugged into the computer. This eliminates any possibility of conflicts between the cartridge and the TS-Pico.
 
-### Understanding Your TS Pico Installation
+### Understanding Your TS-Pico Installation
 
-The TS Pico works with an expansion bus adapter that plugs into your TS 2068 first, then provides multiple slots for various devices including your TS Pico. This design is ideal because it allows you to use multiple peripherals and gives you the flexibility to easily swap devices.
+The TS-Pico works with an expansion bus adapter that plugs into your TS 2068 first, then provides multiple slots for various devices including your TS-Pico. This design is ideal because it allows you to use multiple peripherals and gives you the flexibility to easily swap devices.
 
-#### Installing Your TS Pico with Expansion Bus
+#### Installing Your TS-Pico with Expansion Bus
 1. **Install the expansion bus** into your TS 2068's expansion port:
    - Locate the expansion connector on the right side of your TS 2068. It's the long, rectangular slot with small metal contacts inside.
    - Find the corresponding connector on your expansion bus. You'll notice it has a small notch or "key" - this isn't decorative, it's a safety feature to ensure you can't insert it backwards.
    - Line up the key on the expansion bus with the corresponding slot in your TS 2068's connector. This should feel natural and easy - if you're forcing anything, stop and check your alignment.
    - Gently but firmly press the expansion bus into the connector until it's fully seated. You should feel it slide in smoothly and then stop when it's properly connected.
 
-2. **Choose an appropriate slot** on the expansion bus for your TS Pico. Any slot will work, but many users prefer the leftmost slot for easy access.
+2. **CRITICAL: Configure the BUSISO Bypass jumpers** on the expansion bus:
+   - Locate the BUSISO Bypass jumpers on the right side of the expansion bus adapter
+   - **The BUSISO Bypass jumper MUST be disconnected for the slot where you plan to install the TS-Pico**
+   - **Recommended approach:** Disconnect ALL BUSISO Bypass jumpers to ensure proper operation regardless of which slot you use
+   - **Failure to disconnect the BUSISO Bypass jumper for the TS-Pico slot will prevent the TS-Pico from functioning correctly**
 
-3. **Install the TS Pico** into the chosen slot on the expansion bus, again using the key alignment to ensure proper orientation.
+3. **Choose an appropriate slot** on the expansion bus for your TS-Pico. Any slot will work, but many users prefer the first slot for easy access.
+
+4. **Install the TS-Pico** into the chosen slot on the expansion bus, again using the key alignment to ensure proper orientation.
 
 ### After Installation
 
-Once your TS Pico is installed in the expansion bus, take a moment to check that everything looks right:
-- The TS Pico should be firmly seated with no wobbling
+Once your TS-Pico is installed in the expansion bus, take a moment to check that everything looks right:
+- The TS-Pico should be firmly seated with no wobbling
 - All connectors should be fully engaged
 - Nothing should look forced or crooked
 
@@ -169,7 +175,6 @@ Now let's make sure everything is working correctly:
 ```
 Path: /
 File Name                    Size
-<TAP>                        0 b
 ```
 
 **Success!** If you see the TAP directory listed, your micro SD card is properly set up and ready to use.
@@ -232,15 +237,11 @@ Once your micro SD card is set up, you can start adding TAP files:
 
 ### Best Practices for New Cards
 
-**Choose quality cards:** Invest in a reputable brand for reliability and longevity.
-
-**Don't overfill:** Keep at least 10% of the card's space free for optimal performance.
-
-**Regular backups:** Copy your TAP collection to your computer periodically as a backup.
-
-**Safe handling:** Micro SD cards are tiny and easy to lose - handle them carefully and store them safely.
-
-**Label your cards:** If you use multiple cards, label them clearly so you know what's on each one.
+- **Choose quality cards:** Invest in a reputable brand for reliability and longevity.
+- **Don't overfill:** Keep at least 10% of the card's space free for optimal performance.
+- **Regular backups:** Copy your TAP collection to your computer periodically as a backup.
+- **Safe handling:** Micro SD cards are tiny and easy to lose - handle them carefully and store them safely.
+- **Label your cards:** If you use multiple cards, label them clearly so you know what's on each one.
 
 Once you've completed this setup process, your micro SD card is ready for years of TS-Pico enjoyment. You only need to do this setup once per card - after that, you can simply add and remove TAP files as needed using your computer.
 
@@ -250,13 +251,13 @@ Once you've completed this setup process, your micro SD card is ready for years 
 
 ### The Moment of Truth: First Power-On
 
-Now comes the exciting part - seeing your TS Pico in action for the first time. But before we jump in, let's set proper expectations so you know what to look for.
+Now comes the exciting part - seeing your TS-Pico in action for the first time. But before we jump in, let's set proper expectations so you know what to look for.
 
-**Turn on your TS 2068** as you normally would. You should see the familiar startup sequence: the copyright messages will appear just as they always have. This is important - it means your TS 2068 is starting up normally and the TS Pico isn't interfering with basic operations.
+**Turn on your TS 2068** as you normally would. You should see the familiar startup sequence: the copyright messages will appear just as they always have, plus the TS-Pico copyright message. This is important - it means your TS 2068 is starting up normally and the TS-Pico has successfully initialized.
 
-### Your First TS Pico Command
+### Your First TS-Pico Command
 
-Once you see the familiar cursor (that little "K" in the corner), you're ready to say hello to your TS Pico. Let's start with something simple that will prove everything is working:
+Once you see the familiar "K" cursor, you're ready to say hello to your TS-Pico. Let's start with something simple that will prove everything is working:
 
 Type exactly this:
 ```
@@ -265,7 +266,7 @@ LOAD "tpi:dir"
 
 Then press **ENTER**.
 
-**What just happened?** You've just asked your TS Pico to show you what files are available on the SD card. The "tpi:" part tells your TS 2068 that this command is intended for the TS Pico, not for a regular tape operation.
+**What just happened?** You've just asked your TS-Pico to show you what files are available on the SD card. The "tpi:" part tells your TS 2068 that this command is intended for the TS-Pico, not for a regular tape operation.
 
 ### Understanding What You See
 
@@ -284,201 +285,64 @@ We'll cover how to handle these situations in the troubleshooting section.
 
 ### If Everything Worked
 
-Congratulations! You've just successfully communicated with your TS Pico. That simple command proved that:
-- Your TS Pico is properly connected
+Congratulations! You've just successfully communicated with your TS-Pico. That simple command proved that:
+- Your TS-Pico is properly connected
 - The firmware is running correctly
-- Your TS 2068 can communicate with the TS Pico
+- Your TS 2068 can communicate with the TS-Pico
 - Your SD card is accessible
 
 ### If You Got an Error
 
 Don't worry - this is a learning process, and errors are part of learning. The most common issues at this stage are:
-- **No micro SD card inserted:** Make sure your micro SD card is fully inserted into the TS Pico
+- **No micro SD card inserted:** Make sure your micro SD card is fully inserted into the TS-Pico
 - **Micro SD card not formatted:** Some micro SD cards need to be formatted before use
-- **Connection issue:** Double-check that your TS Pico is fully seated in its connector
+- **Connection issue:** Double-check that your TS-Pico is fully seated in its connector
 
 We'll cover all of these scenarios in detail in the troubleshooting section.
 
 ---
 
-## Understanding Cartridge Compatibility
 
-### The Two Connector System
-
-Your TS 2068 actually has two different types of connectors, and understanding how they work together with your TS-Pico is important for getting the best experience:
-
-#### Expansion Connector (Back of Computer)
-This is the long rectangular connector on the back of your TS 2068 where your TS-Pico's expansion card plugs in. This connector is designed for peripherals like the TS-Pico, disk drives, and other system expansions.
-
-#### Cartridge Connector (Front of Computer)
-This is the connector under the cartridge door on the front of your TS 2068, officially called the "DOCK" connector. This is where you would normally plug in game cartridges and certain software cartridges.
-
-### Physical vs. Logical Compatibility
-
-Here's something that might seem confusing at first: **physically, cartridges and the TS-Pico don't interfere with each other.** You can have a cartridge plugged into the front connector and the TS-Pico plugged into the back connector at the same time without any physical problems.
-
-**However, having a cartridge plugged in will interfere with the TS-Pico's operation** due to how your TS 2068's ROM (the computer's built-in software) works.
-
-### Why Cartridges Interfere with TS-Pico Operation
-
-#### The Boot Sequence Problem
-
-When you turn on your TS 2068, it goes through an initialization sequence that includes checking for a cartridge in the cartridge slot. If it finds an "auto boot" cartridge (like most games or certain software), the computer immediately hands over control to that cartridge and runs it. This bypasses the rest of the normal startup sequence.
-
-#### How the TS-Pico ROM Works
-
-The TS-Pico includes a modified version of the TS 2068's ROM that contains the same initialization sequence as the original. However, since the Raspberry Pi Pico needs a few seconds to boot up when you first turn on power, the TS-Pico holds your TS 2068 in a RESET state during this time.
-
-#### The Timing Issue
-
-Here's where the problem occurs: when the TS-Pico releases the RESET and your TS 2068 starts its initialization sequence, if there's a cartridge plugged in, that cartridge will take control before the TS-Pico is ready. This effectively bypasses the TS-Pico, and you won't be able to use any TS-Pico commands.
-
-### The Digital Cartridge Solution
-
-The good news is that **physical cartridges are not necessary when using the TS-Pico!** Instead, you can load cartridge ROM images digitally and run them through the TS-Pico system.
-
-#### How Digital Cartridges Work
-
-1. **Load the cartridge ROM image** into the TS-Pico's Flash memory or static RAM
-2. **Configure the system** to use that cartridge image with the appropriate commands
-3. **Restart your TS 2068** to activate the cartridge image
-
-This approach gives you several advantages:
-- **No physical cartridges to lose or damage**
-- **Instant switching** between different cartridge images
-- **Perfect preservation** of cartridge software
-- **Full compatibility** with TS-Pico features
-
-#### Loading Cartridge Images
-
-**[CALLOUT NOTE TO RICARDO/DAVID: Please provide detailed instructions for the cartridge loading process, including specific commands, file preparation, and step-by-step procedures for loading cartridge ROMs into Flash/SRAM and configuring them with memboot/memdock commands.]**
-
-### Cartridge Compatibility
-
-#### What Works Well
-
-The TS-Pico is compatible with **almost all cartridge images**, including:
-- Commercial game cartridges
-- Educational software cartridges
-- Utility and programming cartridges
-- Most homebrew and community-developed cartridges
-
-#### Important Exception: Custom ROM Cartridges
-
-There is one important category of cartridges that have limitations with the TS-Pico: **cartridges that contain their own custom version of the TS 2068 ROM**.
-
-**Example: Zebra Systems OS-64**
-The Zebra Systems OS-64 cartridge contains its own custom ROM that provides 64-column text display and other enhancements. Because it includes a complete custom ROM (just like the TS-Pico does), there are compatibility limitations:
-
-- **OS-64 can be used** with the TS-Pico as a digital cartridge image
-- **TS-Pico commands will not work** while in OS-64's 64-column mode
-- **You can still use OS-64's features**, but you'll need to exit OS-64 to access TS-Pico functionality
-
-This limitation exists because both the TS-Pico and OS-64 need to control the computer's ROM space, and they can't both do it at the same time.
-
-### Best Practices for Cartridge Use
-
-#### Recommended Approach
-
-**Remove physical cartridges** when using the TS-Pico to avoid any potential conflicts or confusion.
-
-**Use digital cartridge images** instead of physical cartridges for the best experience.
-
-**Keep your physical cartridges safe** for preservation purposes, but rely on digital images for day-to-day use.
-
-#### When You Need Physical Cartridges
-
-If you need to use a physical cartridge for some reason:
-1. **Power down** your TS 2068 completely
-2. **Remove the TS-Pico** from the expansion connector
-3. **Install your cartridge** and use it normally
-4. **When done**, power down, remove the cartridge, and reinstall the TS-Pico
-
-#### Organizing Cartridge Images
-
-Treat cartridge images like any other files in your TS-Pico collection:
-- **Store them in organized directories** on your micro SD card
-- **Use descriptive filenames** to identify what each cartridge contains
-- **Keep backup copies** on your computer
-- **Document any special loading procedures** for complex cartridges
-
-### Understanding the Technical Details
-
-#### Memory Management
-
-Cartridge images are loaded into either:
-- **Flash memory:** For permanent storage and quick access
-- **Static RAM:** For temporary use or frequently changed cartridges
-
-The choice depends on your specific needs and usage patterns.
-
-#### Boot Configuration Commands
-
-The TS-Pico provides specific commands for managing cartridge images:
-- **`tpi:memboot`:** Configures which memory slot contains the boot ROM
-- **`tpi:memdock`:** Configures which memory slot contains the cartridge image
-
-These commands give you precise control over how your system starts up and which cartridge image is active.
-
-### Troubleshooting Cartridge Issues
-
-#### Problem: TS-Pico commands don't work after startup
-**Likely cause:** Physical cartridge is installed and taking control
-**Solution:** Remove physical cartridge and restart
-
-#### Problem: Digital cartridge image doesn't load
-**Possible causes:**
-- Cartridge image file is corrupted
-- Memory slot configuration is incorrect
-- Insufficient memory space for the cartridge image
-
-#### Problem: Some cartridge features don't work
-**Possible causes:**
-- Cartridge requires specific hardware that's not emulated
-- Cartridge has custom ROM that conflicts with TS-Pico
-- File format compatibility issues
-
-Understanding the relationship between physical cartridges and the TS-Pico helps you make the most of both your vintage cartridge collection and the modern convenience of the TS-Pico system.
 
 ---
 
-## Exploring the TS Pico Hardware
+## Exploring the TS-Pico Hardware
 
 ### Getting to Know Your New Hardware
 
-Before we dive deep into using your TS Pico, let's take a tour of the hardware. Understanding what each part does will help you use the system more effectively and troubleshoot any issues that might arise.
+Before we dive deep into using your TS-Pico, let's take a tour of the hardware. Understanding what each part does will help you use the system more effectively and troubleshoot any issues that might arise.
 
 ### The Raspberry Pi Pico: The Brain of the Operation
 
-The most prominent feature on your TS Pico board is the Raspberry Pi Pico itself. This small green circuit board is actually a complete computer - far more powerful than your TS 2068, but designed to work as its helpful assistant.
+The most prominent feature on your TS-Pico board is the Raspberry Pi Pico itself. This small green circuit board is actually a complete computer - far more powerful than your TS 2068, but designed to work as its helpful assistant.
 
-#### The Status LED: Your Window into the TS Pico's Mind
+#### The Status LED: Your Window into the TS-Pico's Mind
 
-The Raspberry Pi Pico has a small LED that acts like a status indicator. Learning to read this LED will help you understand what your TS Pico is doing at any given moment:
+The Raspberry Pi Pico has a small LED that acts like a status indicator. Learning to read this LED will help you understand what your TS-Pico is doing at any given moment:
 
 **Normal Operations:**
-- **Slow, steady blinking (about once per second):** This is the "all is well" signal. Your TS Pico is idle and ready to accept commands. Think of it as the TS Pico saying "I'm here and ready to help!"
+- **Slow, steady blinking (about once per second):** This is the "all is well" signal. Your TS-Pico is idle and ready to accept commands. Think of it as the TS-Pico saying "I'm here and ready to help!"
   
-- **Solid ON (continuously lit):** The TS Pico is busy processing a command or waiting for input from you. This is normal during file operations, directory scans, or when you're in the middle of a command sequence.
+- **Solid ON (continuously lit):** The TS-Pico is busy processing a command or waiting for input from you. This is normal during file operations, directory scans, or when you're in the middle of a command sequence.
 
 **Special Situations:**
-- **Fast blinking (several times per second):** This usually indicates an error condition. The TS Pico has encountered something it can't handle and is asking for attention.
+- **Fast blinking (several times per second):** This usually indicates an error condition. The TS-Pico has encountered something it can't handle and is asking for attention.
 
 - **Pattern blinking:** During special operations like firmware upgrades or file copying, you might see specific blinking patterns. These are covered in detail in the respective sections of this manual.
 
-- **LED goes dark:** If the LED suddenly stops blinking entirely, it usually means the watchdog timer has activated. This is a safety feature that resets the TS Pico if it gets confused or stuck.
+- **LED goes dark:** If the LED suddenly stops blinking entirely, it usually means the watchdog timer has activated. This is a safety feature that resets the TS-Pico if it gets confused or stuck.
 
 #### Understanding the Watchdog Timer
 
-The watchdog timer deserves special mention because it's one of the TS Pico's most important safety features. Think of it as a helpful assistant who taps you on the shoulder if you've been staring at a problem too long.
+The watchdog timer deserves special mention because it's one of the TS-Pico's most important safety features. Think of it as a helpful assistant who taps you on the shoulder if you've been staring at a problem too long.
 
-If a command doesn't complete as expected, or if the TS Pico gets confused by an unexpected situation, the watchdog timer will activate after several seconds. When this happens, you'll see the LED go dark, and then the TS Pico will automatically reset its internal state and return to normal operation.
+If a command doesn't complete as expected, or if the TS-Pico gets confused by an unexpected situation, the watchdog timer will activate after several seconds. When this happens, you'll see the LED go dark, and then the TS-Pico will automatically reset its internal state and return to normal operation.
 
-This is actually a good thing! It means that even if something goes wrong, your TS Pico won't get permanently stuck. After a watchdog reset, you can simply try your command again or check if there was a problem with your input.
+This is actually a good thing! It means that even if something goes wrong, your TS-Pico won't get permanently stuck. After a watchdog reset, you can simply try your command again or check if there was a problem with your input.
 
 ### The Control Buttons: Physical Control When You Need It
 
-Your TS Pico includes several pushbuttons that provide direct hardware control:
+Your TS-Pico includes several pushbuttons that provide direct hardware control:
 
 #### TS Reset Button
 This button is your "emergency restart" for the TS 2068. When pressed, it pulls the RESET line on your computer's Z80 processor, causing a complete restart. You'll see the familiar three copyright messages appear, just as if you had turned the computer off and on again.
@@ -488,10 +352,10 @@ This button is your "emergency restart" for the TS 2068. When pressed, it pulls 
 - After installing new software that requires a restart
 - When troubleshooting suggests a clean restart
 
-**Important:** This button restarts your TS 2068, not just the TS Pico. Any programs in memory will be lost unless you've saved them first.
+**Important:** This button restarts your TS 2068, not just the TS-Pico. Any programs in memory will be lost unless you've saved them first.
 
 #### Pico Reset and NMI Buttons
-At the time this manual was written, these buttons are reserved for future functionality. The TS Pico firmware doesn't currently use them, but future versions might add features that take advantage of these additional controls.
+At the time this manual was written, these buttons are reserved for future functionality. The TS-Pico firmware doesn't currently use them, but future versions might add features that take advantage of these additional controls.
 
 ### The SD Card Slot: Your Gateway to Unlimited Storage
 
@@ -505,30 +369,30 @@ The micro SD card slot is where the magic happens. This tiny slot accepts standa
 
 ### Power and Connectivity
 
-Your TS Pico draws its power directly from your TS 2068 through the expansion connector. There are no external power supplies or batteries to worry about. When your TS 2068 is on, your TS Pico is on. When your TS 2068 is off, your TS Pico is off. Simple!
+Your TS-Pico draws its power directly from your TS 2068 through the expansion connector. There are no external power supplies or batteries to worry about. When your TS 2068 is on, your TS-Pico is on. When your TS 2068 is off, your TS-Pico is off. Simple!
 
-The TS Pico also includes a micro-USB connector, but this is only used for firmware upgrades. During normal operation, you won't need to connect anything to this port.
+The TS-Pico also includes a micro-USB connector, but this is only used for firmware upgrades. During normal operation, you won't need to connect anything to this port.
 
 ---
 
-## Understanding the TS Pico Commands
+## Understanding the TS-Pico Commands
 
-### The Philosophy Behind TS Pico Commands
+### The Philosophy Behind TS-Pico Commands
 
-Before we dive into specific commands, it's important to understand the philosophy behind how the TS Pico works. The designers wanted to make the TS Pico feel natural to anyone familiar with the TS 2068, while adding powerful new capabilities.
+Before we dive into specific commands, it's important to understand the philosophy behind how the TS-Pico works. The designers wanted to make the TS-Pico feel natural to anyone familiar with the TS 2068, while adding powerful new capabilities.
 
 ### The Magic of "tpi:" - Your Gateway to Modern Features
 
-Every TS Pico command starts with "tpi:" - this is your signal to the system that you want to talk to the TS Pico rather than perform a traditional tape operation. Think of "tpi:" as a polite way of saying "Excuse me, TS Pico, I have a request for you."
+Every TS-Pico command starts with "tpi:" - this is your signal to the system that you want to talk to the TS-Pico rather than perform a traditional tape operation. Think of "tpi:" as a polite way of saying "Excuse me, TS-Pico, I have a request for you."
 
-**Why "tpi:"?** It stands for "Timex Pico Interface" and it serves an important technical purpose: it tells your TS 2068 to pass the command to the TS Pico instead of trying to access a tape drive. This allows the TS Pico to add new functionality without interfering with your computer's existing capabilities.
+**Why "tpi:"?** It stands for "Timex Pico Interface" and it serves an important technical purpose: it tells your TS 2068 to pass the command to the TS-Pico instead of trying to access a tape drive. This allows the TS-Pico to add new functionality without interfering with your computer's existing capabilities.
 
 ### LOAD vs. SAVE: Two Different Types of Conversations
 
-The TS Pico uses your TS 2068's existing LOAD and SAVE commands, but extends them in clever ways:
+The TS-Pico uses your TS 2068's existing LOAD and SAVE commands, but extends them in clever ways:
 
 #### LOAD Commands: "Show Me" or "Get Me"
-LOAD commands are typically used for retrieving information or bringing files into your computer's memory. When you use a LOAD command with "tpi:", you're usually asking the TS Pico to either show you something or to load a file for use.
+LOAD commands are typically used for retrieving information or bringing files into your computer's memory. When you use a LOAD command with "tpi:", you're usually asking the TS-Pico to either show you something or to load a file for use.
 
 **Examples of LOAD commands:**
 - `LOAD "tpi:dir"` - "Show me what files are available"
@@ -536,7 +400,7 @@ LOAD commands are typically used for retrieving information or bringing files in
 - `LOAD "program.tap"` - "Load this specific program into memory"
 
 #### SAVE Commands: "Do This" or "Change That"
-SAVE commands are used for actions that change something or perform an operation. When you use a SAVE command with "tpi:", you're usually asking the TS Pico to change a setting, perform an action, or modify something.
+SAVE commands are used for actions that change something or perform an operation. When you use a SAVE command with "tpi:", you're usually asking the TS-Pico to change a setting, perform an action, or modify something.
 
 **Examples of SAVE commands:**
 - `SAVE "tpi:cd Games"` - "Change to the Games directory"
@@ -585,11 +449,11 @@ This allows your programs to detect which mode the system is in and behave accor
 
 ### The Comfort of Familiarity
 
-Here's one of the most beautiful things about the TS Pico: once you mount a TAP file (more on this shortly), your regular LOAD and SAVE commands work exactly as they always have. You don't need to learn a completely new way of working. Your TS 2068 will load and save programs just like it always did, but faster and more reliably than ever before.
+Here's one of the most beautiful things about the TS-Pico: once you mount a TAP file (more on this shortly), your regular LOAD and SAVE commands work exactly as they always have. You don't need to learn a completely new way of working. Your TS 2068 will load and save programs just like it always did, but faster and more reliably than ever before.
 
 ### Building Your Command Vocabulary
 
-Think of learning TS Pico commands like learning a new language - start with the basics and gradually expand your vocabulary. You don't need to memorize every command right away. In fact, there's a built-in help system (we'll cover this soon) that can remind you of any command you forget.
+Think of learning TS-Pico commands like learning a new language - start with the basics and gradually expand your vocabulary. You don't need to memorize every command right away. In fact, there's a built-in help system (we'll cover this soon) that can remind you of any command you forget.
 
 **Start with these essential commands:**
 1. `LOAD "tpi:dir"` - See what files are available
@@ -597,7 +461,7 @@ Think of learning TS Pico commands like learning a new language - start with the
 3. `SAVE "tpi:getinfo"` - Check system status
 4. `SAVE "tpi:close"` - Close files when done
 
-Master these four commands, and you'll be well on your way to TS Pico proficiency.
+Master these four commands, and you'll be well on your way to TS-Pico proficiency.
 
 ---
 
@@ -618,7 +482,7 @@ LOAD "tpi:dir"
 ```
 
 **What happens when you run this command:**
-1. The TS Pico scans your current directory on the micro SD card
+1. The TS-Pico scans your current directory on the micro SD card
 2. It counts up all the files and folders
 3. It presents them in an organized list with helpful information
 
@@ -673,7 +537,7 @@ Remember those index numbers you saw in the directory listing? Here's where they
 LOAD "tpi:&001"
 ```
 
-This command tells the TS Pico, "Load whatever file is number 001 in the current directory." It's much faster than typing `LOAD "some-long-filename.tap"`, especially for files with complicated names.
+This command tells the TS-Pico, "Load whatever file is number 001 in the current directory." It's much faster than typing `LOAD "some-long-filename.tap"`, especially for files with complicated names.
 
 **When to use index numbers:**
 - Files with long or complex names
@@ -739,7 +603,7 @@ Understanding TAPDIR is crucial because it helps you:
 
 ### The Importance of Good Organization
 
-Just as you might organize your physical cassette tapes into categories (games, utilities, programming tools), organizing your TAP files into directories makes everything easier to find and manage. The TS Pico supports unlimited subdirectories, so you can create an organization system that makes sense for your collection.
+Just as you might organize your physical cassette tapes into categories (games, utilities, programming tools), organizing your TAP files into directories makes everything easier to find and manage. The TS-Pico supports unlimited subdirectories, so you can create an organization system that makes sense for your collection.
 
 ### CD: Changing Directories
 
@@ -843,13 +707,13 @@ SAVE "tpi:rm foldername"
 
 ### Understanding TAP File Operations
 
-TAP files are the core of the TS Pico experience. Think of each TAP file as a digital cassette tape that can contain multiple programs. Unlike physical tapes, TAP files load instantly, never wear out, and can be easily copied and organized.
+TAP files are the core of the TS-Pico experience. Think of each TAP file as a digital cassette tape that can contain multiple programs. Unlike physical tapes, TAP files load instantly, never wear out, and can be easily copied and organized.
 
 ### The TAP File Lifecycle
 
-Every TAP file goes through a simple lifecycle in the TS Pico:
+Every TAP file goes through a simple lifecycle in the TS-Pico:
 1. **Selection:** You choose which TAP file to work with
-2. **Mounting:** The TS Pico makes the file active and ready to use
+2. **Mounting:** The TS-Pico makes the file active and ready to use
 3. **Navigation:** You can move around within the TAP file to find specific programs
 4. **Usage:** You load and save programs using standard TS 2068 commands
 5. **Closing:** You properly close the file when done
@@ -964,7 +828,7 @@ SAVE "tpi:tape"
 ```
 This command switches your LOAD/SAVE commands to the physical cassette interface. This also enables LPRINT, LLIST, and COPY commands for use with a TS 2040 printer. Note that all TS-Pico commands become unavailable in tape mode.
 
-To switch back to the TS Pico:
+To switch back to the TS-Pico:
 ```
 SAVE "tpi:sdcard"
 ```
@@ -975,7 +839,7 @@ SAVE "tpi:sdcard"
 
 ### Getting Help When You Need It
 
-The TS Pico includes a comprehensive built-in help system. Instead of reaching for this manual every time you forget a command, you can get instant help right on your screen.
+The TS-Pico includes a comprehensive built-in help system. Instead of reaching for this manual every time you forget a command, you can get instant help right on your screen.
 
 #### The Built-in Help System
 ```
@@ -993,9 +857,9 @@ This command displays a complete list of all available LOAD and SAVE commands wi
 SAVE "tpi:getinfo"
 ```
 
-This command is like asking your TS Pico, "How are you doing, and what's your current status?" The response includes:
+This command is like asking your TS-Pico, "How are you doing, and what's your current status?" The response includes:
 
-- **Firmware version:** What version of TS Pico software you're running
+- **Firmware version:** What version of TS-Pico software you're running
 - **ROM version:** The version of your TS 2068's operating system
 - **Board revision:** Hardware version information
 - **Memory usage:** How much Flash and SRAM is being used
@@ -1015,7 +879,7 @@ This command is like asking your TS Pico, "How are you doing, and what's your cu
 SAVE "tpi:getlog"
 ```
 
-The TS Pico keeps a detailed log of everything it does. This log includes timestamps and can be invaluable for troubleshooting problems or understanding what happened during a session.
+The TS-Pico keeps a detailed log of everything it does. This log includes timestamps and can be invaluable for troubleshooting problems or understanding what happened during a session.
 
 **Viewing specific amounts of log data:**
 ```
@@ -1034,7 +898,7 @@ SAVE "tpi:getlog" CODE 0,0      # Show entire log
 SAVE "tpi:verbose"
 ```
 
-This toggle switch enables or disables detailed status messages for commands. When verbose mode is on, the TS Pico provides much more detailed feedback about what it's doing.
+This toggle switch enables or disables detailed status messages for commands. When verbose mode is on, the TS-Pico provides much more detailed feedback about what it's doing.
 
 **When to enable verbose mode:**
 - When learning the system
@@ -1047,33 +911,177 @@ This toggle switch enables or disables detailed status messages for commands. Wh
 - When you want cleaner, less cluttered output
 - When running automated scripts or procedures
 
----
+## Understanding Cartridge Compatibility
+
+Your TS 2068 actually has two different types of connectors, and understanding how they work together with your TS-Pico is important for getting the best experience:
+
+#### Expansion Connector (Back of Computer)
+
+This is the long rectangular connector on the back of your TS 2068 where your TS-Pico's expansion card plugs in. This connector is designed for peripherals like the TS-Pico, disk drives, and other system expansions.
+
+#### Cartridge Connector (Front of Computer)
+
+This is the connector under the cartridge door on the front of your TS 2068, officially called the "DOCK" connector. This is where you would normally plug in game cartridges and certain software cartridges.
+
+### Physical vs. Logical Compatibility
+
+Here's something that might seem confusing at first: **physically, cartridges and the TS-Pico don't interfere with each other.** You can have a cartridge plugged into the front connector and the TS-Pico plugged into the back connector at the same time without any physical problems.
+
+**However, having a cartridge plugged in will interfere with the TS-Pico's operation** due to how your TS 2068's ROM (the computer's built-in software) works.
+
+### Why Cartridges Interfere with TS-Pico Operation
+
+#### The Boot Sequence Problem
+
+When you turn on your TS 2068, it goes through an initialization sequence that includes checking for a cartridge in the cartridge slot. If it finds an "auto boot" cartridge (like most games or certain software), the computer immediately hands over control to that cartridge and runs it. This bypasses the rest of the normal startup sequence.
+
+#### How the TS-Pico ROM Works
+
+The TS-Pico includes a modified version of the TS 2068's ROM that contains the same initialization sequence as the original. However, since the Raspberry Pi Pico needs a few seconds to boot up when you first turn on power, the TS-Pico holds your TS 2068 in a RESET state during this time.
+
+#### The Timing Issue
+
+Here's where the problem occurs: when the TS-Pico releases the RESET and your TS 2068 starts its initialization sequence, if there's a cartridge plugged in, the TS-Pico version of the TS 2068 ROM will hand control to that cartridge. This effectively bypasses the TS-Pico, and you won't be able to use any TS-Pico commands.
+
+### The Digital Cartridge Solution
+
+The good news is that **physical cartridges are not necessary when using the TS-Pico!** Instead, you can load cartridge ROM images digitally and run them through the TS-Pico system.
+
+#### How Digital Cartridges Work
+
+1. **Load the cartridge ROM image** into the TS-Pico's Flash memory or static RAM
+2. **Configure the system** to use that cartridge image with the appropriate commands
+3. **Restart your TS 2068** to activate the cartridge image
+
+This approach gives you several advantages:
+
+- **No physical cartridges to lose or damage**
+- **Instant switching** between different cartridge images
+- **Perfect preservation** of cartridge software
+- **Full compatibility** with TS-Pico features
+
+#### Loading Cartridge Images
+
+**[CALLOUT NOTE TO RICARDO/DAVID: Please provide detailed instructions for the cartridge loading process, including specific commands, file preparation, and step-by-step procedures for loading cartridge ROMs into Flash/SRAM and configuring them with memboot/memdock commands.]**
+
+### Cartridge Compatibility
+
+#### What Works Well
+
+The TS-Pico is compatible with **almost all cartridge images**, including:
+
+- Commercial game cartridges
+- Educational software cartridges
+- Utility and programming cartridges
+- Most homebrew and community-developed cartridges
+
+#### Important Exception: Custom ROM Cartridges
+
+There is one important category of cartridges that have limitations with the TS-Pico: **cartridges that contain their own custom version of the TS 2068 ROM**.
+
+**Example: Zebra Systems OS-64**
+The Zebra Systems OS-64 cartridge contains its own custom ROM that provides 64-column text display and other enhancements. Because it includes a complete custom ROM (just like the TS-Pico does), there are compatibility limitations:
+
+- **OS-64 can be used** with the TS-Pico as a digital cartridge image
+- **TS-Pico commands will not work** while in OS-64's 64-column mode
+
+This limitation exists because both the TS-Pico and OS-64 need to control the computer's ROM space, and they can't both do it at the same time. Unfortunately, there's not enough free space in the OS-64 ROM to implement the TS-Pico commands.
+
+### Best Practices for Cartridge Use
+
+#### Recommended Approach
+
+- **Remove physical cartridges** when using the TS-Pico to avoid any potential conflicts or confusion.
+- **Use digital cartridge images** instead of physical cartridges for the best experience.
+- **Keep your physical cartridges safe** for preservation purposes, but rely on digital images for day-to-day use.
+
+#### When You Need Physical Cartridges
+
+If you need to use a physical cartridge for some reason:
+
+1. **Power down** your TS 2068 completely
+2. **Remove the TS-Pico** from the expansion connector
+3. **Install your cartridge** and use it normally
+4. **When done**, power down, remove the cartridge, and reinstall the TS-Pico
+
+#### Organizing Cartridge Images
+
+Treat cartridge images like any other files in your TS-Pico collection:
+
+- **Store them in organized directories** on your micro SD card
+- **Use descriptive filenames** to identify what each cartridge contains
+- **Document any special loading procedures** for complex cartridges
+
+### Understanding the Technical Details
+
+#### Memory Management
+
+Cartridge images are loaded into either:
+
+- **Flash memory:** For permanent storage and quick access
+- **Static RAM:** For temporary use or frequently changed cartridges
+
+The choice depends on your specific needs and usage patterns.
+
+#### Boot Configuration Commands
+
+The TS-Pico provides specific commands for managing cartridge images:
+
+- **`tpi:memboot`:** Configures which memory slot contains the boot ROM
+- **`tpi:memdock`:** Configures which memory slot contains the cartridge image
+
+These commands give you precise control over how your system starts up and which cartridge image is active.
+
+### Troubleshooting Cartridge Issues
+
+#### Problem: TS-Pico commands don't work after startup
+
+**Likely cause:** Physical cartridge is installed and taking control
+**Solution:** Remove physical cartridge and restart
+
+#### Problem: Digital cartridge image doesn't load
+
+**Possible causes:**
+
+- Cartridge image file is corrupted
+- Memory slot configuration is incorrect
+- Insufficient memory space for the cartridge image
+
+#### Problem: Some cartridge features don't work
+
+**Possible causes:**
+
+- Cartridge requires specific hardware that's not emulated
+- Cartridge has custom ROM that conflicts with TS-Pico
+- File format compatibility issues
+
+Understanding the relationship between physical cartridges and the TS-Pico helps you make the most of both your vintage cartridge collection and the modern convenience of the TS-Pico system.
 
 ## Memory and Flash Management
 
-### Understanding TS Pico Memory Architecture
+### Understanding TS-Pico Memory Architecture
 
-Your TS Pico has several different types of memory, each with its own purpose. Understanding these can help you make better use of your system and troubleshoot issues more effectively.
+Your TS-Pico has several different types of memory, each with its own purpose. Understanding these can help you make better use of your system and troubleshoot issues more effectively.
 
 #### Flash Memory (512KB)
-This is permanent storage that retains its contents even when power is off. Think of it like a hard drive - it's where the TS Pico stores:
+This is permanent storage that retains its contents even when power is off. Think of it like a hard drive - it's where the TS-Pico stores:
 - The firmware (operating system)
 - Cached TAP files for faster access
 - System configuration data
 - User data that needs to persist between sessions
 
 #### SRAM (512KB)
-This is high-speed temporary storage that's available to you. Unlike Flash memory, SRAM loses its contents when power is turned off, but it's much faster to access. The TS Pico uses SRAM for:
+This is high-speed temporary storage that's available to you. Unlike Flash memory, SRAM loses its contents when power is turned off, but it's much faster to access. The TS-Pico uses SRAM for:
 - Temporary file operations
 - Fast caching of frequently accessed data
 - Buffer space for large operations
 
 #### SD Card Storage
-This is your unlimited external storage. While not as fast as the internal memory, SD cards can hold thousands of TAP files and provide easy file transfer between your TS Pico and modern computers.
+This is your unlimited external storage. While not as fast as the internal memory, SD cards can hold thousands of TAP files and provide easy file transfer between your TS-Pico and modern computers.
 
 ### Advanced Memory Commands
 
-**⚠️ Warning:** The commands in this section are for advanced users who understand memory management. Incorrect use can cause system instability or data loss. If you're new to the TS Pico, stick to the basic commands until you're more comfortable with the system.
+**⚠️ Warning:** The commands in this section are for advanced users who understand memory management. Incorrect use can cause system instability or data loss. If you're new to the TS-Pico, stick to the basic commands until you're more comfortable with the system.
 
 #### Configuring Boot Memory
 ```
@@ -1133,67 +1141,7 @@ This low-level command receives data blocks and writes them to memory. It's prim
 
 ---
 
-## ZX Spectrum Compatibility Mode
 
-### A Bridge to Another World
-
-One of the most exciting features of the TS Pico is its ability to run ZX Spectrum software. The ZX Spectrum was the TS 2068's cousin in the Sinclair family, and while they're similar, they have some important differences. The TS Pico includes a TC2048 ROM in its Flash ROM that enables your TS 2068 to run ZX Spectrum programs.
-
-### Entering ZX Spectrum Mode
-
-To switch to Spectrum mode, follow these steps carefully:
-
-
-1. **Optional - Mount a TAP file:** If you want to load a Spectrum program:
-   ```
-   LOAD "tpi:filename.tap"
-   ```
-2. **Notify the Pico to stop TPI commands:**
-   ```
-   SAVE "tpi:zx48"
-   ```
-3. **Activate the Spectrum ROM:**
-   ```
-   OUT 244, 3
-   ```
-
-After these steps, your TS 2068 will be running in ZX Spectrum mode with the TC2048 ROM active.
-
-### What to Expect in Spectrum Mode
-
-**Keyboard differences:** Some keys might behave slightly differently. Most Spectrum software was designed with the Spectrum keyboard layout in mind.
-
-**Limited TPI support:** Once in Spectrum mode, you cannot use TPI commands. The limited ROM space means minimal customization is available.
-
-**Basic SAVE/LOAD/VERIFY/MERGE support:** The mode provides basic support for SLVM ZX Spectrum functionality.
-
-### Loading Spectrum Software
-
-Before entering Spectrum mode, mount your TAP files using the TPI command. Once in Spectrum mode, you can load programs using standard LOAD commands, but with limitations on file management.
-
-### Returning to TS 2068 Mode
-
-To return to normal TS 2068 operation:
-
-1. **Re-enable TPI commands:**
-   ```
-   OUT 10, 100
-   ```
-2. **Switch back to TS 2068 ROM:**
-   ```
-   OUT 244, 0
-   ```
-3. **If the system behaves unexpectedly:** Use the TS Reset function to restore normal operation.
-
-### Important Limitations and Cautions
-
-**Limited functionality:** Due to ROM space constraints, Spectrum mode offers basic support only. You cannot use TPI commands while in Spectrum mode.
-
-**TAP file behavior:** Some TAP files may cause unexpected behavior. Always test new files carefully.
-
-**File management limitations:** Loading and saving files has limitations in Spectrum mode. You may need to restart the system to load recently saved files.
-
-**Experiment and explore:** Despite the limitations, Spectrum mode opens up a vast library of software. Many classic Spectrum games and utilities work well on the TS 2068 through the TS Pico.
 
 ---
 
@@ -1201,7 +1149,7 @@ To return to normal TS 2068 operation:
 
 ### The Beauty of Backward Compatibility
 
-One of the most elegant aspects of the TS Pico is how it preserves the familiar LOAD and SAVE commands you already know. Once you have a TAP file mounted, your TS 2068 behaves exactly as it always has - but faster and more reliably than ever before.
+One of the most elegant aspects of the TS-Pico is how it preserves the familiar LOAD and SAVE commands you already know. Once you have a TAP file mounted, your TS 2068 behaves exactly as it always has - but faster and more reliably than ever before.
 
 ### Loading Programs the Familiar Way
 
@@ -1227,7 +1175,7 @@ This loads a program into a specific memory location. Advanced users can use thi
 
 ### Advanced Loading Commands: VERIFY and MERGE
 
-The TS Pico fully supports the traditional TS 2068 VERIFY and MERGE commands, giving you powerful tools for program management and verification.
+The TS-Pico fully supports the traditional TS 2068 VERIFY and MERGE commands, giving you powerful tools for program management and verification.
 
 #### VERIFY: Ensuring Data Integrity
 
@@ -1306,7 +1254,7 @@ Saving works just as you remember, but with modern conveniences:
 ```
 SAVE "my_program"
 ```
-This saves the current program in memory. The behavior depends on your current TS Pico configuration:
+This saves the current program in memory. The behavior depends on your current TS-Pico configuration:
 - **If no TAP file is mounted:** Creates a new TAP file with this name
 - **If a TAP file is mounted and append mode is off:** Creates a new TAP file
 - **If a TAP file is mounted and append mode is on:** Adds to the current TAP file
@@ -1348,7 +1296,7 @@ SAVE "tpi:append"            # Enable append mode
 
 #### Understanding Append Mode
 
-Append mode is a powerful feature that controls how the TS Pico handles SAVE operations when a TAP file is mounted.
+Append mode is a powerful feature that controls how the TS-Pico handles SAVE operations when a TAP file is mounted.
 
 **Enable append mode:**
 ```
@@ -1396,7 +1344,7 @@ SAVE "editor_v1"            # Also adds to utilities.tap
 
 When you type `LOAD ""` with a mounted TAP file, here's what happens behind the scenes:
 
-1. **The TS Pico receives the command** through the interface
+1. **The TS-Pico receives the command** through the interface
 2. **It reads the next block** from the mounted TAP file
 3. **It sends the data** to your TS 2068 just as if it were coming from a cassette tape
 4. **Your TS 2068 processes the data** exactly as it always has
@@ -1435,7 +1383,7 @@ If VERIFY reports mismatches:
 
 ### Mixing Modern and Traditional Commands
 
-You can freely mix TS Pico commands with traditional LOAD/SAVE operations:
+You can freely mix TS-Pico commands with traditional LOAD/SAVE operations:
 
 ```
 LOAD "tpi:dir"              # See what's available
@@ -1445,10 +1393,10 @@ SAVE "tpi:ffw" CODE 4,0     # Skip to program 4
 LOAD ""                     # Load program 4 traditionally
 SAVE "my_highscore"         # Save your progress traditionally
 VERIFY "my_highscore"       # Verify it saved correctly
-SAVE "tpi:close"            # Close the TAP file (TS Pico command)
+SAVE "tpi:close"            # Close the TAP file (TS-Pico command)
 ```
 
-This flexibility means you can use as much or as little of the TS Pico's advanced features as you're comfortable with.
+This flexibility means you can use as much or as little of the TS-Pico's advanced features as you're comfortable with.
 
 ---
 
@@ -1456,7 +1404,7 @@ This flexibility means you can use as much or as little of the TS Pico's advance
 
 ### Avoiding Compatibility Problems
 
-Proper file naming and organization prevents problems and ensures your TS Pico collection works reliably across different systems and situations. Understanding these standards helps you avoid frustrating compatibility issues.
+Proper file naming and organization prevents problems and ensures your TS-Pico collection works reliably across different systems and situations. Understanding these standards helps you avoid frustrating compatibility issues.
 
 ### Character Restrictions and Limitations
 
@@ -1465,7 +1413,7 @@ Proper file naming and organization prevents problems and ensures your TS Pico c
 **Never use these characters in filenames:**
 - **Forward slash (/)** - Reserved for directory separators
 - **Backslash (\)** - Can cause confusion across systems
-- **Colon (:)** - Reserved for TS Pico commands (tpi:)
+- **Colon (:)** - Reserved for TS-Pico commands (tpi:)
 - **Asterisk (*)** - Wildcard character, causes parsing issues
 - **Question mark (?)** - Wildcard character
 - **Quote marks (" ')** - Interfere with command syntax
@@ -1516,14 +1464,14 @@ file*.tap              # Asterisk causes parsing issues
 
 #### Understanding Case Behavior
 
-**TS Pico file system (FAT32):**
+**TS-Pico file system (FAT32):**
 - **Case preserving** - Keeps the case you type
 - **Case insensitive** - Treats "Game.tap" and "game.tap" as the same file
 - **Display case** - Shows filenames as you originally typed them
 
 **TS 2068 command behavior:**
 - **Generally case insensitive** for program names within TAP files
-- **Case sensitive** for some TS Pico commands and parameters
+- **Case sensitive** for some TS-Pico commands and parameters
 - **Consistent case** prevents confusion
 
 #### Case Best Practices
@@ -1757,15 +1705,82 @@ Examples:
 ✗ "My Special Programs".tap
 ```
 
-Following these naming and organization standards ensures your TS Pico collection remains reliable, portable, and easy to manage as it grows over time.
+Following these naming and organization standards ensures your TS-Pico collection remains reliable, portable, and easy to manage as it grows over time.
 
----
+## ZX Spectrum Compatibility Mode
+
+One of the most exciting features of the TS-Pico is its ability to run ZX Spectrum software. The ZX Spectrum was the TS 2068's cousin in the Sinclair family, and while they're similar, they have some important differences. The TS-Pico includes a TC2048 ROM in its Flash ROM that enables your TS 2068 to run ZX Spectrum programs.
+
+### Entering ZX Spectrum Mode
+
+To switch to Spectrum mode, follow these steps carefully:
+
+
+1. **Optional - Mount a TAP file:** If you want to load a Spectrum program:
+
+   ```
+   LOAD "tpi:filename.tap"
+   ```
+
+2. **Notify the Pico to stop TPI commands:**
+
+   ```
+   SAVE "tpi:zx48"
+   ```
+
+3. **Activate the Spectrum ROM:**
+
+   ```
+   OUT 244, 3
+   ```
+
+After these steps, your TS 2068 will be running in ZX Spectrum mode with the TC2048 ROM active.
+
+### What to Expect in Spectrum Mode
+
+**Keyboard differences:** Some keys might behave slightly differently. Most Spectrum software was designed with the Spectrum keyboard layout in mind.
+
+**Limited TPI support:** Once in Spectrum mode, you cannot use TPI commands. The limited ROM space means minimal customization is available.
+
+**Basic SAVE/LOAD/VERIFY/MERGE support:** The mode provides basic support for SLVM ZX Spectrum functionality.
+
+### Loading Spectrum Software
+
+Before entering Spectrum mode, mount your TAP files using the TPI command. Once in Spectrum mode, you can load programs using standard LOAD commands, but with limitations on file management.
+
+### Returning to TS 2068 Mode
+
+To return to normal TS 2068 operation:
+
+1. **Re-enable TPI commands:**
+
+   ```
+   OUT 10, 100
+   ```
+
+2. **Switch back to TS 2068 ROM:**
+
+   ```
+   OUT 244, 0
+   ```
+
+3. **If the system behaves unexpectedly:** Use the TS Reset function to restore normal operation.
+
+### Important Limitations and Cautions
+
+**Limited functionality:** Due to ROM space constraints, Spectrum mode offers basic support only. You cannot use TPI commands while in Spectrum mode.
+
+**TAP file behavior:** Some TAP files may cause unexpected behavior. Always test new files carefully.
+
+**File management limitations:** Loading and saving files has limitations in Spectrum mode. You may need to restart the system to load recently saved files.
+
+**Experiment and explore:** Despite the limitations, Spectrum mode opens up a vast library of software. Many classic Spectrum games and utilities work well on the TS 2068 through the TS-Pico.
 
 ## System Information and Diagnostics
 
-### Keeping Your TS Pico Healthy
+### Keeping Your TS-Pico Healthy
 
-Just like any sophisticated piece of equipment, your TS Pico benefits from regular monitoring and maintenance. The system includes comprehensive diagnostic tools that help you understand how your system is performing and identify potential issues before they become problems.
+Just like any sophisticated piece of equipment, your TS-Pico benefits from regular monitoring and maintenance. The system includes comprehensive diagnostic tools that help you understand how your system is performing and identify potential issues before they become problems.
 
 ### Comprehensive System Monitoring
 
@@ -1774,7 +1789,7 @@ Just like any sophisticated piece of equipment, your TS Pico benefits from regul
 SAVE "tpi:getinfo"
 ```
 
-This command is like asking your TS Pico for a complete health report. The information it provides includes:
+This command is like asking your TS-Pico for a complete health report. The information it provides includes:
 
 **Firmware Information:**
 - Current firmware version
@@ -1831,7 +1846,7 @@ Verbose: OFF
 SAVE "tpi:getlog"
 ```
 
-The TS Pico maintains a detailed log of everything it does. This log is invaluable for:
+The TS-Pico maintains a detailed log of everything it does. This log is invaluable for:
 - Understanding what happened when something goes wrong
 - Monitoring system performance over time
 - Identifying patterns in system behavior
@@ -1878,7 +1893,7 @@ Log entries include timestamps and severity levels:
 SAVE "tpi:verbose"
 ```
 
-Verbose mode provides detailed feedback about what the TS Pico is doing behind the scenes. When enabled, you'll see:
+Verbose mode provides detailed feedback about what the TS-Pico is doing behind the scenes. When enabled, you'll see:
 - Step-by-step progress during file operations
 - Detailed error messages with specific causes
 - Performance timing information
@@ -1930,7 +1945,7 @@ Verbose mode provides detailed feedback about what the TS Pico is doing behind t
 
 #### Warning Signs
 
-Contact the TS Pico community or support if you notice:
+Contact the TS-Pico community or support if you notice:
 - Frequent CRITICAL level log entries
 - Memory usage consistently above 90%
 - Slow file loading times
@@ -1952,7 +1967,7 @@ Before seeking help, gather this information:
 
 ### Don't Panic - Problems Are Solvable
 
-Every TS Pico user encounters issues from time to time. This is normal and expected - you're working with sophisticated hardware and software, and occasionally things don't go as planned. The good news is that most problems have simple solutions, and the TS Pico includes many built-in safety features to protect your data and system.
+Every TS-Pico user encounters issues from time to time. This is normal and expected - you're working with sophisticated hardware and software, and occasionally things don't go as planned. The good news is that most problems have simple solutions, and the TS-Pico includes many built-in safety features to protect your data and system.
 
 ### Basic Troubleshooting Philosophy
 
@@ -1962,22 +1977,22 @@ Every TS Pico user encounters issues from time to time. This is normal and expec
 
 **Document what works:** Keep notes about solutions that work for you. You might encounter the same issue again later.
 
-**Don't be afraid to ask for help:** The TS Pico community is friendly and helpful. If you're stuck, reach out for assistance.
+**Don't be afraid to ask for help:** The TS-Pico community is friendly and helpful. If you're stuck, reach out for assistance.
 
 ### First-Level Troubleshooting
 
 #### When Commands Don't Respond
 
-**Problem:** You type a TS Pico command and nothing happens, or you get an error message.
+**Problem:** You type a TS-Pico command and nothing happens, or you get an error message.
 
 **First steps:**
 1. **Check the LED:** Is the LED on the Raspberry Pi Pico blinking normally?
-2. **Test basic connectivity:** Try `LOAD "tpi:dir"` to see if the TS Pico responds at all
-3. **Check your typing:** TS Pico commands are case-sensitive and must be typed exactly
+2. **Test basic connectivity:** Try `LOAD "tpi:dir"` to see if the TS-Pico responds at all
+3. **Check your typing:** TS-Pico commands are case-sensitive and must be typed exactly
 4. **Check storage mode:** Use `PRINT PEEK 23899` to see if you're in the right mode
 
 **If the LED isn't blinking:**
-- Check that your TS Pico is properly seated in its connector
+- Check that your TS-Pico is properly seated in its connector
 - Ensure your TS 2068 is properly powered on
 - Try the TS Reset button to restart the system
 
@@ -1988,7 +2003,7 @@ Every TS Pico user encounters issues from time to time. This is normal and expec
 
 #### Micro SD Card Issues
 
-**Problem:** The TS Pico can't see your micro SD card or reports micro SD card errors.
+**Problem:** The TS-Pico can't see your micro SD card or reports micro SD card errors.
 
 **Troubleshooting steps:**
 1. **Check physical connection:** Ensure the micro SD card is fully inserted
@@ -1996,7 +2011,7 @@ Every TS Pico user encounters issues from time to time. This is normal and expec
 3. **Check the card in a computer:** Verify the micro SD card works in a regular computer (with adapter if needed)
 4. **Check formatting:** Ensure the micro SD card is formatted as FAT32
 
-**If the micro SD card works in a computer but not in the TS Pico:**
+**If the micro SD card works in a computer but not in the TS-Pico:**
 - Try a different micro SD card to rule out compatibility issues
 - Check that the micro SD card isn't write-protected
 - Ensure the micro SD card isn't corrupted
@@ -2023,7 +2038,7 @@ Every TS Pico user encounters issues from time to time. This is normal and expec
 **Problem:** TAP files mount and programs load, but they crash or behave strangely.
 
 **Investigation steps:**
-1. **Check program compatibility:** Some programs may not work perfectly with the TS Pico
+1. **Check program compatibility:** Some programs may not work perfectly with the TS-Pico
 2. **Try loading from a different position:** Use FFW/REW to try loading from different blocks
 3. **Check TAPDIR:** Verify the program structure looks correct
 4. **Test with known-good programs:** See if the problem affects all programs
@@ -2083,10 +2098,10 @@ Every TS Pico user encounters issues from time to time. This is normal and expec
 
 #### Connection Problems
 
-**Problem:** The TS Pico seems to work intermittently or loses connection.
+**Problem:** The TS-Pico seems to work intermittently or loses connection.
 
 **Connection troubleshooting:**
-1. **Check physical connections:** Ensure the TS Pico is firmly seated in the expansion bus
+1. **Check physical connections:** Ensure the TS-Pico is firmly seated in the expansion bus
 2. **Clean the connectors:** Use a dry cloth to clean the edge connector contacts
 3. **Check for interference:** Remove other peripherals temporarily
 4. **Test different positions:** Try different slots on the expansion bus
@@ -2124,17 +2139,17 @@ SAVE "tpi:sdcard"    # Switch to SD card mode for TS-Pico
 **Level 2 - TS Reset:**
 1. Press the TS Reset button
 2. Wait for the copyright messages to appear
-3. Test basic TS Pico functionality with `LOAD "tpi:dir"`
+3. Test basic TS-Pico functionality with `LOAD "tpi:dir"`
 
 **Level 3 - Power Cycle:**
 1. Turn off the TS 2068 completely
 2. Wait 10 seconds
 3. Turn the TS 2068 back on
-4. Test TS Pico functionality
+4. Test TS-Pico functionality
 
 **Level 4 - Hardware Check:**
 1. Power down the TS 2068
-2. Remove and reseat the TS Pico in the expansion bus
+2. Remove and reseat the TS-Pico in the expansion bus
 3. Check all physical connections
 4. Power up and test
 
@@ -2183,9 +2198,7 @@ SAVE "tpi:sdcard"    # Switch to SD card mode for TS-Pico
 
 ## What's Next? Upgrades and Extensions
 
-### The Future Is Bright
-
-Your TS Pico isn't just a storage device - it's a platform for continuous improvement and expansion. The development team has designed it with upgradability in mind, ensuring that your investment will continue to pay dividends as new features and capabilities are developed.
+Your TS-Pico isn't just a storage device - it's a platform for continuous improvement and expansion. The development team has designed it with upgradability in mind, ensuring that your investment will continue to pay dividends as new features and capabilities are developed.
 
 ### Firmware Upgrades: Keeping Current
 
@@ -2200,7 +2213,7 @@ Firmware upgrades bring:
 
 #### The Upgrade Process
 
-The TS Pico includes a sophisticated upgrade system that makes updating firmware safe and straightforward. The complete upgrade process is covered in the separate "TS-Pico Firmware Upgrade Instructions" document, but here's an overview of what's involved:
+The TS-Pico includes a sophisticated upgrade system that makes updating firmware safe and straightforward. The complete upgrade process is covered in the separate "TS-Pico Firmware Upgrade Instructions" document, but here's an overview of what's involved:
 
 **Preparation phase:**
 - Download the upgrade files from the official repository
@@ -2208,7 +2221,7 @@ The TS Pico includes a sophisticated upgrade system that makes updating firmware
 - Set aside time for the complete process
 
 **Hardware phase:**
-- Connect the TS Pico to your computer via USB
+- Connect the TS-Pico to your computer via USB
 - Install the new firmware using the built-in bootloader
 - Update support files on the SD card
 
@@ -2236,7 +2249,7 @@ The TS Pico includes a sophisticated upgrade system that makes updating firmware
 
 #### Designed for Expansion
 
-The TS Pico was designed with expansion in mind. The development team has made the hardware designs freely available, encouraging community innovation and customization.
+The TS-Pico was designed with expansion in mind. The development team has made the hardware designs freely available, encouraging community innovation and customization.
 
 **Available resources:**
 - **Complete schematics:** Understanding how everything works
@@ -2246,7 +2259,7 @@ The TS Pico was designed with expansion in mind. The development team has made t
 
 #### Community Hardware Projects
 
-The TS Pico community is actively developing extensions and enhancements:
+The TS-Pico community is actively developing extensions and enhancements:
 
 **Current projects:**
 - **Enhanced cases:** Better protection and easier access
@@ -2264,7 +2277,7 @@ The TS Pico community is actively developing extensions and enhancements:
 
 #### You Can Do Your Own Thing
 
-The TS Pico is built on open-source principles. This means you're not limited to what comes in the box - you can modify, enhance, and extend the system to meet your specific needs.
+The TS-Pico is built on open-source principles. This means you're not limited to what comes in the box - you can modify, enhance, and extend the system to meet your specific needs.
 
 **Development resources:**
 - **Complete source code:** Available on GitHub
@@ -2310,7 +2323,7 @@ The TS Pico is built on open-source principles. This means you're not limited to
 
 #### Open Source Philosophy
 
-The TS Pico project embraces open-source development principles:
+The TS-Pico project embraces open-source development principles:
 - **Transparency:** All design decisions are made openly
 - **Collaboration:** Community input shapes development priorities
 - **Sharing:** Improvements benefit everyone
@@ -2329,251 +2342,6 @@ The TS Pico project embraces open-source development principles:
 - **Feature requests:** Suggest improvements and new capabilities
 - **Code contributions:** Submit improvements and new features
 - **Hardware designs:** Share custom modifications and extensions
-
-#### The Reward of Participation
-
-Contributing to the TS Pico project isn't just about giving back - it's about:
-- **Learning:** Developing new skills and understanding
-- **Networking:** Connecting with like-minded enthusiasts
-- **Influence:** Helping shape the future of the project
-- **Satisfaction:** Seeing your contributions help others
-
-### Future Directions
-
-#### Planned Enhancements
-
-The development team has outlined several exciting directions for future development:
-
-**Short-term improvements:**
-- Enhanced file management capabilities
-- Better error handling and recovery
-- Improved compatibility with more software
-- Performance optimizations
-
-**Medium-term projects:**
-- Network connectivity options
-- Integration with modern development tools
-- Enhanced multimedia capabilities
-- Extended memory management
-
-**Long-term vision:**
-- Complete vintage computer platform support
-- Modern programming environments for vintage hardware
-- Educational tools for learning computing history
-- Bridge between vintage and modern computing
-
-#### Your Role in the Future
-
-The future of the TS Pico depends on community involvement. Whether you're a casual user who provides feedback or an active developer contributing code, your participation helps ensure that the TS Pico continues to evolve and improve.
-
-**Stay engaged:**
-- Follow development discussions
-- Try new features as they become available
-- Share your experiences with others
-- Contribute your ideas and suggestions
-
-The TS Pico represents more than just a storage device - it's a testament to the enduring appeal of vintage computing and the power of community-driven development. By joining this community, you're not just using a product, you're participating in a movement to preserve and enhance computing history.
-
----
-
-## The TS Pico Community
-
-### More Than Just Users - We're a Family
-
-The TS Pico isn't just a product - it's the centerpiece of a vibrant, welcoming community of vintage computing enthusiasts, developers, educators, and hobbyists. Whether you're a newcomer to vintage computing or a long-time enthusiast, you'll find your place in this community.
-
-### Who We Are
-
-#### Vintage Computing Enthusiasts
-People who appreciate the elegance and simplicity of classic computers. They collect, restore, and use vintage machines not just for nostalgia, but because these computers offer a different, often more intimate computing experience.
-
-#### Modern Developers with Vintage Hearts
-Programmers and engineers who bring contemporary skills to vintage platforms. They're bridging the gap between old and new, creating modern tools for classic computers.
-
-#### Educators and Students
-Teachers and learners who use vintage computers to understand computing fundamentals. The TS Pico provides an excellent platform for education because it makes vintage computing more accessible while preserving the authentic experience.
-
-#### Hobbyists and Tinkerers
-People who enjoy understanding how things work and aren't afraid to experiment. They're constantly pushing the boundaries of what's possible with vintage hardware.
-
-### Community Values
-
-#### Helpfulness
-No question is too basic, and no problem is too simple. The community believes that everyone started somewhere, and helping newcomers is not just welcome - it's encouraged.
-
-#### Knowledge Sharing
-Members freely share their discoveries, solutions, and creations. Whether it's a new programming technique, a hardware modification, or just a great game recommendation, sharing knowledge strengthens the entire community.
-
-#### Preservation
-The community is committed to preserving computing history. This means not just keeping old machines running, but also documenting their history, preserving software, and teaching others about their significance.
-
-#### Innovation
-While respecting the past, the community embraces innovation that enhances vintage computing. The TS Pico itself is an example of this philosophy - modern technology that enhances rather than replaces vintage computing.
-
-### Where We Gather
-
-#### GitHub Repository
-**Primary hub:** https://github.com/TS-Pico-dev/TS-Pico
-
-This is the main development center where:
-- **Source code** is maintained and developed
-- **Issues** are reported and tracked
-- **Discussions** about features and improvements take place
-- **Documentation** is collaboratively maintained
-- **Releases** are published and announced
-
-**How to participate:**
-- **Star the repository** to show support and stay informed
-- **Watch for releases** to get notifications about updates
-- **Report issues** if you encounter problems
-- **Contribute** if you have programming skills
-
-#### Hardware Design Resources
-**Board designs:** https://github.com/jburrell7/TSPICO
-**Expansion bus:** https://github.com/jburrell7/TS2068_Extender
-
-These repositories contain everything needed to understand, modify, or recreate the TS Pico hardware:
-- Complete schematics and PCB layouts
-- Bills of materials for building your own
-- Assembly instructions and documentation
-- Custom modifications and improvements
-
-#### Community Forums and Discussion Groups
-Various platforms host ongoing discussions about the TS Pico and vintage computing in general:
-- **Topic-specific forums** for detailed technical discussions
-- **General chat areas** for casual conversation and quick questions
-- **Project showcases** where members share their creations
-- **Help sections** for troubleshooting and support
-
-### How to Get Involved
-
-#### For New Users
-
-**Start by introducing yourself:** Most communities have introduction areas where you can share your background and interests. Don't be shy - the community loves meeting new members!
-
-**Ask questions:** The community thrives on helping newcomers. Whether you're stuck on a technical issue or just want to understand how something works, ask away.
-
-**Share your experiences:** Your fresh perspective as a new user is valuable. Share what you find confusing, what works well, and what could be improved.
-
-**Participate in discussions:** Even if you don't have technical expertise, your opinions and experiences matter.
-
-#### For Experienced Users
-
-**Help newcomers:** Share your knowledge and experience with those just starting out. Remember what it was like when you were learning.
-
-**Document your discoveries:** Write guides, create tutorials, or document solutions to problems you've encountered.
-
-**Test new features:** Try beta releases and provide feedback to help improve the system.
-
-**Contribute content:** Share TAP files, create collections, or develop utilities that others can use.
-
-#### For Developers
-
-**Contribute code:** The project welcomes code contributions, whether they're bug fixes, new features, or improvements to existing functionality.
-
-**Review pull requests:** Help maintain code quality by reviewing contributions from others.
-
-**Write documentation:** Technical documentation is always needed and appreciated.
-
-**Mentor others:** Help less experienced programmers learn the codebase and contribute effectively.
-
-### Community Projects and Initiatives
-
-#### Collaborative Development
-The TS Pico is developed collaboratively, with contributions from community members around the world. This distributed development model ensures that the project benefits from diverse perspectives and expertise.
-
-#### Educational Outreach
-Community members are working on educational materials and programs that use the TS Pico to teach:
-- **Computing history:** Understanding the evolution of personal computers
-- **Programming fundamentals:** Learning to code on simple, understandable systems
-- **Hardware concepts:** Exploring how computers work at a basic level
-- **Problem-solving:** Using limitations as creative constraints
-
-#### Preservation Projects
-The community is actively working to preserve:
-- **Software libraries:** Collecting and organizing vintage software
-- **Documentation:** Scanning and digitizing original manuals and materials
-- **Knowledge:** Recording the experiences and expertise of veteran users
-- **Hardware:** Developing tools and techniques for maintaining vintage equipment
-
-#### Innovation Labs
-Community members are exploring cutting-edge applications:
-- **Modern connectivity:** Bringing vintage computers online
-- **Cross-platform development:** Creating tools that work across different vintage systems
-- **Hybrid systems:** Combining vintage and modern components in creative ways
-- **Educational platforms:** Developing comprehensive learning systems
-
-### Supporting the Community
-
-#### Financial Support
-While the TS Pico project is open-source and free, there are costs associated with:
-- **Development infrastructure:** Hosting, tools, and services
-- **Hardware development:** Prototypes, testing equipment, and components
-- **Community events:** Meetups, conferences, and workshops
-
-**Ways to provide financial support:**
-- Purchase TS Pico hardware from official sources
-- Contribute to development funds
-- Sponsor specific features or improvements
-- Support community events and initiatives
-
-#### Non-Financial Contributions
-Not everyone can contribute financially, but there are many other valuable ways to support the community:
-
-**Time and expertise:** Volunteer your skills for development, documentation, or support.
-
-**Testing and feedback:** Help improve the system by trying new features and reporting issues.
-
-**Advocacy:** Spread the word about the TS Pico and vintage computing in general.
-
-**Content creation:** Write articles, create videos, or develop educational materials.
-
-### Community Guidelines and Etiquette
-
-#### Be Respectful
-Treat all community members with respect, regardless of their experience level or background. Everyone was a beginner once.
-
-#### Stay On Topic
-Keep discussions relevant to the TS Pico and vintage computing. Off-topic conversations can happen, but they shouldn't dominate technical forums.
-
-#### Help Others Learn
-When answering questions, explain not just what to do, but why. Help others understand the underlying concepts.
-
-#### Give Credit
-When sharing code, ideas, or solutions, acknowledge the original contributors. The community values proper attribution.
-
-#### Be Patient
-Not everyone communicates in the same way or at the same pace. Be patient with those who are learning or who may not express themselves clearly.
-
-### The Future of the Community
-
-#### Growing Together
-As the TS Pico community grows, we're committed to maintaining the values and culture that make it special. This means:
-- **Preserving helpfulness** as the community gets larger
-- **Maintaining quality** as more people contribute
-- **Staying true to our values** as the project evolves
-- **Supporting newcomers** even as we tackle advanced topics
-
-#### Global Reach
-The TS Pico community is international, with members from many countries and cultures. This diversity is a strength that brings different perspectives and approaches to vintage computing.
-
-#### Intergenerational Knowledge Transfer
-One of the most valuable aspects of the community is the connection between people who experienced the vintage computing era firsthand and those discovering it for the first time. This knowledge transfer ensures that important skills and perspectives aren't lost.
-
-### Making Your Mark
-
-Every community member has the opportunity to make a meaningful contribution. Whether you:
-- **Answer a newcomer's question**
-- **Report a bug that helps improve the system**
-- **Create a tutorial that helps others learn**
-- **Develop a feature that enhances functionality**
-- **Share an interesting discovery or technique**
-
-Your contribution matters and helps make the community stronger.
-
-The TS Pico community is more than just a support network for a vintage computing accessory - it's a gathering place for people who appreciate the art and craft of computing. By joining this community, you're not just getting help with your TS Pico; you're becoming part of a movement to preserve, understand, and extend the golden age of personal computing.
-
----
 
 ## Quick Reference Card
 
@@ -2659,13 +2427,13 @@ SAVE "OUT 10, 100"               # Return from Spectrum mode
 
 ```
 Standard TS 2068 Memory Map with TS-Pico Integration:
-0000h-3FFFh: ROM (modified by TS Pico)
+0000h-3FFFh: ROM (modified by TS-Pico)
 4000h-57FFh: Screen memory
 5800h-5AFFh: Attributes
 5B00h-5BFFh: Printer buffer
 5C00h-5CBFh: System variables
 5CC0h-5DCCh: User accessible area
-5DCDh-5DDCh: TS PICO RESERVED (16 bytes) - DO NOT USE
+5DCDh-5DDCh: TS-Pico RESERVED (16 bytes) - DO NOT USE
 5DDBh:       TPMODE variable (0=tape, 1=SD card)
 5DDDh-FFFFh: User RAM (continues standard map)
 ```
@@ -2674,9 +2442,8 @@ Standard TS 2068 Memory Map with TS-Pico Integration:
 
 | Code | Type | Meaning | Solution |
 |------|------|---------|----------|
-| 1 | Success | Operation completed normally | None needed |
-| 2 | Error | Invalid I/O device | Check command syntax |
-| J | TS 2068 | Invalid I/O device | Verify TS Pico connection |
+| 0 | Success | Operation completed normally | None needed |
+| J | TS 2068 | Invalid I/O device | (use a command to find out what happened?) |
 
 ### Memory Management Quick Reference
 
@@ -2689,10 +2456,8 @@ Standard TS 2068 Memory Map with TS-Pico Integration:
 ### Troubleshooting Quick Steps
 
 1. **Check LED status** - Is it blinking normally?
-2. **Check storage mode** - Use `PRINT PEEK 23899`
 3. **Test basic connectivity** - Try `LOAD "tpi:dir"`
-4. **Check physical connections** - Ensure TS Pico is properly seated
-5. **Review error messages** - Read them carefully for clues
+4. **Check physical connections** - Ensure TS-Pico is properly seated
 6. **Check activity log** - Use `SAVE "tpi:getlog"`
 7. **Try TS Reset** - Press reset button if needed
 8. **Power cycle** - Turn TS 2068 off and on as last resort
@@ -2718,15 +2483,13 @@ Standard TS 2068 Memory Map with TS-Pico Integration:
 
 ## Appendix A: External Commands for Developers
 
-### Introduction to External Commands
-
-The TS Pico firmware includes a powerful extension system that allows developers to add custom commands without modifying the core firmware. This system uses external Python modules that integrate seamlessly with the main TS Pico software.
+The TS-Pico firmware includes a powerful extension system that allows developers to add custom commands without modifying the core firmware. This system uses external Python modules that integrate seamlessly with the main TS-Pico software.
 
 ### Understanding the External Command Architecture
 
 #### How External Commands Work
 
-External commands are implemented as Python functions that are called by the main TS Pico firmware when specific command patterns are detected. This architecture provides several benefits:
+External commands are implemented as Python functions that are called by the main TS-Pico firmware when specific command patterns are detected. This architecture provides several benefits:
 
 - **Modularity:** New commands can be added without touching the core system
 - **Safety:** External commands run in a controlled environment
@@ -2735,7 +2498,7 @@ External commands are implemented as Python functions that are called by the mai
 
 #### The Command Processing Flow
 
-When you type a TS Pico command, the system follows this process:
+When you type a TS-Pico command, the system follows this process:
 
 1. **Command parsing:** The firmware analyzes the command syntax
 2. **Type determination:** Determines if it's a core command or external command
@@ -3054,23 +2817,21 @@ Keep a separate documentation file listing all available external commands and t
 5. **Submit a pull request** with detailed description
 6. **Respond to feedback** from code reviewers
 
-The external command system makes the TS Pico incredibly extensible while maintaining system stability and safety. Whether you're adding simple utilities or complex applications, this architecture provides the foundation for unlimited creativity and functionality.
+The external command system makes the TS-Pico incredibly extensible while maintaining system stability and safety. Whether you're adding simple utilities or complex applications, this architecture provides the foundation for unlimited creativity and functionality.
 
 ---
 
 ## Appendix B: Machine Language Flash Programming
 
-### Introduction to Flash Memory Programming
+The TS-Pico includes sophisticated Flash memory management capabilities that allow advanced users to directly program the onboard Flash memory using machine language routines. This functionality is primarily intended for system developers, firmware engineers, and advanced users who need direct hardware control.
 
-The TS Pico includes sophisticated Flash memory management capabilities that allow advanced users to directly program the onboard Flash memory using machine language routines. This functionality is primarily intended for system developers, firmware engineers, and advanced users who need direct hardware control.
-
-**⚠️ CRITICAL WARNING:** The routines described in this appendix directly manipulate Flash memory hardware. Incorrect use can permanently damage your TS Pico or corrupt system firmware. Only attempt these operations if you have extensive experience with machine language programming and understand the risks involved.
+**CRITICAL WARNING:** The routines described in this appendix directly manipulate Flash memory hardware. Incorrect use can permanently damage your TS-Pico or corrupt system firmware. Only attempt these operations if you have extensive experience with machine language programming and understand the risks involved.
 
 ### Understanding the Flash Memory Architecture
 
 #### Flash Memory Organization
 
-The TS Pico's Flash memory is organized into two main 32KB blocks:
+The TS-Pico's Flash memory is organized into two main 32KB blocks:
 - **Lower Block (0x0000-0x7FFF):** Lower 32KB of Flash memory
 - **Upper Block (0x8000-0xFFFF):** Upper 32KB of Flash memory
 
