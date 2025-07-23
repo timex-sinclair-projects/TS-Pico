@@ -43,7 +43,7 @@ Think of the TS Pico as a bridge between your classic computer and today's techn
 
 ### The Technology Behind the Magic
 
-At its heart, the TS Pico is powered by a Raspberry Pi Pico - a tiny but powerful computer that acts as your TS 2068's new best friend. Programmed in MicroPython (a streamlined version of the popular Python programming language), the TS Pico allows you to save and load programs from TAP files stored on a standard SD card - the same kind you might use in a digital camera.
+At its heart, the TS Pico is powered by a Raspberry Pi Pico - a tiny but powerful computer that acts as your TS 2068's new best friend. Programmed in MicroPython (a streamlined version of the popular Python programming language), the TS Pico allows you to save and load programs from TAP files stored on a standard micro SD card - the same kind you might use in a smartphone or tablet.
 
 But that's not all. Your TS Pico comes equipped with an impressive 512KB of Flash memory. To put that in perspective, that's enough space to store dozens of your favorite programs instantly accessible without even touching the SD card. Some of this Flash memory holds the TS Pico's advanced operating system - think of it as the brain that makes everything work smoothly. The rest is available for your use, acting like super-fast storage for your most frequently used programs.
 
@@ -71,35 +71,178 @@ Installation is straightforward, but let's take it step by step. The most import
 
 Once your TS 2068 is turned off, take a moment to remove any cartridges that might be plugged into the computer. This gives you clear access to the expansion connector and eliminates any possibility of conflicts.
 
-### Understanding Your TS Pico Style
+### Understanding Your TS Pico Installation
 
-The TS Pico comes in two different styles, and the installation process depends on which one you have:
+The TS Pico works with an expansion bus adapter that plugs into your TS 2068 first, then provides multiple slots for various devices including your TS Pico. This design is ideal because it allows you to use multiple peripherals and gives you the flexibility to easily swap devices.
 
-#### Direct Connect Style
-This version looks like a large cartridge and plugs directly into your TS 2068's expansion port. When connected, it will extend horizontally from the right side of your computer. This style is perfect if you want a clean, simple setup without additional cables or adapters.
+#### Installing Your TS Pico with Expansion Bus
+1. **Install the expansion bus** into your TS 2068's expansion port:
+   - Locate the expansion connector on the right side of your TS 2068. It's the long, rectangular slot with small metal contacts inside.
+   - Find the corresponding connector on your expansion bus. You'll notice it has a small notch or "key" - this isn't decorative, it's a safety feature to ensure you can't insert it backwards.
+   - Line up the key on the expansion bus with the corresponding slot in your TS 2068's connector. This should feel natural and easy - if you're forcing anything, stop and check your alignment.
+   - Gently but firmly press the expansion bus into the connector until it's fully seated. You should feel it slide in smoothly and then stop when it's properly connected.
 
-To install a direct connect TS Pico:
-1. **Locate the expansion connector** on the right side of your TS 2068. It's the long, rectangular slot with small metal contacts inside.
-2. **Find the corresponding connector** on your TS Pico. You'll notice it has a small notch or "key" - this isn't decorative, it's a safety feature to ensure you can't insert the card backwards.
-3. **Line up the key** on the TS Pico with the corresponding slot in your TS 2068's connector. This should feel natural and easy - if you're forcing anything, stop and check your alignment.
-4. **Gently but firmly press the TS Pico** into the connector until it's fully seated. You should feel it slide in smoothly and then stop when it's properly connected.
-
-#### Expansion Bus Style
-This version works with an expansion bus adapter that plugs into your TS 2068 first, then provides multiple slots for various devices including your TS Pico. This style is ideal if you plan to use multiple peripherals or if you want the flexibility to easily swap devices.
-
-To install an expansion bus TS Pico:
-1. **Install the expansion bus** into your TS 2068's expansion port using the same careful alignment process described above.
 2. **Choose an appropriate slot** on the expansion bus for your TS Pico. Any slot will work, but many users prefer the leftmost slot for easy access.
+
 3. **Install the TS Pico** into the chosen slot on the expansion bus, again using the key alignment to ensure proper orientation.
 
 ### After Installation
 
-Once your TS Pico is physically connected, take a moment to check that everything looks right:
+Once your TS Pico is installed in the expansion bus, take a moment to check that everything looks right:
 - The TS Pico should be firmly seated with no wobbling
 - All connectors should be fully engaged
 - Nothing should look forced or crooked
 
 If everything looks good, you're ready to power up and start exploring!
+
+---
+
+## Setting Up Your Micro SD Card
+
+### Preparing a New Micro SD Card for Use
+
+If you're using a brand new micro SD card with your TS-Pico, you'll need to prepare it properly before you can start using it. This is a one-time setup process that ensures your TS-Pico can find and access your TAP files correctly.
+
+#### Why This Setup is Necessary
+
+The TS-Pico expects to find your TAP files in a specific directory structure on your micro SD card. When you get a new micro SD card, it's usually either completely blank or formatted in a way that might not be compatible with the TS-Pico. Setting it up correctly ensures everything works smoothly from the start.
+
+### Step 1: Format Your Micro SD Card
+
+**Important:** Formatting will erase everything on the micro SD card. If you have important data on the card, back it up first!
+
+#### Using Windows:
+1. **Insert your micro SD card** into your computer (you may need a micro SD to SD adapter)
+2. **Open File Explorer** and locate your micro SD card (it will appear as a new drive)
+3. **Right-click on the micro SD card drive** and select "Format..."
+4. **Choose these settings:**
+   - **File system:** FAT32
+   - **Allocation unit size:** Default
+   - **Volume label:** You can name it "TS-PICO" or leave it blank
+5. **Click "Start"** and confirm that you want to format the card
+6. **Wait for formatting to complete** (this usually takes just a few seconds)
+
+#### Using macOS:
+1. **Insert your micro SD card** into your computer
+2. **Open Disk Utility** (found in Applications > Utilities)
+3. **Select your micro SD card** from the list on the left
+4. **Click "Erase"** at the top of the window
+5. **Choose these settings:**
+   - **Name:** TS-PICO (or whatever you prefer)
+   - **Format:** MS-DOS (FAT) - this is the same as FAT32
+   - **Scheme:** Master Boot Record
+6. **Click "Erase"** and confirm
+7. **Wait for the process to complete**
+
+#### Using Linux:
+1. **Insert your micro SD card** and identify the device (usually /dev/sdb1 or similar)
+2. **Open a terminal**
+3. **Unmount the card first:** `sudo umount /dev/sdb1` (replace with your device)
+4. **Format with FAT32:** `sudo mkfs.vfat -F 32 /dev/sdb1`
+5. **Wait for formatting to complete**
+
+### Step 2: Create the TAP Directory
+
+Once your micro SD card is formatted, you need to create the directory where the TS-Pico will look for your TAP files.
+
+#### Using Any Operating System:
+1. **Open your file manager** and navigate to your micro SD card
+2. **Create a new folder** called exactly `TAP` (all capital letters)
+3. **Verify the folder was created** - you should see an empty TAP folder on your micro SD card
+
+**Important naming notes:**
+- The folder MUST be named "TAP" in all capital letters
+- Don't use "tap", "Tap", or "TaP" - only "TAP" will work
+- Make sure there are no extra spaces before or after the name
+
+### Step 3: Test Your Setup
+
+Now let's make sure everything is working correctly:
+
+1. **Safely eject** your micro SD card from your computer
+2. **Insert the micro SD card** into your TS-Pico
+3. **Turn on your TS 2068** with the TS-Pico connected
+4. **Type this command:** `LOAD "tpi:dir"`
+5. **Press ENTER**
+
+**What you should see:**
+```
+Path: /
+File Name                    Size
+<TAP>                        0 b
+```
+
+**Success!** If you see the TAP directory listed, your micro SD card is properly set up and ready to use.
+
+### Step 4: Organize Your TAP Directory (Optional)
+
+You can organize your TAP files within the TAP directory using subdirectories. Here are some popular organization schemes:
+
+#### Simple Organization:
+```
+TAP/
+├── Games/
+├── Utilities/
+└── Personal/
+```
+
+#### Detailed Organization:
+```
+TAP/
+├── Games/
+│   ├── Action/
+│   ├── Adventure/
+│   ├── Puzzle/
+│   └── Educational/
+├── Utilities/
+│   ├── Programming/
+│   └── System/
+└── Personal/
+    └── MyPrograms/
+```
+
+**To create subdirectories:**
+1. **Navigate into the TAP folder** on your computer
+2. **Create new folders** with descriptive names
+3. **Use the TS-Pico's `cd` command** to navigate between them
+
+### Adding Your First TAP Files
+
+Once your micro SD card is set up, you can start adding TAP files:
+
+1. **Copy TAP files** from your computer into the TAP directory (or its subdirectories)
+2. **Safely eject** the micro SD card from your computer
+3. **Insert it** back into your TS-Pico
+4. **Use `LOAD "tpi:dir"`** to see your files
+5. **Use `LOAD "filename.tap"`** to mount a specific TAP file
+
+### Troubleshooting Setup Issues
+
+#### Problem: "No TAP directory found" error
+**Solution:** Make sure you created a folder named exactly "TAP" (all capitals) in the root directory of your micro SD card.
+
+#### Problem: TS-Pico doesn't recognize the micro SD card
+**Solutions:**
+- Verify the card is formatted as FAT32
+- Try a different micro SD card to rule out hardware issues
+- Check that the card is fully inserted into the TS-Pico
+
+#### Problem: "Directory not found" when trying to access TAP files
+**Solution:** Make sure your TAP files are inside the TAP directory, not in the root of the micro SD card.
+
+### Best Practices for New Cards
+
+**Choose quality cards:** Invest in a reputable brand for reliability and longevity.
+
+**Don't overfill:** Keep at least 10% of the card's space free for optimal performance.
+
+**Regular backups:** Copy your TAP collection to your computer periodically as a backup.
+
+**Safe handling:** Micro SD cards are tiny and easy to lose - handle them carefully and store them safely.
+
+**Label your cards:** If you use multiple cards, label them clearly so you know what's on each one.
+
+Once you've completed this setup process, your micro SD card is ready for years of TS-Pico enjoyment. You only need to do this setup once per card - after that, you can simply add and remove TAP files as needed using your computer.
 
 ---
 
@@ -133,9 +276,9 @@ Depending on what's on your SD card, you might see:
 - A message about available space on your SD card
 
 **Don't panic if you see an error message!** This is actually normal if:
-- Your SD card is empty (it will say something like "no files found")
-- Your SD card isn't inserted properly
-- Your SD card needs to be formatted
+- Your micro SD card is empty (it will say something like "no files found")
+- Your micro SD card isn't inserted properly
+- Your micro SD card needs to be formatted
 
 We'll cover how to handle these situations in the troubleshooting section.
 
@@ -150,11 +293,152 @@ Congratulations! You've just successfully communicated with your TS Pico. That s
 ### If You Got an Error
 
 Don't worry - this is a learning process, and errors are part of learning. The most common issues at this stage are:
-- **No SD card inserted:** Make sure your SD card is fully inserted into the TS Pico
-- **SD card not formatted:** Some SD cards need to be formatted before use
+- **No micro SD card inserted:** Make sure your micro SD card is fully inserted into the TS Pico
+- **Micro SD card not formatted:** Some micro SD cards need to be formatted before use
 - **Connection issue:** Double-check that your TS Pico is fully seated in its connector
 
 We'll cover all of these scenarios in detail in the troubleshooting section.
+
+---
+
+## Understanding Cartridge Compatibility
+
+### The Two Connector System
+
+Your TS 2068 actually has two different types of connectors, and understanding how they work together with your TS-Pico is important for getting the best experience:
+
+#### Expansion Connector (Back of Computer)
+This is the long rectangular connector on the back of your TS 2068 where your TS-Pico's expansion card plugs in. This connector is designed for peripherals like the TS-Pico, disk drives, and other system expansions.
+
+#### Cartridge Connector (Front of Computer)
+This is the connector under the cartridge door on the front of your TS 2068, officially called the "DOCK" connector. This is where you would normally plug in game cartridges and certain software cartridges.
+
+### Physical vs. Logical Compatibility
+
+Here's something that might seem confusing at first: **physically, cartridges and the TS-Pico don't interfere with each other.** You can have a cartridge plugged into the front connector and the TS-Pico plugged into the back connector at the same time without any physical problems.
+
+**However, having a cartridge plugged in will interfere with the TS-Pico's operation** due to how your TS 2068's ROM (the computer's built-in software) works.
+
+### Why Cartridges Interfere with TS-Pico Operation
+
+#### The Boot Sequence Problem
+
+When you turn on your TS 2068, it goes through an initialization sequence that includes checking for a cartridge in the cartridge slot. If it finds an "auto boot" cartridge (like most games or certain software), the computer immediately hands over control to that cartridge and runs it. This bypasses the rest of the normal startup sequence.
+
+#### How the TS-Pico ROM Works
+
+The TS-Pico includes a modified version of the TS 2068's ROM that contains the same initialization sequence as the original. However, since the Raspberry Pi Pico needs a few seconds to boot up when you first turn on power, the TS-Pico holds your TS 2068 in a RESET state during this time.
+
+#### The Timing Issue
+
+Here's where the problem occurs: when the TS-Pico releases the RESET and your TS 2068 starts its initialization sequence, if there's a cartridge plugged in, that cartridge will take control before the TS-Pico is ready. This effectively bypasses the TS-Pico, and you won't be able to use any TS-Pico commands.
+
+### The Digital Cartridge Solution
+
+The good news is that **physical cartridges are not necessary when using the TS-Pico!** Instead, you can load cartridge ROM images digitally and run them through the TS-Pico system.
+
+#### How Digital Cartridges Work
+
+1. **Load the cartridge ROM image** into the TS-Pico's Flash memory or static RAM
+2. **Configure the system** to use that cartridge image with the appropriate commands
+3. **Restart your TS 2068** to activate the cartridge image
+
+This approach gives you several advantages:
+- **No physical cartridges to lose or damage**
+- **Instant switching** between different cartridge images
+- **Perfect preservation** of cartridge software
+- **Full compatibility** with TS-Pico features
+
+#### Loading Cartridge Images
+
+**[CALLOUT NOTE TO RICARDO/DAVID: Please provide detailed instructions for the cartridge loading process, including specific commands, file preparation, and step-by-step procedures for loading cartridge ROMs into Flash/SRAM and configuring them with memboot/memdock commands.]**
+
+### Cartridge Compatibility
+
+#### What Works Well
+
+The TS-Pico is compatible with **almost all cartridge images**, including:
+- Commercial game cartridges
+- Educational software cartridges
+- Utility and programming cartridges
+- Most homebrew and community-developed cartridges
+
+#### Important Exception: Custom ROM Cartridges
+
+There is one important category of cartridges that have limitations with the TS-Pico: **cartridges that contain their own custom version of the TS 2068 ROM**.
+
+**Example: Zebra Systems OS-64**
+The Zebra Systems OS-64 cartridge contains its own custom ROM that provides 64-column text display and other enhancements. Because it includes a complete custom ROM (just like the TS-Pico does), there are compatibility limitations:
+
+- **OS-64 can be used** with the TS-Pico as a digital cartridge image
+- **TS-Pico commands will not work** while in OS-64's 64-column mode
+- **You can still use OS-64's features**, but you'll need to exit OS-64 to access TS-Pico functionality
+
+This limitation exists because both the TS-Pico and OS-64 need to control the computer's ROM space, and they can't both do it at the same time.
+
+### Best Practices for Cartridge Use
+
+#### Recommended Approach
+
+**Remove physical cartridges** when using the TS-Pico to avoid any potential conflicts or confusion.
+
+**Use digital cartridge images** instead of physical cartridges for the best experience.
+
+**Keep your physical cartridges safe** for preservation purposes, but rely on digital images for day-to-day use.
+
+#### When You Need Physical Cartridges
+
+If you need to use a physical cartridge for some reason:
+1. **Power down** your TS 2068 completely
+2. **Remove the TS-Pico** from the expansion connector
+3. **Install your cartridge** and use it normally
+4. **When done**, power down, remove the cartridge, and reinstall the TS-Pico
+
+#### Organizing Cartridge Images
+
+Treat cartridge images like any other files in your TS-Pico collection:
+- **Store them in organized directories** on your micro SD card
+- **Use descriptive filenames** to identify what each cartridge contains
+- **Keep backup copies** on your computer
+- **Document any special loading procedures** for complex cartridges
+
+### Understanding the Technical Details
+
+#### Memory Management
+
+Cartridge images are loaded into either:
+- **Flash memory:** For permanent storage and quick access
+- **Static RAM:** For temporary use or frequently changed cartridges
+
+The choice depends on your specific needs and usage patterns.
+
+#### Boot Configuration Commands
+
+The TS-Pico provides specific commands for managing cartridge images:
+- **`tpi:memboot`:** Configures which memory slot contains the boot ROM
+- **`tpi:memdock`:** Configures which memory slot contains the cartridge image
+
+These commands give you precise control over how your system starts up and which cartridge image is active.
+
+### Troubleshooting Cartridge Issues
+
+#### Problem: TS-Pico commands don't work after startup
+**Likely cause:** Physical cartridge is installed and taking control
+**Solution:** Remove physical cartridge and restart
+
+#### Problem: Digital cartridge image doesn't load
+**Possible causes:**
+- Cartridge image file is corrupted
+- Memory slot configuration is incorrect
+- Insufficient memory space for the cartridge image
+
+#### Problem: Some cartridge features don't work
+**Possible causes:**
+- Cartridge requires specific hardware that's not emulated
+- Cartridge has custom ROM that conflicts with TS-Pico
+- File format compatibility issues
+
+Understanding the relationship between physical cartridges and the TS-Pico helps you make the most of both your vintage cartridge collection and the modern convenience of the TS-Pico system.
 
 ---
 
@@ -211,13 +495,13 @@ At the time this manual was written, these buttons are reserved for future funct
 
 ### The SD Card Slot: Your Gateway to Unlimited Storage
 
-The SD card slot is where the magic happens. This tiny slot accepts standard SD cards (the same type used in digital cameras) and gives your TS 2068 access to virtually unlimited storage.
+The micro SD card slot is where the magic happens. This tiny slot accepts standard micro SD cards and gives your TS 2068 access to virtually unlimited storage.
 
-**SD Card Best Practices:**
-- **Use quality SD cards:** Cheap, no-name cards can be unreliable. Stick with reputable brands.
-- **Format correctly:** Your SD card should be formatted as FAT32 for best compatibility.
-- **Safe removal:** Always use the `SAVE "tpi:close"` command before removing your SD card.
-- **Handle with care:** SD cards are small and can be easily damaged. Store them safely when not in use.
+**Micro SD Card Best Practices:**
+- **Use quality micro SD cards:** Cheap, no-name cards can be unreliable. Stick with reputable brands.
+- **Format correctly:** Your micro SD card should be formatted as FAT32 for best compatibility.
+- **Safe removal:** Always use the `SAVE "tpi:close"` command before removing your micro SD card.
+- **Handle with care:** Micro SD cards are very small and can be easily damaged. Store them safely when not in use.
 
 ### Power and Connectivity
 
@@ -259,6 +543,46 @@ SAVE commands are used for actions that change something or perform an operation
 - `SAVE "tpi:close"` - "Close the currently open file"
 - `SAVE "tpi:getinfo"` - "Show me detailed system information"
 
+### Storage Mode Commands: Switching Between Tape and SD Card
+
+The TS-Pico operates in one of two storage modes, and you can switch between them as needed:
+
+#### SD Card Mode (Default)
+```
+SAVE "tpi:sdcard"
+```
+This is the normal TS-Pico operating mode where:
+- All TS-Pico commands and features are available
+- TAP files are accessed from the micro SD card
+- Fast loading and saving operations
+- Directory navigation and file management work normally
+- **LPRINT, LLIST, and COPY commands are NOT available**
+
+#### Tape Mode
+```
+SAVE "tpi:tape"
+```
+This switches the system to use the traditional cassette tape interface where:
+- **All TS-Pico commands are disabled** (except switching back to SD mode)
+- LOAD and SAVE operations go to the physical cassette ports (EAR/MIC)
+- **LPRINT, LLIST, and COPY commands become available** for use with TS 2040 printer
+- You can load from physical tapes or save to physical tapes
+- No access to TAP files or SD card operations
+
+### TPMODE System Variable
+
+The current storage mode is controlled by a system variable called TPMODE located at memory address 5DDBh (23899 decimal). You can read this variable in your programs:
+
+```
+PRINT PEEK 23899
+```
+
+**TPMODE Values:**
+- **0:** Tape mode (set by `SAVE "tpi:tape"`)
+- **1:** SD card mode (set by `SAVE "tpi:sdcard"`)
+
+This allows your programs to detect which mode the system is in and behave accordingly.
+
 ### The Comfort of Familiarity
 
 Here's one of the most beautiful things about the TS Pico: once you mount a TAP file (more on this shortly), your regular LOAD and SAVE commands work exactly as they always have. You don't need to learn a completely new way of working. Your TS 2068 will load and save programs just like it always did, but faster and more reliably than ever before.
@@ -283,7 +607,7 @@ Master these four commands, and you'll be well on your way to TS Pico proficienc
 
 Before we dive into specific operations, let's talk about TAP files. If you're familiar with cassette tapes for your TS 2068, TAP files are the digital equivalent. Each TAP file can contain multiple programs, just like a physical tape might have several programs recorded on it.
 
-The beauty of TAP files is that they load much faster than physical tapes, they never wear out, and you can easily organize them into folders on your SD card. Think of your SD card as a vast library, with each TAP file being like a book that contains multiple chapters (programs).
+The beauty of TAP files is that they load much faster than physical tapes, they never wear out, and you can easily organize them into folders on your SD card. Think of your micro SD card as a vast library, with each TAP file being like a book that contains multiple chapters (programs).
 
 ### DIR: Your Window into Available Files
 
@@ -294,7 +618,7 @@ LOAD "tpi:dir"
 ```
 
 **What happens when you run this command:**
-1. The TS Pico scans your current directory on the SD card
+1. The TS Pico scans your current directory on the micro SD card
 2. It counts up all the files and folders
 3. It presents them in an organized list with helpful information
 
@@ -638,9 +962,12 @@ This command enables append mode, which allows you to add new programs to the cu
 ```
 SAVE "tpi:tape"
 ```
-This command temporarily switches your LOAD/SAVE commands back to the physical cassette interface. Useful if you need to load something from an actual cassette tape or save to physical media for backup.
+This command switches your LOAD/SAVE commands to the physical cassette interface. This also enables LPRINT, LLIST, and COPY commands for use with a TS 2040 printer. Note that all TS-Pico commands become unavailable in tape mode.
 
-To switch back to the TS Pico, just mount a new TAP file.
+To switch back to the TS Pico:
+```
+SAVE "tpi:sdcard"
+```
 
 ---
 
@@ -675,6 +1002,7 @@ This command is like asking your TS Pico, "How are you doing, and what's your cu
 - **SD card status:** Information about your SD card
 - **Current file:** What TAP file is currently mounted, if any
 - **Configuration settings:** Various system settings and their current values
+- **Storage mode:** Whether you're in tape mode or SD card mode
 
 **When to use getinfo:**
 - When troubleshooting problems
@@ -809,56 +1137,63 @@ This low-level command receives data blocks and writes them to memory. It's prim
 
 ### A Bridge to Another World
 
-One of the most exciting features of the TS Pico is its ability to run ZX Spectrum software. The ZX Spectrum was the TS 2068's cousin in the Sinclair family, and while they're similar, they have some important differences. The TS Pico includes special compatibility mode that lets your TS 2068 run ZX Spectrum programs.
+One of the most exciting features of the TS Pico is its ability to run ZX Spectrum software. The ZX Spectrum was the TS 2068's cousin in the Sinclair family, and while they're similar, they have some important differences. The TS Pico includes a TC2048 ROM in its Flash ROM that enables your TS 2068 to run ZX Spectrum programs.
 
 ### Entering ZX Spectrum Mode
 
-```
-SAVE "tpi:zx48"
-```
+To switch to Spectrum mode, follow these steps carefully:
 
-When you enter this command, several things happen behind the scenes:
-- The TS Pico adjusts memory mapping to match ZX Spectrum expectations
-- Screen handling is modified for Spectrum compatibility
-- Keyboard mapping is adjusted for Spectrum programs
-- Various system parameters are modified to create a Spectrum-like environment
+
+1. **Optional - Mount a TAP file:** If you want to load a Spectrum program:
+   ```
+   LOAD "tpi:filename.tap"
+   ```
+2. **Notify the Pico to stop TPI commands:**
+   ```
+   SAVE "tpi:zx48"
+   ```
+3. **Activate the Spectrum ROM:**
+   ```
+   OUT 244, 3
+   ```
+
+After these steps, your TS 2068 will be running in ZX Spectrum mode with the TC2048 ROM active.
 
 ### What to Expect in Spectrum Mode
 
-**Visual changes:** You might notice slight differences in how the screen looks or how text is displayed. This is normal and expected.
-
 **Keyboard differences:** Some keys might behave slightly differently. Most Spectrum software was designed with the Spectrum keyboard layout in mind.
 
-**Program behavior:** Spectrum programs should run normally, though some might behave slightly differently than they would on an actual Spectrum.
+**Limited TPI support:** Once in Spectrum mode, you cannot use TPI commands. The limited ROM space means minimal customization is available.
+
+**Basic SAVE/LOAD/VERIFY/MERGE support:** The mode provides basic support for SLVM ZX Spectrum functionality.
 
 ### Loading Spectrum Software
 
-While in Spectrum mode, you can load TAP files containing ZX Spectrum programs just like you would load TS 2068 programs:
+Before entering Spectrum mode, mount your TAP files using the TPI command. Once in Spectrum mode, you can load programs using standard LOAD commands, but with limitations on file management.
 
-```
-LOAD "spectrum_game.tap"
-LOAD ""
-```
+### Returning to TS 2068 Mode
 
-### Returning to TS Mode
+To return to normal TS 2068 operation:
 
-When you're ready to return to normal TS 2068 operation:
+1. **Re-enable TPI commands:**
+   ```
+   OUT 10, 100
+   ```
+2. **Switch back to TS 2068 ROM:**
+   ```
+   OUT 244, 0
+   ```
+3. **If the system behaves unexpectedly:** Use the TS Reset function to restore normal operation.
 
-```
-SAVE "OUT 10, 100"
-```
+### Important Limitations and Cautions
 
-This command returns all settings to normal TS 2068 operation. You can then use your TS Pico normally with TS 2068 software.
+**Limited functionality:** Due to ROM space constraints, Spectrum mode offers basic support only. You cannot use TPI commands while in Spectrum mode.
 
-### Tips for Spectrum Compatibility
+**TAP file behavior:** Some TAP files may cause unexpected behavior. Always test new files carefully.
 
-**Not all programs will work:** Some Spectrum programs use hardware features or memory configurations that can't be perfectly emulated. Don't be discouraged if a particular program doesn't work - this is normal.
+**File management limitations:** Loading and saving files has limitations in Spectrum mode. You may need to restart the system to load recently saved files.
 
-**Save your work first:** Always save any important work before switching to Spectrum mode, as the mode change affects memory configuration.
-
-**Experiment and explore:** Spectrum mode opens up a vast library of software. Many classic Spectrum games and utilities work well on the TS 2068 through the TS Pico.
-
-**Keep notes:** If you find Spectrum programs that work particularly well, keep track of them for future reference.
+**Experiment and explore:** Despite the limitations, Spectrum mode opens up a vast library of software. Many classic Spectrum games and utilities work well on the TS 2068 through the TS Pico.
 
 ---
 
@@ -866,7 +1201,7 @@ This command returns all settings to normal TS 2068 operation. You can then use 
 
 ### The Beauty of Backward Compatibility
 
-One of the most elegant aspects of the TS Pico is how it preserves the familiar LOAD and SAVE commands you already know. Once you have a TAP file mounted, your TS 2068 behaves exactly as it always has - but faster and more reliably.
+One of the most elegant aspects of the TS Pico is how it preserves the familiar LOAD and SAVE commands you already know. Once you have a TAP file mounted, your TS 2068 behaves exactly as it always has - but faster and more reliably than ever before.
 
 ### Loading Programs the Familiar Way
 
@@ -890,6 +1225,79 @@ LOAD "program_name" CODE 65000,255
 ```
 This loads a program into a specific memory location. Advanced users can use this for custom memory management or loading machine code programs.
 
+### Advanced Loading Commands: VERIFY and MERGE
+
+The TS Pico fully supports the traditional TS 2068 VERIFY and MERGE commands, giving you powerful tools for program management and verification.
+
+#### VERIFY: Ensuring Data Integrity
+
+The VERIFY command compares a program on your TAP file with what's currently in memory, ensuring data integrity without actually loading anything.
+
+```
+VERIFY ""
+VERIFY "program_name"
+```
+
+**How VERIFY works with TAP files:**
+1. **Mount your TAP file** containing the program you want to verify
+2. **Load the program** into memory first using standard LOAD commands
+3. **Use VERIFY** to compare the TAP file version with the memory version
+4. **Check the result** - you'll get "0 OK" if they match, or an error code if they don't
+
+**When to use VERIFY:**
+- **After loading important programs** to ensure they loaded correctly
+- **Before saving modified programs** to confirm what's in memory
+- **When diagnosing loading problems** to isolate issues
+- **For data integrity checking** of critical software
+
+**Example verification workflow:**
+```
+LOAD "game.tap"              # Mount the TAP file
+LOAD "adventure"             # Load the adventure program
+RUN                          # Play the game, make progress
+VERIFY "adventure"           # Verify the original is still on tape
+SAVE "adventure_save"        # Save your progress if verified OK
+```
+
+#### MERGE: Combining Programs Creatively
+
+MERGE loads a program from a TAP file but combines it with what's already in memory, rather than replacing it completely.
+
+```
+MERGE ""
+MERGE "program_name"
+```
+
+**How MERGE differs from LOAD:**
+- **LOAD clears memory** before loading the new program
+- **MERGE preserves existing content** and adds to it
+- **Line number conflicts** are resolved by the new program taking precedence
+- **Variables and data** from the existing program may be preserved
+
+**Creative uses for MERGE:**
+- **Combining utilities** with your main program
+- **Adding subroutines** from a library to your current project
+- **Loading additional levels** or content into games
+- **Building complex programs** from multiple smaller components
+
+**MERGE best practices:**
+- **Plan your line numbers** to avoid conflicts
+- **Test thoroughly** as MERGE can have unexpected results
+- **Use consistent variable names** across programs you plan to merge
+- **Keep backup copies** before experimenting with MERGE
+
+**Example MERGE workflow:**
+```
+LOAD "utilities.tap"         # Mount utility collection
+LOAD "graphics"              # Load graphics routines (lines 8000-8999)
+SAVE "tpi:close"            # Close utilities TAP
+LOAD "myproject.tap"         # Mount your project
+MERGE "main"                 # Merge main program (lines 1000-7999)
+# Now you have both graphics utilities and main program in memory
+LIST                         # Check the combined program
+SAVE "combined_project"      # Save the merged result
+```
+
 ### Saving Programs
 
 Saving works just as you remember, but with modern conveniences:
@@ -898,7 +1306,10 @@ Saving works just as you remember, but with modern conveniences:
 ```
 SAVE "my_program"
 ```
-This saves the current program in memory to the mounted TAP file (if append mode is enabled) or creates a new TAP file.
+This saves the current program in memory. The behavior depends on your current TS Pico configuration:
+- **If no TAP file is mounted:** Creates a new TAP file with this name
+- **If a TAP file is mounted and append mode is off:** Creates a new TAP file
+- **If a TAP file is mounted and append mode is on:** Adds to the current TAP file
 
 #### Saving with Auto-start
 ```
@@ -911,6 +1322,75 @@ This saves the program with an automatic start line, so it will begin running im
 SAVE "my_code" CODE 32768,1024
 ```
 This saves a specific block of memory, useful for machine code programs or data.
+
+### Creating and Managing New TAP Files
+
+Understanding how to create and manage TAP files gives you complete control over your software collection.
+
+#### Creating Brand New TAP Files
+
+**Method 1: Direct Creation**
+When no TAP file is currently mounted, any SAVE command creates a new TAP file:
+```
+SAVE "tpi:close"             # Ensure no TAP file is mounted
+SAVE "my_new_collection"     # Creates "my_new_collection.tap"
+```
+
+**Method 2: Planned Creation**
+Create an empty TAP file and then build it up:
+```
+SAVE "tpi:close"             # Start fresh
+SAVE "empty_file"            # Creates the TAP file
+LOAD "empty_file.tap"        # Mount it
+SAVE "tpi:append"            # Enable append mode
+# Now save multiple programs to build your collection
+```
+
+#### Understanding Append Mode
+
+Append mode is a powerful feature that controls how the TS Pico handles SAVE operations when a TAP file is mounted.
+
+**Enable append mode:**
+```
+SAVE "tpi:append"
+```
+
+**How append mode works:**
+- **When OFF (default):** SAVE commands create new TAP files
+- **When ON:** SAVE commands add to the currently mounted TAP file
+- **Persistent:** Append mode stays on until explicitly changed or system restart
+
+**Append mode best practices:**
+
+**Building a software collection:**
+```
+LOAD "utilities.tap"         # Mount your collection
+SAVE "tpi:append"            # Enable append mode
+# Load and save multiple programs
+LOAD "calculator"            # From somewhere else
+SAVE "calc_v2"              # Adds to utilities.tap
+LOAD "text_editor"           # From another source  
+SAVE "editor_v1"            # Also adds to utilities.tap
+```
+
+**When to use append mode:**
+- **Building themed collections** (games, utilities, etc.)
+- **Consolidating scattered programs** into organized TAP files
+- **Adding new versions** of programs to existing collections
+- **Creating backup collections** with multiple programs
+
+**When NOT to use append mode:**
+- **When creating standalone programs** that should be in separate files
+- **When working with very large programs** that should have dedicated TAP files
+- **When you're unsure** - it's safer to create separate files and combine later
+
+#### Managing TAP File Size and Organization
+
+**Optimal TAP file sizes:**
+- **Small collections:** 10-50 programs per TAP file for easy browsing
+- **Themed collections:** Group related programs regardless of count
+- **Large programs:** Give complex programs their own TAP files
+- **Micro SD card limits:** Keep individual TAP files under 1MB for best performance
 
 ### The Loading Process: What's Really Happening
 
@@ -946,6 +1426,13 @@ If a program loads but behaves strangely:
 2. Check the TAP file on a computer to verify it's not corrupted
 3. Try loading from a different position in the TAP file
 
+#### VERIFY failures
+If VERIFY reports mismatches:
+1. Check if the program in memory has been modified
+2. Verify you're comparing the right program versions
+3. Consider if the TAP file might be corrupted
+4. Try loading fresh and verifying immediately
+
 ### Mixing Modern and Traditional Commands
 
 You can freely mix TS Pico commands with traditional LOAD/SAVE operations:
@@ -957,6 +1444,7 @@ LOAD "tpi:tapdir"           # See what's in the TAP file
 SAVE "tpi:ffw" CODE 4,0     # Skip to program 4
 LOAD ""                     # Load program 4 traditionally
 SAVE "my_highscore"         # Save your progress traditionally
+VERIFY "my_highscore"       # Verify it saved correctly
 SAVE "tpi:close"            # Close the TAP file (TS Pico command)
 ```
 
@@ -964,163 +1452,312 @@ This flexibility means you can use as much or as little of the TS Pico's advance
 
 ---
 
-## File and Directory Management Best Practices
+## File Naming and Organization Standards
 
-### Organizing for Success
+### Avoiding Compatibility Problems
 
-Good file organization isn't just about keeping things neat - it's about making your TS Pico experience more enjoyable and efficient. A well-organized SD card means you can find what you want quickly and spend more time using your computer and less time searching for files.
+Proper file naming and organization prevents problems and ensures your TS Pico collection works reliably across different systems and situations. Understanding these standards helps you avoid frustrating compatibility issues.
 
-### Filename Best Practices
+### Character Restrictions and Limitations
 
-#### Stick to TS 2068 Conventions
-Your TS 2068 was designed in an era of 8-character filenames, and while the TS Pico can handle longer names, it's best to keep TAP filenames to 10 characters or less (not including the .TAP extension). This ensures compatibility and makes directory listings more readable on your TS 2068's limited screen space.
+#### Forbidden Characters in Filenames
 
-**Good filename examples:**
-- `zork.tap`
-- `adventure.tap`
-- `utils.tap`
-- `games01.tap`
+**Never use these characters in filenames:**
+- **Forward slash (/)** - Reserved for directory separators
+- **Backslash (\)** - Can cause confusion across systems
+- **Colon (:)** - Reserved for TS Pico commands (tpi:)
+- **Asterisk (*)** - Wildcard character, causes parsing issues
+- **Question mark (?)** - Wildcard character
+- **Quote marks (" ')** - Interfere with command syntax
+- **Pipe (|)** - Special character in many systems
+- **Angle brackets (< >)** - Reserved for directory indicators
 
-**Avoid these filename patterns:**
-- `my-really-long-adventure-game-collection.tap` (too long)
-- `Game$.tap` (special characters can cause problems)
-- `GAME.TAP` vs `game.tap` (inconsistent capitalization)
+**Control characters to avoid:**
+- **NULL (character 0)** - Terminates strings
+- **TAB character** - Causes spacing issues
+- **Carriage return/Line feed** - Break filename parsing
+- **Characters 1-31** - Various control functions
 
-#### Use Consistent Naming Conventions
+#### Safe Characters for Filenames
 
-Develop a consistent naming system and stick to it:
+**Always safe to use:**
+- **Letters:** A-Z, a-z
+- **Numbers:** 0-9
+- **Underscore (_)** - Excellent for word separation
+- **Hyphen (-)** - Good for compound names
+- **Period (.)** - For file extensions only
 
-**By category:**
-- `games-action.tap`
-- `games-puzzle.tap`
-- `utils-file.tap`
-- `utils-math.tap`
+**Use with caution:**
+- **Space character** - Can work but may cause issues in some contexts
+- **Parentheses ()** - Usually okay but avoid nested parentheses
+- **Square brackets []** - Generally safe but not recommended
 
-**By source:**
-- `magazine01.tap`
-- `magazine02.tap`
-- `personal01.tap`
+#### Best Practice Filename Examples
 
-**By frequency of use:**
-- `daily.tap`
-- `weekly.tap`
-- `archive01.tap`
-
-### Directory Structure Strategies
-
-#### The Beginner's Approach
-Start simple with just a few main directories:
+**Good filenames:**
 ```
-/
-├── Games/
-├── Utilities/
-├── Personal/
-└── Archive/
+adventure_game.tap
+missile_command_v2.tap
+text_editor_pro.tap
+my_programs_1984.tap
+space_invaders_clone.tap
 ```
 
-#### The Enthusiast's Approach
-As your collection grows, add more specific categories:
+**Problematic filenames:**
 ```
-/
-├── Games/
-│   ├── Action/
-│   ├── Adventure/
-│   ├── Puzzle/
-│   └── Educational/
-├── Utilities/
-│   ├── Programming/
-│   ├── FileManager/
-│   └── System/
-├── Personal/
-│   ├── MyPrograms/
-│   ├── WorkInProgress/
-│   └── Experiments/
-└── Archive/
-    ├── Magazine/
-    └── Old/
+"my game".tap           # Quotes cause problems
+space/adventure.tap     # Slash breaks directory structure
+game?.tap              # Question mark is wildcard
+my:program.tap         # Colon conflicts with tpi: syntax
+file*.tap              # Asterisk causes parsing issues
 ```
 
-#### The Collector's Approach
-For extensive collections, consider organization by source or era:
+### Case Sensitivity Considerations
+
+#### Understanding Case Behavior
+
+**TS Pico file system (FAT32):**
+- **Case preserving** - Keeps the case you type
+- **Case insensitive** - Treats "Game.tap" and "game.tap" as the same file
+- **Display case** - Shows filenames as you originally typed them
+
+**TS 2068 command behavior:**
+- **Generally case insensitive** for program names within TAP files
+- **Case sensitive** for some TS Pico commands and parameters
+- **Consistent case** prevents confusion
+
+#### Case Best Practices
+
+**Recommended approach:**
+- **Use lowercase** for most filenames and directories
+- **Use consistent case** throughout your collection
+- **Avoid mixing cases** unnecessarily (don't use "MyGame.TAP")
+
+**Good case usage:**
 ```
-/
-├── Commercial/
-│   ├── Timex/
-│   ├── ThirdParty/
-│   └── Modern/
-├── Magazines/
-│   ├── SinclairUser/
-│   ├── ComputeGazette/
-│   └── Others/
-├── Homebrew/
-│   ├── Contests/
-│   ├── Community/
-│   └── Modern/
-└── Personal/
-    └── MyStuff/
-```
-
-### SD Card Management
-
-#### Use Quality Hardware
-Invest in a good SD card from a reputable manufacturer. Your TS Pico deserves reliable storage, and a quality SD card will serve you well for years.
-
-**Recommended specifications:**
-- **Capacity:** 8GB to 32GB (more than enough for thousands of TAP files)
-- **Speed Class:** Class 10 or better for best performance
-- **Brand:** Stick with well-known manufacturers like SanDisk, Kingston, or Samsung
-
-#### Regular Maintenance
-
-**Weekly maintenance:**
-- Check available space with `LOAD "tpi:dir"` from the root directory
-- Review and clean up any temporary files
-- Ensure important TAP files are properly named and organized
-
-**Monthly maintenance:**
-- Backup your SD card to your computer
-- Check for and remove any corrupted files
-- Reorganize directories if your collection has grown
-
-**Before major changes:**
-- Always backup before reorganizing large numbers of files
-- Test new organizational schemes with a small subset first
-- Keep notes about your organization system
-
-#### Safe SD Card Practices
-
-**Always close files before removing the SD card:**
-```
-SAVE "tpi:close"
+TAP/
+├── games/
+│   ├── action/
+│   │   ├── defender.tap
+│   │   └── missile_cmd.tap
+│   └── adventure/
+│       ├── zork.tap
+│       └── adventure.tap
+└── utilities/
+    ├── editor.tap
+    └── calculator.tap
 ```
 
-**Power down properly:** Turn off your TS 2068 before removing the SD card.
+**Problematic case usage:**
+```
+TAP/
+├── Games/           # Inconsistent with lowercase preference
+├── UTILITIES/       # All caps is harder to read
+├── Personal/        # Mixed case creates confusion
+└── archive/         # Inconsistent with other directories
+```
 
-**Handle with care:** SD cards are small and can be easily damaged. Store them in protective cases when not in use.
+### Recommended Naming Conventions
 
-**Keep backups:** SD cards can fail. Regular backups to your computer ensure you never lose your collection.
+#### TAP File Naming Standards
 
-### Managing Large Collections
+**Game files:**
+- **Format:** `gamename.tap` or `game_name.tap`
+- **Examples:** `pacman.tap`, `space_invaders.tap`, `adventure_quest.tap`
+- **Version numbers:** `pacman_v2.tap`, `editor_v1_5.tap`
 
-#### Use Multiple SD Cards
-If your collection becomes very large, consider using multiple SD cards organized by theme:
-- One card for games
-- One card for utilities and programming tools
-- One card for personal projects
-- One card for archives and rarely-used items
+**Utility collections:**
+- **Format:** `category_utils.tap` or `specific_tool.tap`
+- **Examples:** `text_utils.tap`, `math_tools.tap`, `file_manager.tap`
 
-#### Create Index Files
-For very large collections, consider creating simple text files that list contents:
-- Create a TAP file containing a BASIC program that lists all your games
-- Keep notes in a computer file about what's on each SD card
-- Create "catalog" TAP files that serve as menus for your collection
+**Personal programs:**
+- **Format:** `project_name.tap` or `personal_category.tap`
+- **Examples:** `my_games.tap`, `school_projects.tap`, `work_utils.tap`
 
-#### Regular Cleanup
-Periodically review your collection:
-- Remove duplicate files
-- Delete corrupted or non-working TAP files
-- Move rarely-used items to archive directories
-- Consolidate related small TAP files into larger collections
+**Date-based naming:**
+- **Format:** `name_YYYY.tap` or `name_YYYYMM.tap`
+- **Examples:** `collection_2024.tap`, `backup_202412.tap`
+
+#### Directory Naming Standards
+
+**Top-level directories:**
+- Keep names short and descriptive
+- Use lowercase for consistency
+- Avoid spaces if possible
+
+**Good directory names:**
+```
+games/
+utilities/
+personal/
+development/
+archive/
+testing/
+backup/
+```
+
+**Avoid these directory names:**
+```
+stuff/              # Too vague
+misc/               # Becomes a dumping ground
+old_junk/           # Negative and unclear
+my files/           # Space causes issues
+GAMES/              # Unnecessary capitalization
+```
+
+#### Special File Types
+
+**ROM and cartridge images:**
+- **Format:** `title.rom` or `title.dck`
+- **Examples:** `basic_rom.rom`, `word_processor.dck`
+- **Version info:** `os_v1_4.rom`, `game_cart_v2.dck`
+
+**Binary data files:**
+- **Format:** `dataname.bin`
+- **Examples:** `charset.bin`, `sprites.bin`, `music_data.bin`
+
+**Documentation files:**
+- **Format:** `readme.tap`, `manual.tap`, `help.tap`
+- **Examples:** `game_instructions.tap`, `program_help.tap`
+
+### Organization Best Practices
+
+#### Hierarchical Structure Guidelines
+
+**Depth recommendations:**
+- **Maximum depth:** 4 levels for practical navigation
+- **Optimal depth:** 2-3 levels for most collections
+- **Example structure:**
+```
+TAP/                    # Level 1 (required)
+├── games/              # Level 2 (category)
+│   ├── action/         # Level 3 (subcategory)
+│   │   └── arcade/     # Level 4 (sub-subcategory) - maximum recommended
+│   └── adventure/
+└── utilities/
+```
+
+#### File Distribution Guidelines
+
+**Files per directory:**
+- **Optimal:** 10-30 files per directory
+- **Maximum practical:** 50-75 files per directory
+- **Technical limit:** 100+ files (but becomes unwieldy)
+
+**When to subdivide:**
+- Directory listings become longer than one screen
+- Scrolling through files becomes tedious
+- Logical subcategories emerge naturally
+- Performance starts to degrade
+
+#### Naming for Sorting and Display
+
+**Alphabetical considerations:**
+- Files are typically sorted alphabetically
+- Use prefixes to control sort order when needed
+- Consider how names will appear in directory listings
+
+**Sorting strategies:**
+```
+# Priority-based prefixes
+01_essential_games.tap
+02_good_games.tap
+03_archive_games.tap
+
+# Category prefixes
+action_defender.tap
+action_invaders.tap
+puzzle_tetris.tap
+puzzle_blocks.tap
+
+# Date prefixes
+2024_01_new_games.tap
+2024_02_updates.tap
+```
+
+### Troubleshooting Naming Issues
+
+#### Common Problems and Solutions
+
+**Problem: Files don't appear in listings**
+- **Cause:** Illegal characters in filename
+- **Solution:** Rename using only safe characters
+
+**Problem: Cannot load specific files**
+- **Cause:** Case sensitivity confusion or special characters
+- **Solution:** Use consistent lowercase naming
+
+**Problem: Directory navigation fails**
+- **Cause:** Spaces or special characters in directory names
+- **Solution:** Rename directories using underscores instead of spaces
+
+**Problem: Files appear corrupted or unreadable**
+- **Cause:** Filename too long or contains control characters
+- **Solution:** Shorten filename and remove special characters
+
+#### Filename Validation Checklist
+
+Before finalizing any filename, check:
+- [ ] No forbidden characters (/, \, :, *, ?, ", ', |, <, >)
+- [ ] Length under 20 characters for best compatibility
+- [ ] Uses only letters, numbers, underscore, hyphen, and period
+- [ ] Consistent case throughout your collection
+- [ ] Descriptive enough to identify contents
+- [ ] Won't conflict with existing files
+- [ ] Follows your established naming convention
+
+### Migration and Cleanup Strategies
+
+#### Cleaning Up Existing Collections
+
+**Assessment process:**
+1. List all files with problematic names
+2. Identify inconsistent naming patterns
+3. Plan standardized replacement names
+4. Back up everything before making changes
+
+**Batch renaming approach:**
+```
+# Document current state
+LOAD "tpi:dir" > current_files.txt
+
+# Plan new names
+old_name.tap -> new_standardized_name.tap
+
+# Rename systematically
+# Copy files to computer, rename, copy back
+```
+
+#### Establishing Standards
+
+**Create a naming guide for your collection:**
+- Document your chosen conventions
+- Include examples of good and bad names
+- Share standards with anyone who contributes to your collection
+- Review and update standards as your collection grows
+
+**Template for personal naming standards:**
+```
+MY TS-PICO NAMING STANDARDS
+===========================
+
+Directories: lowercase, no spaces, descriptive
+TAP files: lowercase, underscores for spaces, .tap extension
+Versions: _v1, _v2, etc.
+Dates: _YYYY or _YYYYMM format
+Personal files: my_ prefix
+Work files: work_ prefix
+Archive files: archive_ prefix
+
+Examples:
+✓ games/action/space_invaders_v2.tap
+✓ utilities/text_editor_pro.tap
+✓ personal/my_programs_2024.tap
+✗ Games/Action/Space Invaders (v2).TAP
+✗ "My Special Programs".tap
+```
+
+Following these naming and organization standards ensures your TS Pico collection remains reliable, portable, and easy to manage as it grows over time.
 
 ---
 
@@ -1147,12 +1784,13 @@ This command is like asking your TS Pico for a complete health report. The infor
 **Hardware Status:**
 - Board revision and hardware version
 - Memory configuration and usage
-- SD card information and status
+- Micro SD card information and status
 
 **Current Operations:**
 - What file is currently mounted
 - Current directory location
 - System configuration settings
+- Current storage mode (tape or SD card)
 
 **Performance Metrics:**
 - Memory usage statistics
@@ -1169,9 +1807,10 @@ ROM Version: v1.2
 Board: Rev 3.1
 Flash: 256KB used / 512KB total
 SRAM: 128KB used / 512KB total
-SD Card: 8GB, 2.3GB free
+Micro SD Card: 8GB, 2.3GB free
 Current File: adventure.tap
 Path: /Games/Adventure/
+Storage Mode: SD Card (TPMODE=1)
 Verbose: OFF
 ```
 
@@ -1183,6 +1822,7 @@ Verbose: OFF
 - **SD Card:** Storage information and remaining space
 - **Current File:** What TAP file is currently active
 - **Path:** Your current directory location
+- **Storage Mode:** Whether you're in tape mode (0) or SD card mode (1)
 
 ### Activity Logging and Monitoring
 
@@ -1276,8 +1916,8 @@ Verbose mode provides detailed feedback about what the TS Pico is doing behind t
 - If SRAM usage is high, restart the system periodically to clear temporary data
 - Monitor for memory leaks in the activity log
 
-**SD card optimization:**
-- Keep at least 10% of SD card space free for optimal performance
+**Micro SD card optimization:**
+- Keep at least 10% of micro SD card space free for optimal performance
 - Organize files into directories to improve access times
 - Remove duplicate or corrupted files
 
@@ -1334,6 +1974,7 @@ Every TS Pico user encounters issues from time to time. This is normal and expec
 1. **Check the LED:** Is the LED on the Raspberry Pi Pico blinking normally?
 2. **Test basic connectivity:** Try `LOAD "tpi:dir"` to see if the TS Pico responds at all
 3. **Check your typing:** TS Pico commands are case-sensitive and must be typed exactly
+4. **Check storage mode:** Use `PRINT PEEK 23899` to see if you're in the right mode
 
 **If the LED isn't blinking:**
 - Check that your TS Pico is properly seated in its connector
@@ -1345,20 +1986,20 @@ Every TS Pico user encounters issues from time to time. This is normal and expec
 - Check the command syntax against the examples in this manual
 - Try the same command again - sometimes temporary issues resolve themselves
 
-#### SD Card Issues
+#### Micro SD Card Issues
 
-**Problem:** The TS Pico can't see your SD card or reports SD card errors.
+**Problem:** The TS Pico can't see your micro SD card or reports micro SD card errors.
 
 **Troubleshooting steps:**
-1. **Check physical connection:** Ensure the SD card is fully inserted
+1. **Check physical connection:** Ensure the micro SD card is fully inserted
 2. **Try removing and reinserting:** Sometimes cards need to be reseated
-3. **Check the card in a computer:** Verify the SD card works in a regular computer
-4. **Check formatting:** Ensure the SD card is formatted as FAT32
+3. **Check the card in a computer:** Verify the micro SD card works in a regular computer (with adapter if needed)
+4. **Check formatting:** Ensure the micro SD card is formatted as FAT32
 
-**If the SD card works in a computer but not in the TS Pico:**
-- Try a different SD card to rule out compatibility issues
-- Check that the SD card isn't write-protected
-- Ensure the SD card isn't corrupted
+**If the micro SD card works in a computer but not in the TS Pico:**
+- Try a different micro SD card to rule out compatibility issues
+- Check that the micro SD card isn't write-protected
+- Ensure the micro SD card isn't corrupted
 
 ### File Operation Problems
 
@@ -1386,6 +2027,16 @@ Every TS Pico user encounters issues from time to time. This is normal and expec
 2. **Try loading from a different position:** Use FFW/REW to try loading from different blocks
 3. **Check TAPDIR:** Verify the program structure looks correct
 4. **Test with known-good programs:** See if the problem affects all programs
+
+#### Printer Commands Don't Work
+
+**Problem:** LPRINT, LLIST, or COPY commands give errors or don't work.
+
+**Solution steps:**
+1. **Switch to tape mode:** Use `SAVE "tpi:tape"` first
+2. **Check TPMODE:** Use `PRINT PEEK 23899` - it should show 0 for tape mode
+3. **Verify TS 2040 connection:** Ensure your printer is properly connected
+4. **Remember the limitation:** These commands only work in tape mode
 
 ### Memory and Performance Issues
 
@@ -1435,10 +2086,29 @@ Every TS Pico user encounters issues from time to time. This is normal and expec
 **Problem:** The TS Pico seems to work intermittently or loses connection.
 
 **Connection troubleshooting:**
-1. **Check physical connections:** Ensure the TS Pico is firmly seated
+1. **Check physical connections:** Ensure the TS Pico is firmly seated in the expansion bus
 2. **Clean the connectors:** Use a dry cloth to clean the edge connector contacts
 3. **Check for interference:** Remove other peripherals temporarily
-4. **Test different positions:** If using an expansion bus, try different slots
+4. **Test different positions:** Try different slots on the expansion bus
+
+### Storage Mode Issues
+
+#### Wrong Storage Mode
+
+**Problem:** Commands don't work or printer functions are unavailable.
+
+**Check current mode:**
+```
+PRINT PEEK 23899
+```
+- **0:** Tape mode (LPRINT/LLIST/COPY available, TS-Pico commands disabled)
+- **1:** SD card mode (TS-Pico commands available, printer commands disabled)
+
+**Switch modes as needed:**
+```
+SAVE "tpi:tape"      # Switch to tape mode for printer
+SAVE "tpi:sdcard"    # Switch to SD card mode for TS-Pico
+```
 
 ### Advanced Troubleshooting
 
@@ -1464,7 +2134,7 @@ Every TS Pico user encounters issues from time to time. This is normal and expec
 
 **Level 4 - Hardware Check:**
 1. Power down the TS 2068
-2. Remove and reseat the TS Pico
+2. Remove and reseat the TS Pico in the expansion bus
 3. Check all physical connections
 4. Power up and test
 
@@ -1485,12 +2155,14 @@ Every TS Pico user encounters issues from time to time. This is normal and expec
 2. Note what you were doing when the problem occurred
 3. Run `SAVE "tpi:getinfo"` and record the output
 4. Check the activity log with `SAVE "tpi:getlog"`
+5. Check TPMODE with `PRINT PEEK 23899`
 
 **Try the basics:**
 1. Power cycle the system
 2. Try different TAP files
-3. Test with a different SD card
+3. Test with a different micro SD card
 4. Check physical connections
+5. Try switching storage modes
 
 #### Where to Get Help
 
@@ -1505,6 +2177,7 @@ Every TS Pico user encounters issues from time to time. This is normal and expec
 - Include exact error messages
 - Mention your firmware version
 - Note what troubleshooting steps you've already tried
+- Include TPMODE value if relevant to your issue
 
 ---
 
@@ -1917,6 +2590,13 @@ SAVE "tpi:cd /"                  # Go to root directory
 SAVE "tpi:close"                 # Close current file
 ```
 
+#### Storage Mode Commands
+```
+SAVE "tpi:sdcard"                # Switch to SD card mode (default)
+SAVE "tpi:tape"                  # Switch to tape mode (enables printer)
+PRINT PEEK 23899                 # Check TPMODE (0=tape, 1=SD card)
+```
+
 #### TAP File Navigation
 ```
 LOAD "filename.tap"              # Mount a TAP file
@@ -1943,10 +2623,18 @@ SAVE "my_program"                # Save current program
 SAVE "my_program" LINE 10        # Save with auto-start line
 ```
 
+#### Printer Commands (Tape Mode Only)
+```
+SAVE "tpi:tape"                  # Switch to tape mode first
+LPRINT "Hello, World!"           # Print text to TS 2040 printer
+LLIST                            # Print program listing
+COPY                             # Print screen contents
+SAVE "tpi:sdcard"                # Return to SD card mode
+```
+
 #### Advanced Features
 ```
 SAVE "tpi:append"                # Enable append mode
-SAVE "tpi:tape"                  # Switch to cassette mode
 SAVE "tpi:zx48"                  # Enter ZX Spectrum mode
 SAVE "OUT 10, 100"               # Return from Spectrum mode
 ```
@@ -1959,6 +2647,28 @@ SAVE "OUT 10, 100"               # Return from Spectrum mode
 | Solid ON | Processing command | Wait for completion |
 | Fast blink (2/sec) | Error condition | Check logs, try reset |
 | Dark (no activity) | Watchdog reset | Wait, then retry command |
+
+### Storage Mode Reference
+
+| Mode | TPMODE Value | TS-Pico Commands | Printer Commands |
+|------|-------------|------------------|------------------|
+| SD Card | 1 | Available | NOT Available |
+| Tape | 0 | NOT Available | Available |
+
+### Memory Map Reference
+
+```
+Standard TS 2068 Memory Map with TS-Pico Integration:
+0000h-3FFFh: ROM (modified by TS Pico)
+4000h-57FFh: Screen memory
+5800h-5AFFh: Attributes
+5B00h-5BFFh: Printer buffer
+5C00h-5CBFh: System variables
+5CC0h-5DCCh: User accessible area
+5DCDh-5DDCh: TS PICO RESERVED (16 bytes) - DO NOT USE
+5DDBh:       TPMODE variable (0=tape, 1=SD card)
+5DDDh-FFFFh: User RAM (continues standard map)
+```
 
 ### Error Code Reference
 
@@ -1979,12 +2689,13 @@ SAVE "OUT 10, 100"               # Return from Spectrum mode
 ### Troubleshooting Quick Steps
 
 1. **Check LED status** - Is it blinking normally?
-2. **Test basic connectivity** - Try `LOAD "tpi:dir"`
-3. **Check physical connections** - Ensure TS Pico is properly seated
-4. **Review error messages** - Read them carefully for clues
-5. **Check activity log** - Use `SAVE "tpi:getlog"`
-6. **Try TS Reset** - Press reset button if needed
-7. **Power cycle** - Turn TS 2068 off and on as last resort
+2. **Check storage mode** - Use `PRINT PEEK 23899`
+3. **Test basic connectivity** - Try `LOAD "tpi:dir"`
+4. **Check physical connections** - Ensure TS Pico is properly seated
+5. **Review error messages** - Read them carefully for clues
+6. **Check activity log** - Use `SAVE "tpi:getlog"`
+7. **Try TS Reset** - Press reset button if needed
+8. **Power cycle** - Turn TS 2068 off and on as last resort
 
 ### File Organization Tips
 
@@ -2497,486 +3208,3 @@ Entry point: 0x7F9E
 7FC5    JR      FLSHWR          ; Continue writing
 
 ; End routine same as erase routine above
-```
-
-#### Lower Block Flash Programming
-
-**Sector Erase Routine (Lower 32KB)**
-Entry point: 0x8020
-
-```assembly
-; Flash Update - Lower Block Sector Erase
-; Entry: 0x8020
-; Erases lower 32KB (8 sectors of 4KB each)
-
-8020    DI                      ; Disable interrupts
-8021    PUSH    AF              ; Save registers
-8022    PUSH    BC
-8023    PUSH    DE
-8024    PUSH    HL
-8025    LD      A,15            ; Page select value (00001111b)
-8027    OUT     (244),A         ; Page in Flash memory
-8029    LD      B,8             ; Number of 4KB sectors to erase
-802B    LD      HL,0000h        ; Start address (lower 32KB)
-
-802E BACK1:
-802E    LD      DE,1000h        ; 4KB sector size
-8031    LD      A,170           ; Flash unlock command 1 (0xAA)
-8033    LD      (5555h),A       ; Write to unlock address 1
-8036    LD      A,85            ; Flash unlock command 2 (0x55)
-8038    LD      (2AAAh),A       ; Write to unlock address 2
-803B    LD      A,128           ; Sector erase setup command (0x80)
-803D    LD      (5555h),A       ; Write to unlock address 1
-8040    LD      A,170           ; Flash unlock command 1 (0xAA)
-8042    LD      (5555h),A       ; Write to unlock address 1
-8045    LD      A,85            ; Flash unlock command 2 (0x55)
-8047    LD      (2AAAh),A       ; Write to unlock address 2
-804A    LD      A,48            ; Sector erase command (0x30)
-804C    LD      (HL),A          ; Write to sector address
-804D    ADD     HL,DE           ; Move to next sector
-804E    LD      DE,8000h        ; Delay loop counter
-
-8051 WAIT:
-8051    DEC     DE              ; Decrement delay counter
-8052    LD      A,D             ; Check if delay complete
-8053    OR      E
-8054    JR      NZ,WAIT         ; Continue delay (≈25ms per sector)
-8056    DJNZ    BACK1           ; Repeat for all sectors
-
-8058    LD      B,255           ; Additional delay
-805A LOOP:
-805A    DJNZ    LOOP            ; Final delay loop
-
-805C END:
-805C    XOR     A               ; Clear page selection
-805D    OUT     (244),A         ; Page out Flash memory
-805F    POP     HL              ; Restore registers
-8060    POP     DE
-8061    POP     BC
-8062    POP     AF
-8063    EI                      ; Re-enable interrupts
-8064    RET                     ; Return to caller
-```
-
-**Byte Write Routine (Lower 32KB)**
-Entry point: 0x8066
-
-```assembly
-; Flash Update - Lower Block Byte Write
-; Entry: 0x8066
-; Writes data to lower 32KB Flash memory
-
-8066    DI                      ; Disable interrupts
-8067    PUSH    AF              ; Save registers
-8068    PUSH    BC
-8069    PUSH    DE
-806A    PUSH    HL
-806B    LD      A,15            ; Page select value (00001111b)
-806D    OUT     (244),A         ; Page in Flash memory
-806F    LD      DE,8000h        ; Number of bytes to write (32KB)
-8072    LD      HL,0000h        ; Start address (lower 32KB)
-
-8075 FLSHWR:
-8075    LD      A,170           ; Flash unlock command 1 (0xAA)
-8077    LD      (5555h),A       ; Write to unlock address 1
-807A    LD      A,85            ; Flash unlock command 2 (0x55)
-807C    LD      (2AAAh),A       ; Write to unlock address 2
-807F    LD      A,160           ; Program command (0xA0)
-8081    LD      (5555h),A       ; Write to unlock address 1
-
-8084 SRAMWR:
-8084    IN      A,(14)          ; Get data from TS-Pico
-8086    LD      (HL),A          ; Write to Flash memory
-8087    LD      A,E             ; Check if done
-8088    OR      D
-8089    JR      Z,END           ; Jump to end if complete
-808B    INC     HL              ; Increment address
-808C    DEC     DE              ; Decrement byte count
-808D    JR      FLSHWR          ; Continue writing
-
-; End routine same as erase routine above
-```
-
-### Using the Flash Programming Routines
-
-#### Entry Points Summary
-
-| Function | Entry Point | Purpose |
-|----------|-------------|---------|
-| Upper erase | 0x7F58 | Erase upper 32KB (8 sectors) |
-| Upper write | 0x7F9E | Write to upper 32KB |
-| Lower erase | 0x8020 | Erase lower 32KB (8 sectors) |
-| Lower write | 0x8066 | Write to lower 32KB |
-
-#### Calling Convention
-
-**From BASIC:**
-```basic
-RANDOMIZE USR 32600    # Call upper block erase (0x7F58)
-RANDOMIZE USR 32670    # Call upper block write (0x7F9E)
-RANDOMIZE USR 32800    # Call lower block erase (0x8020)
-RANDOMIZE USR 32870    # Call lower block write (0x8066)
-```
-
-**From machine code:**
-```assembly
-CALL 7F58h    ; Upper block erase
-CALL 7F9Eh    ; Upper block write
-CALL 8020h    ; Lower block erase
-CALL 8066h    ; Lower block write
-```
-
-#### Data Source Configuration
-
-The write routines read data from I/O port 14 (`IN A,(14)`). This can be modified to read from other sources:
-
-**Reading from memory:**
-```assembly
-LD      A,(DATA_SOURCE)    ; Replace IN A,(14)
-```
-
-**Reading from a buffer:**
-```assembly
-LD      A,(IX+0)          ; Read from buffer pointed to by IX
-INC     IX                ; Increment buffer pointer
-```
-
-### Safety Considerations and Best Practices
-
-#### Pre-Programming Checks
-
-**Verify power stability:** Ensure stable power supply during programming operations.
-
-**Check memory configuration:** Verify correct page mapping before starting operations.
-
-**Backup existing data:** Always backup Flash contents before programming new data.
-
-**Test with small blocks:** Start with single sector operations before attempting full block programming.
-
-#### Error Detection and Recovery
-
-**Verify programming success:**
-```assembly
-; After programming, verify data
-LD      A,(TARGET_ADDRESS)
-CP      EXPECTED_VALUE
-JR      NZ,PROGRAM_ERROR
-```
-
-**Implement timeout protection:**
-```assembly
-LD      BC,TIMEOUT_COUNT
-VERIFY_LOOP:
-    IN      A,(STATUS_PORT)
-    BIT     7,A              ; Check ready bit
-    JR      NZ,PROGRAM_COMPLETE
-    DEC     BC
-    LD      A,B
-    OR      C
-    JR      NZ,VERIFY_LOOP
-    ; Timeout occurred - handle error
-```
-
-#### Recovery Procedures
-
-**If programming fails:**
-1. Power cycle the system
-2. Attempt to read current Flash contents
-3. Re-run erase operation if necessary
-4. Retry programming with verified data
-5. Contact support if problems persist
-
-### Advanced Flash Programming Techniques
-
-#### Selective Sector Programming
-
-**Programming individual sectors:**
-```assembly
-; Erase single 4KB sector at address HL
-ERASE_SECTOR:
-    DI
-    LD      A,246           ; Page in Flash
-    OUT     (244),A
-    
-    ; Unlock sequence
-    LD      A,170
-    LD      (5555h),A
-    LD      A,85
-    LD      (2AAAh),A
-    LD      A,128
-    LD      (5555h),A
-    LD      A,170
-    LD      (5555h),A
-    LD      A,85
-    LD      (2AAAh),A
-    LD      A,48
-    LD      (HL),A          ; Erase sector at HL
-    
-    ; Wait for completion
-    CALL    WAIT_ERASE_COMPLETE
-    
-    XOR     A
-    OUT     (244),A         ; Page out Flash
-    EI
-    RET
-```
-
-#### Data Verification Routines
-
-**Comprehensive verification:**
-```assembly
-VERIFY_FLASH:
-    LD      HL,START_ADDRESS
-    LD      DE,DATA_BUFFER
-    LD      BC,DATA_LENGTH
-    
-VERIFY_LOOP:
-    LD      A,(DE)          ; Expected data
-    CP      (HL)            ; Actual Flash contents
-    JR      NZ,VERIFY_ERROR
-    INC     HL
-    INC     DE
-    DEC     BC
-    LD      A,B
-    OR      C
-    JR      NZ,VERIFY_LOOP
-    
-    ; Verification successful
-    RET
-    
-VERIFY_ERROR:
-    ; Handle verification error
-    ; HL points to failed address
-    ; A contains Flash value
-    ; (DE) contains expected value
-    RET
-```
-
-### Integration with TS Pico System
-
-#### Coordinating with Firmware
-
-**Safe programming windows:**
-- Perform Flash operations only when the TS Pico firmware is idle
-- Use system commands to ensure proper coordination
-- Monitor system status before beginning operations
-
-**Resource management:**
-- Ensure no conflicting memory access during programming
-- Coordinate with file system operations
-- Respect system memory allocation
-
-#### Custom Applications
-
-**Creating custom firmware:**
-- Use these routines to install custom firmware modules
-- Implement failsafe mechanisms for recovery
-- Maintain compatibility with existing system functions
-
-**Data storage applications:**
-- Store large datasets in Flash memory
-- Implement wear-leveling for frequently updated data
-- Create custom file systems using Flash storage
-
-### Troubleshooting Flash Programming Issues
-
-#### Common Problems and Solutions
-
-**Programming fails consistently:**
-- Check power supply stability
-- Verify correct memory page mapping
-- Ensure Flash memory isn't write-protected
-- Check for hardware conflicts
-
-**Data corruption after programming:**
-- Verify programming timing sequences
-- Check for electrical interference
-- Ensure complete erase before programming
-- Verify data source integrity
-
-**System instability after Flash operations:**
-- Verify register preservation in routines
-- Check interrupt handling during operations
-- Ensure proper memory page restoration
-- Verify stack integrity throughout operations
-
-The machine language Flash programming capabilities provide powerful tools for advanced system customization and development. However, they require careful attention to detail and thorough understanding of both the hardware and software implications of direct Flash memory manipulation.
-
----
-
-## Appendix C: Technical Specifications
-
-### Hardware Specifications
-
-#### Raspberry Pi Pico Microcontroller
-- **Processor:** Dual-core ARM Cortex-M0+ @ 133MHz
-- **Memory:** 264KB on-chip SRAM
-- **Flash:** 2MB onboard Flash memory (firmware storage)
-- **I/O:** 26 GPIO pins (subset used for TS Pico interface)
-- **Communication:** USB 1.1 device interface
-- **Power consumption:** Low power design, powered from TS 2068
-
-#### TS Pico Memory Configuration
-- **Flash Memory:** 512KB high-speed Flash storage
-  - System firmware and cached files
-  - User-programmable sections available
-  - Organized in 4KB erasable sectors
-- **SRAM:** 512KB static RAM
-  - High-speed temporary storage
-  - Fully available to user applications
-  - Battery-backed operation (when available)
-- **SD Card Interface:** Standard SD/SDHC card support
-  - FAT32 file system
-  - Up to 32GB capacity tested
-  - Hot-swappable with proper procedures
-
-#### Physical Specifications
-- **Board dimensions:** Compatible with TS 2068 expansion format
-- **Connectors:** 
-  - TS 2068 edge connector (direct or expansion bus)
-  - Micro-USB (firmware updates only)
-  - SD card slot (standard size)
-- **Indicators:** LED status indicator on Raspberry Pi Pico
-- **Controls:** Reset buttons for TS and Pico systems
-
-### Software Specifications
-
-#### Firmware Architecture
-- **Language:** MicroPython 3.4+ compatible
-- **Real-time capabilities:** Hardware timer support
-- **File systems:** FAT32 on SD card, internal Flash file system
-- **Communication:** Custom protocol with TS 2068
-- **Extensibility:** External command module support
-
-#### Command Interface
-- **Command syntax:** Extended LOAD/SAVE command structure
-- **Response format:** Compatible with TS 2068 expectations
-- **Error handling:** Comprehensive error reporting and recovery
-- **Logging:** Full activity logging with timestamps
-
-#### Performance Characteristics
-- **File access time:** Sub-second TAP file mounting
-- **Data transfer rate:** Optimized for TS 2068 timing requirements
-- **Cache efficiency:** Intelligent Flash memory caching
-- **Power efficiency:** Low-power operation with sleep modes
-
-### Compatibility Information
-
-#### TS 2068 Compatibility
-- **Models supported:** All TS 2068 variants
-- **Memory requirements:** No additional TS 2068 memory required
-- **ROM compatibility:** Works with all known ROM versions
-- **Peripheral compatibility:** Compatible with most TS 2068 peripherals
-
-#### File Format Support
-- **TAP files:** Full TS 2068 and ZX Spectrum TAP format support
-- **DCK files:** Cartridge and dock image support
-- **ROM files:** System ROM and cartridge ROM images
-- **BIN files:** Raw binary data files
-- **Directory structure:** Unlimited nested subdirectories
-
-#### ZX Spectrum Compatibility
-- **Spectrum 48K mode:** Full compatibility mode available
-- **TAP file compatibility:** Most Spectrum TAP files supported
-- **Keyboard mapping:** Automatic adjustment for Spectrum software
-- **Memory mapping:** Spectrum-compatible memory configuration
-
-### Environmental and Operating Conditions
-
-#### Operating Environment
-- **Temperature range:** 0°C to 40°C (32°F to 104°F)
-- **Humidity:** 10% to 90% non-condensing
-- **Power supply:** 5V DC from TS 2068 (approximately 200mA)
-- **Storage temperature:** -20°C to 60°C (-4°F to 140°F)
-
-#### Reliability and Durability
-- **MTBF (Mean Time Between Failures):** >50,000 hours
-- **Flash memory endurance:** >100,000 write/erase cycles per sector
-- **SD card lifespan:** Dependent on card quality and usage
-- **Expected service life:** >10 years with normal use
-
-### Performance Benchmarks
-
-#### File Operation Performance
-- **Directory listing:** <100ms for typical directories
-- **TAP file mounting:** <200ms for files up to 1MB
-- **Program loading:** 5-10x faster than cassette tape
-- **File copying:** Dependent on SD card speed class
-
-#### Memory Usage
-- **Firmware overhead:** <128KB Flash, <64KB SRAM
-- **Cache efficiency:** 90%+ hit rate for frequently accessed files
-- **Available user space:** >384KB Flash, >448KB SRAM
-- **SD card overhead:** <1% for file system structures
-
-#### Power Consumption
-- **Idle mode:** <50mA from TS 2068 power supply
-- **Active operation:** <150mA during file operations
-- **Sleep mode:** <10mA when TS 2068 is inactive
-- **Total system impact:** <3% increase in TS 2068 power consumption
-
-### Upgrade and Maintenance
-
-#### Firmware Updates
-- **Update mechanism:** USB-based firmware loading
-- **Backup and recovery:** Automatic firmware backup
-- **Version control:** Semantic versioning (major.minor.patch)
-- **Compatibility checking:** Automatic version compatibility verification
-
-#### Maintenance Requirements
-- **Periodic maintenance:** SD card organization and cleanup
-- **Firmware updates:** Check quarterly for updates
-- **Hardware cleaning:** Annual connector cleaning recommended
-- **Backup procedures:** Regular backup of important files
-
-#### Diagnostic Capabilities
-- **Built-in diagnostics:** Comprehensive system health monitoring
-- **Performance monitoring:** Real-time performance metrics
-- **Error logging:** Detailed error tracking and reporting
-- **Remote diagnostics:** Community support for troubleshooting
-
-### Safety and Regulatory Information
-
-#### Electrical Safety
-- **Overcurrent protection:** Built-in current limiting
-- **ESD protection:** Electrostatic discharge protection on all I/O
-- **Reverse polarity protection:** Protection against incorrect connections
-- **Thermal protection:** Automatic thermal management
-
-#### Regulatory Compliance
-- **CE marking:** European Conformity for electronic devices
-- **FCC compliance:** Federal Communications Commission (Class B)
-- **RoHS compliance:** Restriction of Hazardous Substances directive
-- **Lead-free construction:** RoHS-compliant lead-free manufacturing
-
-#### User Safety Guidelines
-- **Installation safety:** Always power down before installation
-- **Handling precautions:** Avoid static electricity damage
-- **Operating limits:** Stay within specified environmental conditions
-- **Emergency procedures:** Safe shutdown and recovery procedures
-
-### Development and Extension Information
-
-#### Hardware Development
-- **Schematics available:** Open-source hardware design
-- **PCB files:** Complete manufacturing files available
-- **Component specifications:** Full bill of materials provided
-- **Extension interfaces:** GPIO access for custom modifications
-
-#### Software Development
-- **Source code:** Available under open-source license
-- **Development tools:** MicroPython development environment
-- **API documentation:** Complete programming interface documentation
-- **Community contributions:** Guidelines for contributing modifications
-
-#### Technical Support
-- **Documentation:** Comprehensive user and developer documentation
-- **Community forums:** Active user and developer community
-- **Issue tracking:** GitHub-based issue tracking and resolution
-- **Professional support:** Commercial support options available
-
------
-
-*This manual covers TS-Pico firmware version 1.2 and is current as of April 2025. For the most up-to-date information, documentation, and firmware releases, visit the official GitHub repository at https://github.com/TS-Pico-dev/TS-Pico*
-
-*The TS-Pico project is developed and maintained by a community of volunteers dedicated to preserving and enhancing vintage computing experiences. We encourage participation, feedback, and contributions from users of all skill levels.*
